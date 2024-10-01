@@ -453,18 +453,26 @@ class General extends Widget_Base {
 			[ 
 				'label'   => __( 'Title', 'bdthemes-prime-slider' ),
 				'type'    => Controls_Manager::TEXT,
-				'default' => 'Facebook',
 			]
 		);
 
-		$repeater->add_control(
-			'social_link',
-			[ 
-				'label'   => __( 'Link', 'bdthemes-prime-slider' ),
-				'type'    => Controls_Manager::TEXT,
-				'default' => __( 'http://www.facebook.com/bdthemes/', 'bdthemes-prime-slider' ),
-			]
-		);
+		/**
+		 * TODO: It should be removed after 3.18.0 release
+		 */
+        $repeater->add_control(
+            'social_link',
+            [ 
+                'label'   => __( 'Link', 'bdthemes-prime-slider' ),
+                'type'    => Controls_Manager::HIDDEN,
+            ]
+        );
+        $repeater->add_control(
+            'social_icon_link',
+            [ 
+                'label'   => __( 'Link', 'bdthemes-prime-slider' ),
+                'type'    => Controls_Manager::URL,
+            ]
+        );
 
 		$repeater->add_control(
 			'social_icon',
@@ -479,39 +487,45 @@ class General extends Widget_Base {
 		);
 
 		$this->add_control(
-			'social_link_list',
-			[ 
-				'type'        => Controls_Manager::REPEATER,
-				'fields'      => $repeater->get_controls(),
-				'default'     => [ 
-					[ 
-						'social_link'       => __( 'http://www.facebook.com/bdthemes/', 'bdthemes-prime-slider' ),
-						'social_icon'       => [ 
-							'value'   => 'fab fa-facebook-f',
-							'library' => 'fa-brands',
-						],
-						'social_link_title' => 'Facebook',
+            'social_link_list',
+            [ 
+                'type'        => Controls_Manager::REPEATER,
+                'fields'      => $repeater->get_controls(),
+                'default'     => [ 
+                    [ 
+                        'social_icon_link'       => [ 
+                            'url' => 'http://www.facebook.com/bdthemes/',
+                        ],
+                        'social_icon'       => [ 
+                            'value'   => 'fab fa-facebook-f',
+                            'library' => 'fa-brands',
+                        ],
+						'social_link_title' => __( 'Facebook', 'bdthemes-prime-slider' ),
 					],
 					[ 
-						'social_link'       => __( 'http://www.twitter.com/bdthemes/', 'bdthemes-prime-slider' ),
+						'social_icon_link'       => [ 
+							'url' => 'http://www.twitter.com/bdthemes/',
+						],
 						'social_icon'       => [ 
 							'value'   => 'fab fa-twitter',
 							'library' => 'fa-brands',
 						],
-						'social_link_title' => 'Twitter',
+						'social_link_title' => __( 'Twitter', 'bdthemes-prime-slider' ),
 					],
 					[ 
-						'social_link'       => __( 'http://www.instagram.com/bdthemes/', 'bdthemes-prime-slider' ),
+						'social_icon_link'       => [ 
+							'url' => 'http://www.instagram.com/bdthemes/',
+						],
 						'social_icon'       => [ 
 							'value'   => 'fab fa-instagram',
 							'library' => 'fa-brands',
 						],
-						'social_link_title' => 'Instagram',
-					],
-				],
-				'title_field' => '{{{ social_link_title }}}',
-			]
-		);
+						'social_link_title' => __( 'Instagram', 'bdthemes-prime-slider' ),
+                    ],
+                ],
+                'title_field' => '{{{ social_link_title }}}',
+            ]
+        );
 
 		$this->end_controls_section();
 
@@ -2315,18 +2329,43 @@ class General extends Widget_Base {
 
 			<?php if ( $label ) : ?>
 				<?php if ( '' !== $settings['show_share_us'] ) : ?>
-					<h3><?php esc_html_e( 'Share Us', 'bdthemes-prime-slider' ); ?></h3>
+					<h3><?php esc_html_e( 'Follow Us', 'bdthemes-prime-slider' ); ?></h3>
 				<?php endif; ?>
 			<?php endif; ?>
 
 			<?php
-			foreach ( $settings['social_link_list'] as $link ) :
-				$tooltip = ( 'yes' == $settings['social_icon_tooltip'] ) ? ' title="' . esc_html( $link['social_link_title'] ) . '" bdt-tooltip="pos: ' . $position . '"' : ''; ?>
+			foreach ( $settings['social_link_list'] as $index => $link ) :
+                
+                $link_key = 'link_' . $index;
+                $this->add_render_attribute($link_key, 'class', 'bdt-social-animate', true);
 
-				<a class="bdt-social-animate" href="<?php echo esc_url( $link['social_link'] ); ?>" target="_blank" <?php echo wp_kses_post( $tooltip ); ?>>
-					<?php Icons_Manager::render_icon( $link['social_icon'], [ 'aria-hidden' => 'true', 'class' => 'fa-fw' ] ); ?>
-				</a>
-			<?php endforeach; ?>
+                if ( 'yes' == $settings['social_icon_tooltip'] ) {
+                    $this->add_render_attribute(
+                        [
+                            $link_key => [
+                                'title' => esc_html( $link['social_link_title'] ),
+                                'bdt-tooltip' => 'pos: ' . esc_html($position),
+                            ]
+                        ], '', '', true );
+                }                
+
+                if ( isset($link['social_icon_link']['url']) && ! empty($link['social_icon_link']['url']) ) {
+                    $this->add_link_attributes($link_key, $link['social_icon_link']);
+                } else { // TODO: Condition should be removed after 3.18.0 
+                    $this->add_render_attribute(
+                        [
+                            $link_key => [
+                                'href' => esc_attr($link['social_link']),
+                                'target' => '_blank',
+                            ]
+                        ], '', '', true );
+                }
+                
+                ?>
+                <a <?php $this->print_render_attribute_string($link_key); ?>>
+                    <?php Icons_Manager::render_icon( $link['social_icon'], [ 'aria-hidden' => 'true', 'class' => 'fa-fw' ] ); ?>
+                </a>
+            <?php endforeach; ?>
 		</div>
 
 		<?php
@@ -2487,26 +2526,11 @@ class General extends Widget_Base {
 
 		$this->add_render_attribute( 'slider-button', 'class', 'bdt-slide-btn', true );
 		$this->add_render_attribute( 'slider-button', 'data-reveal', 'reveal-active', true );
-
-		if ( isset( $content['button_link']['url'] ) && ! empty( $content['button_link']['url'] ) ) {
-			$this->add_render_attribute( 'slider-button', 'href', esc_url( $content['button_link']['url'] ), true );
-
-			if ( $content['button_link']['is_external'] ) {
-				$this->add_render_attribute( 'slider-button', 'target', '_blank', true );
-			} else {
-				$this->add_render_attribute( 'slider-button', 'target', '_self', true );
-			}
-
-			if ( $content['button_link']['nofollow'] ) {
-				$this->add_render_attribute( 'slider-button', 'rel', 'nofollow', true );
-			}
-		} else {
-			$this->add_render_attribute( 'slider-button', 'href', 'javascript:void(0);', true );
-		}
+		$this->add_link_attributes( 'slider-button', $content['button_link'], true );
 
 		?>
 
-		<?php if ( $content['slide_button_text'] && ( 'yes' == $settings['show_button_text'] ) ) : ?>
+		<?php if ( $content['slide_button_text'] && ( 'yes' == $settings['show_button_text'] ) && ! empty( $content['button_link']['url'] ) ) : ?>
 
 			<a <?php $this->print_render_attribute_string( 'slider-button' ); ?>>
 
@@ -2570,25 +2594,8 @@ class General extends Widget_Base {
 
 		$this->add_render_attribute( 'slide_content_animate', 'class', 'bdt-prime-slider-content' );
 
-		if ( $slide_content['title'] ) {
-			$title_link_href   = isset( $slide_content['title_link']['url'] ) ? esc_url( $slide_content['title_link']['url'] ) : 'javascript:void(0);';
-			$title_link_target = $slide_content['title_link']['is_external'] ? '_blank' : '_self';
-
-			$this->add_render_attribute(
-				[ 
-					'title-link' => [ 
-						'class'  => [ 
-							'bdt-slider-title-link',
-						],
-						'href'   => $title_link_href,
-						'target' => $title_link_target
-					]
-				],
-				'',
-				'',
-				true
-			);
-		}
+		$this->add_render_attribute( 'title-link', 'class', 'bdt-slider-title-link', true );
+		$this->add_link_attributes( 'title-link', $slide_content['title_link'], true );
 
 		?>
 		<div class="bdt-position-z-index bdt-position-large">

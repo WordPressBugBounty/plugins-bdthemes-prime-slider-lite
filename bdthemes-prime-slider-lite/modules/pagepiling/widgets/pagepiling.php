@@ -296,14 +296,23 @@ class Pagepiling extends Widget_Base {
 			]
 		);
 
-		$repeater->add_control(
-			'social_link',
-			[
-				'label'   => __('Link', 'bdthemes-prime-slider'),
-				'type'    => Controls_Manager::TEXT,
-				'default' => __('http://www.facebook.com/bdthemes/', 'bdthemes-prime-slider'),
-			]
-		);
+		/**
+		 * TODO: It should be removed after 3.18.0 release
+		 */
+        $repeater->add_control(
+            'social_link',
+            [ 
+                'label'   => __( 'Link', 'bdthemes-prime-slider' ),
+                'type'    => Controls_Manager::HIDDEN,
+            ]
+        );
+        $repeater->add_control(
+            'social_icon_link',
+            [ 
+                'label'   => __( 'Link', 'bdthemes-prime-slider' ),
+                'type'    => Controls_Manager::URL,
+            ]
+        );
 
 		$this->add_control(
 			'social_link_list',
@@ -312,16 +321,22 @@ class Pagepiling extends Widget_Base {
 				'fields'  => $repeater->get_controls(),
 				'default' => [
 					[
-						'social_link'       => __('http://www.facebook.com/bdthemes/', 'bdthemes-prime-slider'),
-						'social_link_title' => 'Fb.',
+						'social_icon_link'       => [ 
+                            'url' => 'http://www.facebook.com/bdthemes/',
+                        ],
+						'social_link_title' => __('Fb.', 'bdthemes-prime-slider'),
 					],
 					[
-						'social_link'       => __('http://www.twitter.com/bdthemes/', 'bdthemes-prime-slider'),
-						'social_link_title' => 'Tw.',
+						'social_icon_link'       => [ 
+							'url' => 'http://www.twitter.com/bdthemes/',
+						],
+						'social_link_title' => __('Tw.', 'bdthemes-prime-slider'),
 					],
 					[
-						'social_link'       => __('http://www.instagram.com/bdthemes/', 'bdthemes-prime-slider'),
-						'social_link_title' => 'Inst.',
+						'social_icon_link'       => [ 
+							'url' => 'http://www.instagram.com/bdthemes/',
+						],
+						'social_link_title' => __('In.', 'bdthemes-prime-slider'),
 					],
 				],
 				'title_field' => '{{{ social_link_title }}}',
@@ -1157,15 +1172,7 @@ class Pagepiling extends Widget_Base {
 
 				<h3><?php echo esc_html($settings['social_main_title']); ?></h3>
 
-				<?php foreach ($settings['social_link_list'] as $link) : ?>
-
-					<a href="<?php echo esc_url($link['social_link']); ?>" target="_blank">
-						<span class="bdt-social-share-title">
-							<?php echo esc_html($link['social_link_title']); ?>
-						</span>
-					</a>
-					
-				<?php endforeach; ?>
+				<?php $this->render_social_link_repeater(); ?>
 
 			</div>
 
@@ -1176,24 +1183,11 @@ class Pagepiling extends Widget_Base {
 		$settings = $this->get_settings_for_display();
 
 		$this->add_render_attribute('slider-button', 'class', 'bdt-slide-btn', true);
-
-		if ($content['button_link']['url']) {
-			$this->add_render_attribute('slider-button', 'href', esc_url($content['button_link']['url']), true);
-
-			if ($content['button_link']['is_external']) {
-				$this->add_render_attribute('slider-button', 'target', '_blank', true);
-			}
-
-			if ($content['button_link']['nofollow']) {
-				$this->add_render_attribute('slider-button', 'rel', 'nofollow', true);
-			}
-		} else {
-			$this->add_render_attribute('slider-button', 'href', '#', true);
-		}
+		$this->add_link_attributes('slider-button', $content['button_link'], true);
 
 		?>
 
-		<?php if ($content['slide_button_text'] && ('yes' == $settings['show_button_text'])) : ?>
+		<?php if ( $content['slide_button_text'] && ('yes' == $settings['show_button_text']) && ! empty($content['button_link']['url']) ) : ?>
 
 			<a <?php $this->print_render_attribute_string('slider-button'); ?>>
 
@@ -1220,7 +1214,7 @@ class Pagepiling extends Widget_Base {
 
 		// remove global lightbox
 		$this->add_render_attribute( 'lightbox-content', 'data-elementor-open-lightbox', 'no', true );
-		$this->add_render_attribute( 'lightbox-content', 'href', esc_url($slide['lightbox_link']['url']), true );
+		$this->add_link_attributes( 'lightbox-content', $slide['lightbox_link'], true );
 		
 		$this->add_render_attribute( 'lightbox', 'class', 'bdt-slide-play-button', true );
 		$this->add_render_attribute( 'lightbox', 'bdt-lightbox', 'video-autoplay: true;', true );

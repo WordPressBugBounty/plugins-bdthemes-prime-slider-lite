@@ -1244,19 +1244,9 @@ class Sequester extends Widget_Base {
 
 		?>
 
-			<div <?php $this->print_render_attribute_string('social-icon'); ?>>
-
-				<?php foreach ($settings['social_link_list'] as $link) : ?>
-
-					<a href="<?php echo esc_url($link['social_link']); ?>" target="_blank">
-						<span class="bdt-social-share-title">
-							<?php echo esc_html($link['social_link_title']); ?>
-						</span>
-					</a>
-					
-				<?php endforeach; ?>
-
-			</div>
+		<div <?php $this->print_render_attribute_string('social-icon'); ?>>
+			<?php $this->render_social_link_repeater(); ?>
+		</div>
 
 		<?php
 	}
@@ -1298,24 +1288,11 @@ class Sequester extends Widget_Base {
 
 		$this->add_render_attribute('slider-button', 'class', 'bdt-slide-btn', true);
 		$this->add_render_attribute('slider-button', 'data-reveal', 'reveal-active', true);
-
-		if (isset($content['button_link']['url'])) {
-			$this->add_render_attribute('slider-button', 'href', esc_url($content['button_link']['url']), true);
-
-			if ($content['button_link']['is_external']) {
-				$this->add_render_attribute('slider-button', 'target', '_blank', true);
-			}
-
-			if ($content['button_link']['nofollow']) {
-				$this->add_render_attribute('slider-button', 'rel', 'nofollow', true);
-			}
-		} else {
-			$this->add_render_attribute('slider-button', 'href', '#', true);
-		}
+		$this->add_link_attributes('slider-button', $content['button_link'], true);
 
 		?>
 
-		<?php if ($content['slide_button_text'] && ('yes' == $settings['show_button_text'])) : ?>
+		<?php if ( $content['slide_button_text'] && ('yes' == $settings['show_button_text']) && isset($content['button_link']['url']) ) : ?>
 
 			<a <?php $this->print_render_attribute_string('slider-button'); ?>>
 
@@ -1365,6 +1342,8 @@ class Sequester extends Widget_Base {
 			}
 		}
 
+		$this->add_link_attributes( 'title-link', $slide_content['title_link'], true );
+
         ?>
 
 		<div class="bdt-prime-slider-content">
@@ -1382,7 +1361,7 @@ class Sequester extends Widget_Base {
 					<div class="bdt-main-title">
 						<<?php echo esc_attr(Utils::get_valid_html_tag($settings['title_html_tag'])); ?> class="bdt-title-tag" <?php echo wp_kses_post($parallax_title); ?> data-reveal="reveal-active">
 							<?php if ('' !== $slide_content['title_link']['url']) : ?>
-								<a href="<?php echo esc_url($slide_content['title_link']['url']); ?>">
+								<a <?php $this->print_render_attribute_string( 'title-link' ); ?>>
 								<?php endif; ?>
 								<?php echo wp_kses_post(prime_slider_first_word($slide_content['title'])); ?>
 								<?php if ('' !== $slide_content['title_link']['url']) : ?>

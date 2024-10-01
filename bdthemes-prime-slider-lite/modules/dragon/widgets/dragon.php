@@ -223,58 +223,10 @@ class dragon extends Widget_Base {
 
 		$this->end_controls_section();
 
-		$this->start_controls_section(
-			'section_content_social_link',
-			[
-				'label' 	=> __('Social Link', 'bdthemes-prime-slider'),
-				'condition' => [
-					'show_social_icon' => 'yes',
-				],
-			]
-		);
-
-		$repeater = new Repeater();
-
-		$repeater->add_control(
-			'social_link_title',
-			[
-				'label'   => __('Title', 'bdthemes-prime-slider'),
-				'type'    => Controls_Manager::TEXT,
-			]
-		);
-
-		$repeater->add_control(
-			'social_link',
-			[
-				'label'   => __('Link', 'bdthemes-prime-slider'),
-				'type'    => Controls_Manager::TEXT,
-			]
-		);
-
-		$this->add_control(
-			'social_link_list',
-			[
-				'type'    => Controls_Manager::REPEATER,
-				'fields'  => $repeater->get_controls(),
-				'default' => [
-					[
-						'social_link'       => __('http://www.facebook.com/bdthemes/', 'bdthemes-prime-slider'),
-						'social_link_title' => 'Facebook',
-					],
-					[
-						'social_link'       => __('http://www.twitter.com/bdthemes/', 'bdthemes-prime-slider'),
-						'social_link_title' => 'Twitter',
-					],
-					[
-						'social_link'       => __('http://www.instagram.com/bdthemes/', 'bdthemes-prime-slider'),
-						'social_link_title' => 'Instagram',
-					],
-				],
-				'title_field' => '{{{ social_link_title }}}',
-			]
-		);
-
-		$this->end_controls_section();
+		/**
+		 * Global social link settings
+		 */
+		$this->register_social_links_text_controls();
 		
 		$this->start_controls_section(
 			'section_content_animation',
@@ -1030,17 +982,7 @@ class dragon extends Widget_Base {
 		?>
 
 		<div <?php $this->print_render_attribute_string('social-icon'); ?>>
-
-			<?php foreach ($settings['social_link_list'] as $link) : ?>
-
-				<a href="<?php echo esc_url($link['social_link']); ?>" target="_blank">
-					<span class="bdt-social-share-title">
-						<?php echo esc_html($link['social_link_title']); ?>
-					</span>
-				</a>
-				
-			<?php endforeach; ?>
-
+			<?php $this->render_social_link_repeater(); ?>
 		</div>
 
 		<?php
@@ -1112,6 +1054,8 @@ class dragon extends Widget_Base {
 			}
 		}
 
+		$this->add_link_attributes( 'title-link', $slide_content['title_link'], true );
+
         ?>
 		<div class="bdt-prime-slider-wrapper">
 			<div class="bdt-prime-slider-content">
@@ -1130,7 +1074,7 @@ class dragon extends Widget_Base {
 					<div class="bdt-main-title">
 						<<?php echo esc_attr(Utils::get_valid_html_tag($settings['title_html_tag'])); ?> class="bdt-title-tag" data-bdt-slideshow-parallax="<?php echo esc_attr($parallax_title); ?>"  data-reveal="reveal-active">
 							<?php if ('' !== $slide_content['title_link']['url']) : ?>
-								<a href="<?php echo esc_url($slide_content['title_link']['url']); ?>">
+								<a <?php $this->print_render_attribute_string('title-link'); ?>>
 								<?php endif; ?>
 								<?php echo wp_kses_post( prime_slider_first_word($slide_content['title']) ); ?>
 								<?php if ('' !== $slide_content['title_link']['url']) : ?>
@@ -1147,7 +1091,7 @@ class dragon extends Widget_Base {
 				<?php endif; ?>
 
 				<div data-bdt-slideshow-parallax="x: 400,-400; opacity: 1,1,0">
-					<?php $this->render_button($slide_content, $link_key); ?>
+					<?php $this->render_button($slide_content, 'bdt-ps-button' . $link_key); ?>
 				</div>
 					
 			</div>

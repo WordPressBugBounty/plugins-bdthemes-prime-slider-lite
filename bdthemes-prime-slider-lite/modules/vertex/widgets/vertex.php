@@ -49,7 +49,7 @@ class Vertex extends Widget_Base {
     }
 
     public function get_style_depends() {
-        return ['ps-vertex', 'prime-slider-font'];
+        return ['e-swiper', 'ps-vertex', 'prime-slider-font'];
     }
 
     public function get_script_depends() {
@@ -69,7 +69,10 @@ class Vertex extends Widget_Base {
         return 'https://youtu.be/ktEB9YdU8A8';
     }
 
-    protected function is_dynamic_content(): bool {
+    public function has_widget_inner_wrapper(): bool {
+        return ! \Elementor\Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
+    }
+	protected function is_dynamic_content(): bool {
 		return false;
 	}
 

@@ -43,7 +43,7 @@ class Sniper extends Widget_Base {
 	}
 
 	public function get_style_depends() {
-		return ['ps-sniper'];
+		return ['e-swiper', 'ps-sniper'];
 	}
 	public function get_script_depends() {
 		return ['shutters', 'gl', 'slicer', 'tinder', 'ps-sniper'];
@@ -53,6 +53,9 @@ class Sniper extends Widget_Base {
 		return 'https://youtu.be/KZstgwk-pog?si=k0t9Gj7POSuEzDIi';
 	}
 
+	public function has_widget_inner_wrapper(): bool {
+        return ! \Elementor\Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
+    }
 	protected function is_dynamic_content(): bool {
 		return false;
 	}

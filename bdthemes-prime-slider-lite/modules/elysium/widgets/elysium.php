@@ -63,6 +63,9 @@ class Elysium extends Widget_Base {
 		return 'https://youtu.be/S3c1G6AFGi0';
 	}
 
+	public function has_widget_inner_wrapper(): bool {
+        return ! \Elementor\Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
+    }
 	protected function is_dynamic_content(): bool {
 		return false;
 	}
@@ -265,11 +268,6 @@ class Elysium extends Widget_Base {
 		 * Autoplay Controls
 		 */
 		$this->register_autoplay_controls();
-
-		/**
-		 * Centered Slides Controls
-		 */
-		$this->register_centered_slides_controls();
 
 		/**
 		 * Grab Cursor Controls
@@ -761,7 +759,7 @@ class Elysium extends Widget_Base {
 							"pauseOnHover"   => ("yes" == $settings["pauseonhover"]) ? true : false,
 							"slidesPerView"  => isset($settings["columns_mobile"]) ? (int)$settings["columns_mobile"] : 1,
 							"spaceBetween"   => !empty($settings["item_gap_mobile"]["size"]) ? (int)$settings["item_gap_mobile"]["size"] : 0,
-							"centeredSlides" => ($settings["centered_slides"] === "yes") ? true : true,
+							"centeredSlides" => true,
 							"grabCursor"     => ($settings["grab_cursor"] === "yes") ? true : false,
 							"effect"         => 'slide',
                             "parallax"       => true,

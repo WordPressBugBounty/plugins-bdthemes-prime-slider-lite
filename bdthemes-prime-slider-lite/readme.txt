@@ -5,7 +5,7 @@ Tags: wordpress slider, elementor addons, slider, image slider, video slider
 Requires at least: 5.0.0
 Tested up to: 6.7.1
 Requires PHP: 7.4.0
-Stable tag: 3.16.3
+Stable tag: 3.16.4
 License: GPL3
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Elementor requires at least: 3.22
@@ -222,6 +222,14 @@ https://youtu.be/XjFiW5rFrac
 
 == Changelog ==
 
+
+= 3.16.4 [29th December 2024] =
+
+* Added: Slide image controls added in isolate widget
+* Added: Navigation arrows offset option added in isolate widget
+* Added: Dots size, position & spacing added in isolate widget
+* Added: Skin slice scroll down controls added in isolate widget
+* Fixed: Button, arrows & scroll down hover radius issue fixed in isolate widget
 
 = 3.16.3 [24th December 2024] =
 

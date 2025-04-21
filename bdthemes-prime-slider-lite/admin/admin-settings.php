@@ -4,7 +4,6 @@ use PrimeSlider\Utils;
 use PrimeSlider\Admin\ModuleService;
 use Elementor\Modules\Usage\Module;
 use Elementor\Tracker;
-
 /**
  * Prime Slider Admin Settings Class
  */
@@ -339,6 +338,9 @@ class PrimeSlider_Admin_Settings {
 		//initialize settings
 		$this->settings_api->admin_init();
 		$this->ps_redirect_to_get_pro();
+		if (true === _is_ps_pro_activated()) {
+			$this->bdt_redirect_to_renew_link();
+		}
 	}
 
 	/**
@@ -355,6 +357,14 @@ class PrimeSlider_Admin_Settings {
             exit;
         }
     }
+
+	// Redirect to renew link
+	public function bdt_redirect_to_renew_link() {
+		if (isset($_GET['page']) && $_GET['page'] === self::PAGE_ID . '_license_renew') {
+			wp_redirect('https://account.bdthemes.com/');
+			exit;
+		}
+	}
 
 	public function admin_menu() {
 		add_menu_page(
@@ -624,10 +634,13 @@ class PrimeSlider_Admin_Settings {
 				<div class="bdt-border-rounded bdt-box-shadow-small bdt-alert-warning" bdt-alert>
 					<a href class="bdt-alert-close" bdt-close></a>
 					<div class="bdt-text-default">
-						<?php
-						esc_html_e('To view widgets analytics, Elementor Usage Data Sharing feature by Elementor needs to be activated. Please activate the feature to get widget analytics instantly ', 'bdthemes-prime-slider');
-						echo '<a href="' . esc_url(admin_url('admin.php?page=elementor')) . '">from here.</a>';
-						?>
+					<?php
+					printf(
+						esc_html__('To view widgets analytics, Elementor Usage Data Sharing feature needs to be activated. Please activate the feature to get widget analytics instantly %s', 'bdthemes-prime-slider'),
+						'<a href="' . esc_url(admin_url('admin.php?page=elementor')) . '">' . esc_html__('from here', 'bdthemes-prime-slider') . '</a>'
+					);
+					?>
+
 					</div>
 				</div>
 			<?php endif; ?>
@@ -1323,6 +1336,14 @@ class PrimeSlider_Admin_Settings {
                 const getProLink = $('a[href="admin.php?page=prime_slider_options_get_pro"]');
                 if (getProLink.length) {
                     getProLink.attr('target', '_blank');
+                }
+            });
+
+			// License Renew Redirect
+			jQuery(document).ready(function ($) {
+                const renewalLink = $('a[href="admin.php?page=prime_slider_options_license_renew"]');
+                if (renewalLink.length) {
+                    renewalLink.attr('target', '_blank');
                 }
             });
 		</script>

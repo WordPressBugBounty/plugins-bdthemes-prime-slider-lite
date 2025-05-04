@@ -579,6 +579,9 @@ if ( ! class_exists( 'Insights_SDK' ) ) {
 		public function dci_enqueue_scripts() {
 			wp_enqueue_style( 'dci-sdk', plugins_url( 'assets/css/dci.css', __FILE__ ), array(), $this->version, 'all' );
 			wp_enqueue_script( 'dci-sdk', plugins_url( 'assets/js/dci.js', __FILE__ ), array( 'jquery' ), $this->version, true );
+
+			$inline_css = '.dci-global-notice { display: none; }';
+			wp_add_inline_style( 'dci-sdk', $inline_css );
 		}
 
 		/**
@@ -600,7 +603,7 @@ if ( ! class_exists( 'Insights_SDK' ) ) {
 
 			?>
 			<div
-				class="dci-global-notice dci-notice-data notice notice-success is-dismissible bdt-dci-notice <?php echo esc_attr( substr( $this->dci_name, 0, -33 ) ); ?>">
+				class="dci-global-notice dci-notice-data notice notice-success is-dismissible <?php echo esc_attr( substr( $this->dci_name, 0, -33 ) ); ?>">
 				<div class="dci-global-header bdt-dci-notice-global-header">
 					<?php if ( ! empty( $plugin_icon ) ) : ?>
 						<div class="bdt-dci-notice-logo">
@@ -613,7 +616,7 @@ if ( ! class_exists( 'Insights_SDK' ) ) {
 						</h3>
 						<?php printf( wp_kses_post( $plugin_msg ) ); ?>
 						<p>
-							<a href="<?php echo esc_url( $admin_url ); ?>">Learn More</a>?
+							<a href="<?php echo esc_url( $admin_url ); ?>"><?php echo esc_html__( 'Learn More', 'bdthemes-prime-slider' ); ?></a>?
 						</p>
 						<input type="hidden" name="dci_name" value="<?php echo esc_html( $this->dci_name ); ?>">
 						<input type="hidden" name="dci_date_name" value="<?php echo esc_html( $this->dci_date_name ); ?>">
@@ -622,50 +625,17 @@ if ( ! class_exists( 'Insights_SDK' ) ) {
 
 						<div class="bdt-dci-notice-button-wrap">
 							<button name="dci_allow_status" value="yes" class="dci-button-allow">
-								Yes, I'd Love To Contribute
+								<?php echo esc_html__( 'Yes, I\'d Love To Contribute', 'bdthemes-prime-slider' ); ?>
 							</button>
 							<button name="dci_allow_status" value="skip" class="dci-button-skip">
-								Skip For Now
+								<?php echo esc_html__( 'Skip For Now', 'bdthemes-prime-slider' ); ?>
 							</button>
 							<button name="dci_allow_status" value="disallow" class="dci-button-disallow dci-button-danger">
-								No Thanks
+								<?php echo esc_html__( 'No Thanks', 'bdthemes-prime-slider' ); ?>
 							</button>
 						</div>
 					</div>
 				</div>
-
-				<script>
-				jQuery(document).ready(function($) {
-					// Show only the first DCI notice
-					var $notices = $('.bdt-dci-notice');
-					if ($notices.length > 1) {
-						$notices.not(':first').hide();
-					}
-
-					// When a notice is dismissed, show the next one if available
-					$(document).on('click', '.bdt-dci-notice .notice-dismiss', function() {
-						var $currentNotice = $(this).closest('.bdt-dci-notice');
-						var $nextNotice = $currentNotice.nextAll('.bdt-dci-notice:first');
-						
-						if ($nextNotice.length) {
-							$nextNotice.show();
-						}
-					});
-
-					// Handle button clicks
-					$('.bdt-dci-notice button').on('click', function() {
-						var $notice = $(this).closest('.bdt-dci-notice');
-						var $nextNotice = $notice.nextAll('.bdt-dci-notice:first');
-						
-						$notice.fadeOut(300, function() {
-							if ($nextNotice.length) {
-								$nextNotice.fadeIn();
-							}
-						});
-					});
-				});
-				</script>
-
 			</div>
 
 			<?php
@@ -695,7 +665,7 @@ if ( ! class_exists( 'Insights_SDK' ) ) {
 				</div>
 				<?php printf( $plugin_msg ); ?>
 				<p>
-					What we <a href="<?php echo esc_url( $admin_url ); ?>">collect</a>?
+					<?php echo esc_html__( 'What we ', 'bdthemes-prime-slider' ); ?> <a href="<?php echo esc_url( $admin_url ); ?>"><?php echo esc_html__( 'collect', 'bdthemes-prime-slider' ); ?></a>?
 				</p>
 				<input type="hidden" name="dci_name" value="<?php echo esc_html( $this->dci_name ); ?>">
 				<input type="hidden" name="dci_date_name" value="<?php echo esc_html( $this->dci_date_name ); ?>">
@@ -703,13 +673,13 @@ if ( ! class_exists( 'Insights_SDK' ) ) {
 				<input type="hidden" name="nonce" value="<?php echo esc_html( wp_create_nonce( 'dci_sdk' ) ); ?>">
 				<p>
 					<button name="dci_allow_status" value="yes" class="button button-primary dci-button-allow">
-						Allow
+						<?php echo esc_html__( 'Allow', 'bdthemes-prime-slider' ); ?>
 					</button>
 					<button name="dci_allow_status" value="skip" class="button dci-button-skip button-secondary">
-						I'll Skip For Now
+						<?php echo esc_html__( "I'll Skip For Now", 'bdthemes-prime-slider' ); ?>
 					</button>
 					<button name="dci_allow_status" value="disallow" class="button dci-button-disallow dci-button-danger">
-						Don't Allow
+						<?php echo esc_html__( 'Don\'t Allow', 'bdthemes-prime-slider' ); ?>
 					</button>
 				</p>
 			</div>

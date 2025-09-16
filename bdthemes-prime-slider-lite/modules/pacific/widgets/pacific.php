@@ -73,9 +73,6 @@ class Pacific extends Widget_Base {
 	public function has_widget_inner_wrapper(): bool {
         return ! \Elementor\Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
     }
-	protected function is_dynamic_content(): bool {
-		return false;
-	}
 
 	protected function register_controls() {
 		$reveal_effects = prime_slider_option( 'reveal-effects', 'prime_slider_other_settings', 'off' );
@@ -1473,7 +1470,7 @@ class Pacific extends Widget_Base {
 						<a class="bdt-button bdt-padding-remove" href="#<?php echo esc_attr( $modal_id ); ?>"
 							data-reveal="reveal-active" bdt-toggle>
 							<span class="bdt-btn-text">
-								<?php echo esc_html__( $settings['read_more_text'] ) ?>
+								<?php echo esc_html( $settings['read_more_text'] ) ?>
 							</span>
 							<span class="bdt-readmore-icon eicon-plus"></span>
 						</a>

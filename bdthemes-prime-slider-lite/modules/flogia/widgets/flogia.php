@@ -72,9 +72,6 @@ class Flogia extends Widget_Base {
     public function has_widget_inner_wrapper(): bool {
         return ! \Elementor\Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
     }
-	protected function is_dynamic_content(): bool {
-		return false;
-	}
 
 	protected function register_controls() {
         $reveal_effects = prime_slider_option('reveal-effects', 'prime_slider_other_settings', 'off');
@@ -847,7 +844,7 @@ class Flogia extends Widget_Base {
         $this->add_control(
             'avatar_size',
             [
-                'label'      => _x('Size', 'bdthemes-prime-slider'),
+                'label'      => esc_html__( 'Size', 'bdthemes-prime-slider' ),
                 'type'       => Controls_Manager::SELECT,
                 'default'    => '42',
                 'options'    => [

@@ -558,21 +558,36 @@ trait Global_Widget_Controls {
 			]
 		);
 
+		$this->add_control(
+			'follow_us_text',
+			[ 
+				'label'   	=> esc_html__( 'Follow Us Text', 'bdthemes-prime-slider' ),
+				'type'    	=> Controls_Manager::TEXT,
+				'dynamic' 	=> [ 'active' => true ],
+				'default' 	=> esc_html__( 'Follow Us', 'bdthemes-prime-slider' ),
+				'condition' => [ 
+					'_skin' 	=> 'folio',
+				],
+			]
+		);
+
 		$repeater = new Repeater();
 
 		$repeater->add_control(
 			'social_link_title',
 			[ 
-				'label' => __( 'Title', 'bdthemes-prime-slider' ),
-				'type'  => Controls_Manager::TEXT,
+				'label'   => __( 'Title', 'bdthemes-prime-slider' ),
+				'type'    => Controls_Manager::TEXT,
+				'dynamic' => [ 'active' => true ],
 			]
 		);
 
 		$repeater->add_control(
 			'social_icon_link',
 			[ 
-				'label' => __( 'Link', 'bdthemes-prime-slider' ),
-				'type'  => Controls_Manager::URL,
+				'label'   => __( 'Link', 'bdthemes-prime-slider' ),
+				'type'    => Controls_Manager::URL,
+				'dynamic' => [ 'active' => true ],
 			]
 		);
 
@@ -1636,6 +1651,7 @@ trait Global_Widget_Controls {
 			[ 
 				'label'       => esc_html__( 'Button Text', 'bdthemes-prime-slider' ),
 				'type'        => Controls_Manager::TEXT,
+				'dynamic'     => [ 'active' => true ],
 				'placeholder' => esc_html__( 'More Details', 'bdthemes-prime-slider' ),
 				'default'     => esc_html__( 'More Details', 'bdthemes-prime-slider' ),
 				'label_block' => false,
@@ -2023,8 +2039,9 @@ trait Global_Widget_Controls {
 		$repeater->add_control(
 			'social_link_title',
 			[ 
-				'label' => __( 'Title', 'bdthemes-prime-slider' ),
-				'type'  => Controls_Manager::TEXT,
+				'label'   => __( 'Title', 'bdthemes-prime-slider' ),
+				'type'    => Controls_Manager::TEXT,
+				'dynamic' => [ 'active' => true ],
 			]
 		);
 
@@ -2033,6 +2050,7 @@ trait Global_Widget_Controls {
 			[ 
 				'label' => __( 'Link', 'bdthemes-prime-slider' ),
 				'type'  => Controls_Manager::URL,
+				'dynamic' => [ 'active' => true ],
 			]
 		);
 
@@ -2060,6 +2078,56 @@ trait Global_Widget_Controls {
 		);
 
 		$this->end_controls_section();
+	}
+
+	/**
+	 * Button Previous & Next Text controls
+	 */
+	protected function register_previous_next_buttons_text_controls() {
+		$this->start_controls_tabs(
+			'tabs_previous_next_buttons',
+			[
+				'separator' => 'before',
+			]
+		);
+		
+		$this->start_controls_tab(
+			'tab_button_previous',
+			[
+				'label' => esc_html__( 'Previous', 'bdthemes-prime-slider' ),
+			]
+		);
+		
+		$this->add_control(
+			'button_previous_text',
+			[
+				'label'   => esc_html__( 'Text', 'bdthemes-prime-slider' ),
+				'type'    => Controls_Manager::TEXT,
+				'dynamic' => [ 'active' => true ],
+				'default' => esc_html__( 'Prev', 'bdthemes-prime-slider' ),
+			]
+		);
+		
+		$this->end_controls_tab();
+		
+		$this->start_controls_tab(
+			'tab_button_next',
+			[
+				'label' => esc_html__( 'Next', 'bdthemes-prime-slider' ),
+			]
+		);
+		
+		$this->add_control(
+			'button_next_text',
+			[
+				'label'   => esc_html__( 'Text', 'bdthemes-prime-slider' ),
+				'type'    => Controls_Manager::TEXT,
+				'dynamic' => [ 'active' => true ],
+				'default' => esc_html__( 'Next', 'bdthemes-prime-slider' ),
+			]
+		);
+		
+		$this->end_controls_tabs();
 	}
 
 	/**
@@ -2284,6 +2352,7 @@ trait Global_Widget_Controls {
 
 			if ( isset( $link['social_icon_link']['url'] ) && ! empty( $link['social_icon_link']['url'] ) ) {
 				$this->add_link_attributes( $link_key, $link['social_icon_link'] );
+				$this->add_render_attribute( $link_key, 'aria-label', 'Social Link ' . $link['social_link_title'], true );
 			}
 
 			?>
@@ -2390,7 +2459,7 @@ trait Global_Widget_Controls {
 				}
 
 				?>
-				<a <?php $this->print_render_attribute_string( $link_key ); ?> data-bdt-tooltip="<?php echo $tooltip; ?>">
+				<a <?php $this->print_render_attribute_string( $link_key ); ?> data-bdt-tooltip="<?php echo esc_attr( $tooltip ); ?>">
 					<span><span>
 							<?php Icons_Manager::render_icon( $link['social_icon'], [ 'aria-hidden' => 'true', 'class' => 'fa-fw' ] ); ?>
 						</span></span>

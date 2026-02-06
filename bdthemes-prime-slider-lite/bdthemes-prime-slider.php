@@ -3,24 +3,36 @@
 /**
  * Plugin Name: Prime Slider
  * Plugin URI: https://primeslider.pro/
- * Description: Prime Slider is a packed of elementor widget that gives you some awesome header and slider combination for your website.
- * Version: 3.18.6
+ * Description: Prime Slider is a pack of elementor widget that gives you some awesome header and slider combination for your website.
+ * Version: 4.1.5
  * Author: BdThemes
  * Author URI: https://bdthemes.com/
  * Text Domain: bdthemes-prime-slider
  * Domain Path: /languages
  * License: GPL3
- * Elementor requires at least: 3.22
- * Elementor tested up to: 3.32.0
+ * Elementor requires at least: 3.28
+ * Elementor tested up to: 3.34.4
  */
 
 // Some pre define value for easy use
 
 if ( ! defined( 'BDTPS_CORE_VER' ) ) {
-	define( 'BDTPS_CORE_VER', '3.18.6' );
+	define( 'BDTPS_CORE_VER', '4.1.5' );
 }
 if ( ! defined( 'BDTPS_CORE__FILE__' ) ) {
 	define( 'BDTPS_CORE__FILE__', __FILE__ );
+}
+
+
+// Load white label configuration if it exists (before defining BDTPS_CORE_TITLE)
+if ( ! defined( 'BDTPS_WL' ) ) {
+    if ( get_option( 'ps_white_label_enabled' ) ) {
+        define( 'BDTPS_WL', true );
+		$white_label_config = dirname( __FILE__ ) . '/includes/white-label-config.php';
+		if ( file_exists( $white_label_config ) ) {
+			require_once( $white_label_config );
+		}
+	}
 }
 
 
@@ -98,10 +110,19 @@ function prime_slider_load_plugin() {
 		return;
 	}
 
+	/**
+	 * Setup Wizard Initialization
+	 */
+	require_once( dirname( __FILE__ ) . '/includes/setup-wizard/init.php' );
+
 	// Filters for developer
 	require BDTPS_CORE_PATH . 'includes/prime-slider-filters.php';
 	// Prime Slider widget and assets loader
 	require BDTPS_CORE_PATH . 'loader.php';
+
+	// Initialize custom CSS/JS injection on frontend
+	add_action( 'wp_head', 'ps_inject_header_custom_code', 999 );
+	add_action( 'wp_footer', 'ps_inject_footer_custom_code', 999 );
 }
 
 add_action( 'plugins_loaded', 'prime_slider_load_plugin' );

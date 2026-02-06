@@ -284,6 +284,7 @@ class Pagepiling extends Widget_Base {
 			[
 				'label'   => __('Social Text', 'bdthemes-prime-slider'),
 				'type'    => Controls_Manager::TEXT,
+				'dynamic' => [ 'active' => true ],
 				'default' => __('Follow Us', 'bdthemes-prime-slider'),
 			]
 		);
@@ -296,6 +297,7 @@ class Pagepiling extends Widget_Base {
 			[
 				'label'   => __('Title', 'bdthemes-prime-slider'),
 				'type'    => Controls_Manager::TEXT,
+				'dynamic' => [ 'active' => true ],
 			]
 		);
 
@@ -304,6 +306,7 @@ class Pagepiling extends Widget_Base {
             [ 
                 'label'   => __( 'Link', 'bdthemes-prime-slider' ),
                 'type'    => Controls_Manager::URL,
+				'dynamic' => [ 'active' => true ],
             ]
         );
 
@@ -1159,8 +1162,10 @@ class Pagepiling extends Widget_Base {
 		$settings = $this->get_settings_for_display();
 
 		$this->add_render_attribute('slider-button', 'class', 'bdt-slide-btn', true);
+
 		if ($content['slide_button_text']) {
 			$this->add_link_attributes('slider-button', $content['button_link'], true);
+			$this->add_render_attribute('slider-button', 'aria-label', $content['slide_button_text'] . ' Button', true);
 		}
 		
 		?>
@@ -1273,12 +1278,13 @@ class Pagepiling extends Widget_Base {
 			[
 				'pagepiling-slider' => [
 					'data-settings' => [
-						wp_json_encode(array_filter([
-							"scrollingSpeed"     => $settings["scrollingSpeed"]["size"],
-							"autoplay"       => ("yes" == $settings["autoplay"]) ? ["autoplay_duration" => $settings["autoplay_duration"]['size']] : false,
+						wp_json_encode([
+							"scrollingSpeed"     => !empty($settings["scrollingSpeed"]["size"]) ? (int)$settings["scrollingSpeed"]["size"] : 700,
+							"autoplay"       	 => ("yes" == $settings["autoplay"]) ? true : false,
+							"autoplay_duration"  => !empty($settings["autoplay_duration"]['size']) ? (int)$settings["autoplay_duration"]['size'] : 1000,
 							"loopBottom"         => ("yes" == $settings["loopBottom"]) ? true : false,
 							"loopTop"            => ("yes" == $settings["loopTop"]) ? true : false,
-				        ]))
+				        ])
 					]
 				]
 			]

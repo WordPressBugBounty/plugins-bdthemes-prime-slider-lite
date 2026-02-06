@@ -518,6 +518,27 @@ class ModuleService {
 					'video_url'    => 'https://youtu.be/EITpA2vI9V4?si=wUIJKjMeB0hzseu8',
 				],
 
+				[ 
+					'name'         => 'turnar',
+					'label'        => esc_html__( 'Turnar', 'bdthemes-prime-slider' ),
+					'type'         => 'checkbox',
+					'default'      => "off",
+					'widget_type'  => 'pro',
+					'content_type' => 'static new',
+					'demo_url'     => 'https://primeslider.pro/demo/turnar/',
+					'video_url'    => '',
+				],
+				[ 
+					'name'         => 'motion',
+					'label'        => esc_html__( 'Motion', 'bdthemes-prime-slider' ),
+					'type'         => 'checkbox',
+					'default'      => "off",
+					'widget_type'  => 'pro',
+					'content_type' => 'static new',
+					'demo_url'     => 'https://primeslider.pro/demo/motion/',
+					'video_url'    => '',
+				],
+
 				// [
 				//     'name'         => 'twinkle',
 				//     'label'        => esc_html__( 'Twinkle', 'bdthemes-prime-slider' ),
@@ -558,7 +579,7 @@ class ModuleService {
 					'default'     	=> 'off',
 					'widget_type' 	=> 'pro',
 					'content_type' 	=> 'new',
-					'demo_url'    	=> '',
+					'demo_url'    	=> 'https://primeslider.pro/adaptive-background-demo-1/',
 					'video_url'   	=> '',
 				],
 			]
@@ -705,7 +726,7 @@ class ModuleService {
 				'type'        => 'checkbox',
 				'default'     => 'off',
 				'widget_type' => 'pro',
-				'demo_url'    => 'https://www.elementpack.pro/knowledge-base/how-to-use-reveal-effects/',
+				'demo_url'    => 'https://primeslider.pro/demo/reveal-effects/reveal-effects-demo-1/',
 				'video_url'   => '',
 			],
 

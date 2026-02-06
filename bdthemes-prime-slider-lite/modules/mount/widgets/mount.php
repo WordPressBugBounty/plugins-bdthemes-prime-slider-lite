@@ -216,8 +216,6 @@ class Mount extends Widget_Base {
 
 		$this->end_controls_section();
 
-		
-
 		$this->start_controls_section(
 			'section_content_social_link',
 			[
@@ -228,6 +226,16 @@ class Mount extends Widget_Base {
 			]
 		);
 
+		$this->add_control(
+			'follow_us_text',
+			[
+				'label' => esc_html__('Follow Us Text', 'bdthemes-prime-slider'),
+				'type'  => Controls_Manager::TEXT,
+				'dynamic' => [ 'active' => true ],
+				'default' => esc_html__('Follow Us', 'bdthemes-prime-slider'),
+			]
+		);
+
 		$repeater = new Repeater();
 
 		$repeater->add_control(
@@ -235,6 +243,7 @@ class Mount extends Widget_Base {
 			[
 				'label'   => __('Title', 'bdthemes-prime-slider'),
 				'type'    => Controls_Manager::TEXT,
+				'dynamic' => [ 'active' => true ],
 			]
 		);
 
@@ -243,6 +252,7 @@ class Mount extends Widget_Base {
             [ 
                 'label'   => __( 'Link', 'bdthemes-prime-slider' ),
                 'type'    => Controls_Manager::URL,
+				'dynamic' => [ 'active' => true ],
             ]
         );
 
@@ -415,7 +425,7 @@ class Mount extends Widget_Base {
 		$this->start_controls_tab(
 			'slider_title_style',
 			[
-				'label' 	=> __('Title', 'bdthemes-prime-slider'),
+				'label' 	=> esc_html__('Title', 'bdthemes-prime-slider'),
 				'condition' => [
 					'show_title' => ['yes'],
 				],
@@ -449,6 +459,21 @@ class Mount extends Widget_Base {
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .bdt-prime-slider .bdt-prime-slider-content .bdt-main-title .bdt-title-tag' => 'color: {{VALUE}};',
+				],
+				'condition' => [
+					'show_title' => ['yes'],
+				],
+			]
+		);
+
+		$this->add_control(
+			'mount_title_hover_color',
+			[
+				'label'     => esc_html__('Hover Color', 'bdthemes-prime-slider'),
+				'type'      => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .bdt-prime-slider .bdt-prime-slider-content .bdt-main-title .bdt-title-tag:hover' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .bdt-prime-slider .bdt-prime-slider-content .bdt-main-title .bdt-title-tag a:hover' => 'color: {{VALUE}};',
 				],
 				'condition' => [
 					'show_title' => ['yes'],
@@ -998,7 +1023,9 @@ class Mount extends Widget_Base {
 
 			<div <?php $this->print_render_attribute_string('social-icon'); ?>>
 
-				<h3><?php echo esc_html__('Follow Us', 'bdthemes-prime-slider') ?></h3>
+				<h3>
+					<?php echo $settings['follow_us_text'] ? $settings['follow_us_text'] : esc_html__('Follow Us', 'bdthemes-prime-slider') ?>
+				</h3>
 
 				<?php $this->render_social_link_repeater(); ?>
 

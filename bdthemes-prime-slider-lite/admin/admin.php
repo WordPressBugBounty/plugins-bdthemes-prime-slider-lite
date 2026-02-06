@@ -33,14 +33,14 @@ class Admin {
 
 		// register_activation_hook(BDTPS_CORE__FILE__, 'install_and_activate');
 		
-		add_action('admin_init', [ $this, 'notice_styles' ] );
+		add_action('admin_init', [ $this, 'biggopti_styles' ] );
 
 		add_filter( 'plugin_action_links_' . BDTPS_CORE_PBNAME, [ $this, 'plugin_action_links' ] );
 
 	}
 
-	function notice_styles(){
-		wp_enqueue_style('ps-admin-notice', BDTPS_CORE_ADMIN_URL . 'assets/css/ps-admin-notice.css', [], BDTPS_CORE_VER);
+	function biggopti_styles(){
+		wp_enqueue_style('ps-admin-biggopti', BDTPS_CORE_ADMIN_URL . 'assets/css/ps-admin-biggopti.css', [], BDTPS_CORE_VER);
 	}
 
 	function install_and_activate() {
@@ -53,10 +53,10 @@ class Admin {
 	/**
 	 * You can easily add white label branding for extended license or multi site license. Don't try for regular license otherwise your license will be invalid.
 	 * @return [type] [description]
-	 * Define BDTPS_CORE_WL for execute white label branding
+	 * Define BDTPS_WL for execute white label branding
 	 */
 	public function whitelabel() {
-		if ( defined( 'BDTPS_CORE_WL' ) ) {
+		if ( defined( 'BDTPS_WL' ) ) {
 
 			add_filter( 'gettext', [ $this, 'prime_slider_name_change' ], 20, 3 );
 
@@ -137,7 +137,7 @@ class Admin {
 		if ( true !== _is_ps_pro_activated() ) {
 			$row_meta = [
 				'settings' => '<a href="'.admin_url( 'admin.php?page=prime_slider_options' ) .'" aria-label="' . esc_attr(__('Go to settings', 'bdthemes-prime-slider')) . '" >' . __('Settings', 'bdthemes-prime-slider') . '</b></a>',
-				'gopro' => '<a href="https://primeslider.pro/pricing/?utm_source=PrimeSlider&utm_medium=PluginPage&utm_campaign=30%OffOnPrimeSlider&coupon=FREETOPRO" aria-label="' . esc_attr(__('Go get the pro version', 'bdthemes-prime-slider')) . '" target="_blank" title="When you purchase through this link you will get 30% discount!" class="ps-go-pro">' . __('Upgrade For 30% Off!', 'bdthemes-prime-slider') . '</a>',
+				'gopro' => '<a href="https://bdthemes.com/deals/?utm_source=WordPress_org&utm_medium=bfcm_cta&utm_campaign=prime_slider" aria-label="' . esc_attr(__('Go get the pro version', 'bdthemes-prime-slider')) . '" target="_blank" title="When you purchase through this link you will get 87% discount!" class="ps-go-pro">' . __('Black Friday Limited Offer Up To 87% Off!', 'bdthemes-prime-slider') . '</a>',
 			];
 		} else {
 			$row_meta = [

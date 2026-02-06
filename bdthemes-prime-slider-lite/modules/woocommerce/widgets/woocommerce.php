@@ -1526,7 +1526,7 @@ class Woocommerce extends Widget_Base {
 					'pagination_offset_toggle' => 'yes'
 				],
 				'selectors' => [
-					'{{WRAPPER}} .bdt-prime-slider .bdt-ps-dotnav' => 'margin-right: {{SIZE}}px;',
+					'{{WRAPPER}} .bdt-prime-slider .bdt-ps-dotnav' => 'margin-right: {{SIZE}}px !important;',
 				],
 			]
 		);
@@ -1546,7 +1546,7 @@ class Woocommerce extends Widget_Base {
 					'pagination_offset_toggle' => 'yes'
 				],
 				'selectors' => [
-					'{{WRAPPER}} .bdt-prime-slider .bdt-ps-dotnav' => 'margin-bottom: {{SIZE}}px;',
+					'{{WRAPPER}} .bdt-prime-slider .bdt-ps-dotnav' => 'margin-bottom: {{SIZE}}px !important;',
 				],
 			]
 		);
@@ -1819,13 +1819,13 @@ class Woocommerce extends Widget_Base {
 
 				<?php if ($settings['show_category']) : ?>
 					<div class="bdt-ps-category" data-reveal="reveal-active" data-bdt-slideshow-parallax="y: 50,0,-110; opacity: 1,1,0">
-						<?php echo wc_get_product_category_list(get_the_ID(), ' '); ?>
+						<?php echo wp_kses_post( wc_get_product_category_list( get_the_ID(), ' ' ) ); ?>
 					</div>
 				<?php endif; ?>
 
 				<?php if ($settings['show_title']) : ?>
 					<<?php echo esc_attr(Utils::get_valid_html_tag($settings['title_html_tag'])); ?> class="bdt-ps-title" data-reveal="reveal-active" <?php echo wp_kses_post($parallax_title); ?>>
-						<a href="<?php the_permalink(); ?>">
+						<a href="<?php the_permalink(); ?>" aria-label="<?php echo esc_attr( sprintf( __( 'View details for %s', 'bdthemes-prime-slider-lite' ), get_the_title() ) ); ?>">
 							<?php the_title(); ?>
 						</a>
 					</<?php echo esc_attr(Utils::get_valid_html_tag($settings['title_html_tag'])); ?>>

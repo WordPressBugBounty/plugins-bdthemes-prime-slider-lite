@@ -37,8 +37,12 @@ class Skin_Folio extends Elementor_Skin_Base {
 
 			<?php if ( $label ) : ?>
 				<h3>
-					<?php esc_html_e( 'Follow Us', 'bdthemes-prime-slider' ); ?>
-				</h3>
+          <?php
+          echo ! empty( $settings['follow_us_text'] )
+            ? esc_html( $settings['follow_us_text'] )
+            : esc_html__( 'Follow Us', 'bdthemes-prime-slider' );
+          ?>
+        </h3>
 			<?php endif; ?>
       <div class="bdt-social-icon-item-wrap bdt-flex bdt-flex-middle">
 
@@ -61,7 +65,7 @@ class Skin_Folio extends Elementor_Skin_Base {
 
 				?>
         
-          <a <?php $this->parent->print_render_attribute_string( $link_key ); ?> data-bdt-tooltip="<?php echo $tooltip; ?>">
+          <a <?php $this->parent->print_render_attribute_string( $link_key ); ?> data-bdt-tooltip="<?php echo esc_attr( $tooltip ); ?>">
             <span><span>
                 <?php Icons_Manager::render_icon( $link['social_icon'], [ 'aria-hidden' => 'true', 'class' => 'fa-fw' ] ); ?>
               </span></span>

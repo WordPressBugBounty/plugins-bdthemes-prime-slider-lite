@@ -459,6 +459,19 @@ class General extends Widget_Base {
 			]
 		);
 
+		$this->add_control(
+			'general_follow_us_text',
+			[
+				'label'     => esc_html__( 'Follow Us Text', 'bdthemes-prime-slider' ),
+				'type'      => Controls_Manager::TEXT,
+				'dynamic'   => [ 'active' => true ],
+				'default'   => esc_html__( 'Follow Us', 'bdthemes-prime-slider' ),
+				'condition' => [
+					'_skin!' => [ '', 'meteor' ],
+				],
+			]
+		);
+
 		$repeater = new Repeater();
 
 		$repeater->add_control(
@@ -466,6 +479,7 @@ class General extends Widget_Base {
 			[ 
 				'label'   => __( 'Title', 'bdthemes-prime-slider' ),
 				'type'    => Controls_Manager::TEXT,
+				'dynamic' => [ 'active' => true ],
 			]
 		);
 
@@ -474,6 +488,7 @@ class General extends Widget_Base {
             [ 
                 'label'   => __( 'Link', 'bdthemes-prime-slider' ),
                 'type'    => Controls_Manager::URL,
+				'dynamic' => [ 'active' => true ],
             ]
         );
 
@@ -2571,7 +2586,13 @@ class General extends Widget_Base {
 
 			<?php if ( $label ) : ?>
 				<?php if ( '' !== $settings['show_share_us'] ) : ?>
-					<h3><?php esc_html_e( 'Follow Us', 'bdthemes-prime-slider' ); ?></h3>
+					<h3>
+						<?php
+						echo $settings['general_follow_us_text']
+							? $settings['general_follow_us_text']
+							: esc_html__( 'Follow Us', 'bdthemes-prime-slider' );
+						?>
+					</h3>
 				<?php endif; ?>
 			<?php endif; ?>
 
@@ -2592,7 +2613,7 @@ class General extends Widget_Base {
                 }
                 
                 ?>
-                <a <?php $this->print_render_attribute_string($link_key); ?> data-bdt-tooltip="<?php echo $tooltip; ?>">
+                <a <?php $this->print_render_attribute_string($link_key); ?> data-bdt-tooltip="<?php echo esc_attr( $tooltip ); ?>">
                     <?php Icons_Manager::render_icon( $link['social_icon'], [ 'aria-hidden' => 'true', 'class' => 'fa-fw' ] ); ?>
                 </a>
             <?php endforeach; ?>

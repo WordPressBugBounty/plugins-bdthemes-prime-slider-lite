@@ -55,6 +55,27 @@ class ModuleService {
 				],
 
 				[ 
+					'name'         => 'cards-stack',
+					'label'        => esc_html__( 'Cards Stack', 'bdthemes-prime-slider' ),
+					'type'         => 'checkbox',
+					'default'      => "off",
+					'widget_type'  => 'pro',
+					'content_type' => 'static swiper new',
+					'demo_url'     => 'https://primeslider.pro/demo/cards-stack/',
+					'video_url'    => '',
+        ], 
+        [
+					'name'         => 'cloud',
+					'label'        => esc_html__( 'Cloud', 'bdthemes-prime-slider' ),
+					'type'         => 'checkbox',
+					'default'      => "off",
+					'widget_type'  => 'pro',
+					'content_type' => 'static swiper new',
+					'demo_url'     => 'https://primeslider.pro/demo/cloud/',
+					'video_url'    => '',
+				],
+
+				[ 
 					'name'         => 'coddle',
 					'label'        => esc_html__( 'Coddle', 'bdthemes-prime-slider' ),
 					'type'         => 'checkbox',
@@ -130,6 +151,17 @@ class ModuleService {
 					'content_type' => 'static swiper',
 					'demo_url'     => 'https://primeslider.pro/demo/escape/',
 					'video_url'    => 'https://youtu.be/WTqtALRdhDc',
+				],
+
+				[
+					'name'         => 'expo',
+					'label'        => esc_html__( 'Expo', 'bdthemes-prime-slider' ),
+					'type'         => 'checkbox',
+					'default'      => "off",
+					'widget_type'  => 'pro',
+					'content_type' => 'static swiper new',
+					'demo_url'     => 'https://primeslider.pro/demo/expo/',
+					'video_url'    => 'https://youtu.be/HxwdDoOsdMA',
 				],
 
 				[ 
@@ -494,6 +526,17 @@ class ModuleService {
 					'content_type' => 'post swiper',
 					'demo_url'     => 'https://primeslider.pro/demo/storker/',
 					'video_url'    => 'https://youtu.be/Lsg15pGppb0',
+				],
+
+				[ 
+					'name'         => 'super-flow',
+					'label'        => esc_html__( 'Super Flow', 'bdthemes-prime-slider' ),
+					'type'         => 'checkbox',
+					'default'      => "off",
+					'widget_type'  => 'pro',
+					'content_type' => 'static swiper new',
+					'demo_url'     => 'https://primeslider.pro/demo/super-flow/',
+					'video_url'    => '',
 				],
 
 				[ 

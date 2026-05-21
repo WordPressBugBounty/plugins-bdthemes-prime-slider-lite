@@ -5,11 +5,11 @@ Tags: hero slider, content slider, elementor addon, image slider, video slider
 Requires at least: 5.0.0
 Tested up to: 6.9.4
 Requires PHP: 7.4.0
-Stable tag: 4.3.0
+Stable tag: 4.3.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Elementor requires at least: 3.28
-Elementor tested up to: 4.0.7
+Elementor tested up to: 4.0.9
 
 Create responsive sliders using Elementor for hero sections, posts, logos, images, products, testimonials, and more.
 
@@ -273,6 +273,11 @@ https://youtu.be/WhhdCWtPHvA?si=28X_56Pg2sD_vRKe
 
 
 == Changelog ==
+
+= 4.3.1 [21st May 2026] =
+
+* Updated: Made compatible with WordPress version 7.0
+* Fixed: Pause on Hover issues in the pacific, elysium and rubix widgets
 
 = 4.3.0 [10th May 2026] =
 
@@ -619,7 +624,7 @@ Details [changelog here](https://feedback.bdthemes.com/announcements?category=ca
 
 ### Is Prime Slider compatible with managed WordPress hosting? 
 
-- Prime Slider has been tested on popular managed WordPress hosting environments, including Kinsta.
+- Prime Slider has been tested on popular managed WordPress hosting environments, including [Kinsta](https://kinsta.com/).
 
 
 == Screenshots ==

@@ -1,17 +1,17 @@
-=== Prime Slider Addons for Elementor ===
-Contributors: bdthemes, selimmw, mohammaadfarid, abutalib, maudud, muhammadasik, syedfarhanreza, arafatakashakku, shmusuf, shaikatazim, shamim496
+=== Prime Slider Addons for Elementor - Widgets, Templates & Elementor Addons ===
+Contributors: bdthemes, selimmw, mohammaadfarid, abutalib, maudud, muhammadasik, arafatakashakku, shmusuf, shaikatazim, shamim496
 Donate link: https://bdthemes.com/
 Tags: hero slider, content slider, elementor addon, image slider, video slider
 Requires at least: 5.0.0
-Tested up to: 7.0.1
+Tested up to: 7.0.2
 Requires PHP: 7.4.0
-Stable tag: 4.4.3
+Stable tag: 4.4.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Elementor requires at least: 4.0.0
-Elementor tested up to: 4.1.4
+Elementor tested up to: 4.2.0
 
-Create responsive sliders using Elementor for hero sections, posts, logos, images, products, testimonials, and more.
+Create responsive Elementor sliders for hero sections, posts, products, and more with powerful Elementor addons and ready-to-use Elementor templates.
 
 == Description ==
 
@@ -274,9 +274,20 @@ https://youtu.be/WhhdCWtPHvA?si=28X_56Pg2sD_vRKe
 
 == Changelog ==
 
+= 4.4.4 [26th July 2026] =
+
+* Added: Inactive Dot Color control added in the blog widget
+* Added: Tooltip text and background color controls in the blog widget
+* Added: Tooltip text and background color controls in the general and isolate widgets
+* Fixed: Title style tab now only shows when show title is enabled in the flogia widget
+* Fixed: Button text control now only shows when show btton is enabled in the blog widget
+* Fixed: PHP deprecation issue on the meteor skin in the general widget
+* Updated: Security improved
+
 = 4.4.3 [14th July 2026] =
 
 * Fixed: Output escaping issues in the mercury, mount, omatic and pacific widgets
+* Fixed: Output escaping issues in multiple widgets
 
 = 4.4.2 [29th June 2026] =
 

@@ -30,7 +30,7 @@ class Mercury extends Widget_Base {
     }
 
     public function get_title() {
-        return BDTPS . esc_html__( 'Mercury', 'bdthemes-prime-slider' );
+        return BDTPS . esc_html__( 'Mercury', 'bdthemes-prime-slider-lite' );
     }
 
     public function get_icon() {
@@ -46,20 +46,12 @@ class Mercury extends Widget_Base {
     }
 
     public function get_style_depends() {
-        return ['swiper', 'ps-mercury', 'prime-slider-font'];
+        return ['swiper', 'bdtps-mercury', 'prime-slider-font'];
     }
 
     public function get_script_depends() {
-        $reveal_effects = prime_slider_option('reveal-effects', 'prime_slider_other_settings', 'off');
-        if ('on' === $reveal_effects) {
-            if ( true === _is_ps_pro_activated() ) {
-                return ['swiper', 'shutters', 'gl', 'slicer', 'tinder', 'anime', 'revealFx', 'ps-mercury'];
-            } else {
-                return ['swiper', 'shutters', 'gl', 'slicer', 'tinder', 'ps-mercury'];
-            }
-        } else {
-            return ['swiper', 'shutters', 'gl', 'slicer', 'tinder', 'ps-mercury'];
-        }
+    	// Add-ons (e.g. Prime Slider Pro) append their own handles via this filter.
+    	return $this->addon_script_depends( [ 'swiper', 'bdtps-mercury' ] );
     }
 
     public function get_custom_help_url() {
@@ -71,18 +63,17 @@ class Mercury extends Widget_Base {
     }
 
 	protected function register_controls() {
-        $reveal_effects = prime_slider_option('reveal-effects', 'prime_slider_other_settings', 'off');
         $this->start_controls_section(
             'section_content_layout',
             [
-                'label' => esc_html__( 'Layout', 'bdthemes-prime-slider' ),
+                'label' => esc_html__( 'Layout', 'bdthemes-prime-slider-lite' ),
             ]
         );
 
         $this->add_responsive_control(
             'item_height',
             [
-                'label' => esc_html__('Image Height', 'bdthemes-prime-slider'),
+                'label' => esc_html__('Image Height', 'bdthemes-prime-slider-lite'),
                 'type'  => Controls_Manager::SLIDER,
                 'size_units' => [ 'px', 'vh' ],
                 'range' => [
@@ -104,7 +95,7 @@ class Mercury extends Widget_Base {
         $this->add_responsive_control(
             'content_max_width',
             [
-                'label' => esc_html__('Content Max Width', 'bdthemes-prime-slider') . BDTPS_CORE_PC,
+                'label' => esc_html__('Content Max Width', 'bdthemes-prime-slider-lite'),
                 'type'  => Controls_Manager::SLIDER,
                 'range' => [
                     'px' => [
@@ -115,37 +106,35 @@ class Mercury extends Widget_Base {
                 'selectors'   => [
                     '{{WRAPPER}} .bdt-mercury-content-slider .bdt-content' => 'max-width: {{SIZE}}{{UNIT}};',
                 ],
-                'classes'    => BDTPS_CORE_IS_PC
             ]
         );
 
         $this->add_control(
             'content_reverse',
             [
-                'label'   => esc_html__( 'Content Reverse', 'bdthemes-prime-slider' ) . BDTPS_CORE_PC,
+                'label'   => esc_html__( 'Content Reverse', 'bdthemes-prime-slider-lite' ),
                 'type'    => Controls_Manager::SWITCHER,
                 'prefix_class' => 'bdt-reverse--',
                 'render_type' => 'template',
-                'classes'    => BDTPS_CORE_IS_PC
             ]
         );
 
         $this->add_responsive_control(
             'content_alignment',
             [
-                'label'     => esc_html__( 'Alignment', 'bdthemes-prime-slider' ),
+                'label'     => esc_html__( 'Alignment', 'bdthemes-prime-slider-lite' ),
                 'type'      => Controls_Manager::CHOOSE,
                 'options'   => [
                     'left'   => [
-                        'title' => esc_html__( 'Left', 'bdthemes-prime-slider' ),
+                        'title' => esc_html__( 'Left', 'bdthemes-prime-slider-lite' ),
                         'icon'  => 'eicon-text-align-left',
                     ],
                     'center' => [
-                        'title' => esc_html__( 'Center', 'bdthemes-prime-slider' ),
+                        'title' => esc_html__( 'Center', 'bdthemes-prime-slider-lite' ),
                         'icon'  => 'eicon-text-align-center',
                     ],
                     'right'  => [
-                        'title' => esc_html__( 'Right', 'bdthemes-prime-slider' ),
+                        'title' => esc_html__( 'Right', 'bdthemes-prime-slider-lite' ),
                         'icon'  => 'eicon-text-align-right',
                     ],
                 ],
@@ -166,7 +155,7 @@ class Mercury extends Widget_Base {
         $this->start_controls_section(
             'section_post_query_builder',
             [
-                'label' => __( 'Query', 'bdthemes-prime-slider' ),
+                'label' => __( 'Query', 'bdthemes-prime-slider-lite' ),
                 'tab' => Controls_Manager::TAB_CONTENT,
             ]
         );
@@ -178,7 +167,7 @@ class Mercury extends Widget_Base {
         $this->start_controls_section(
             'section_additional_settings',
             [
-                'label' => esc_html__( 'Additional Options', 'bdthemes-prime-slider' ),
+                'label' => esc_html__( 'Additional Options', 'bdthemes-prime-slider-lite' ),
             ]
         );
 
@@ -217,7 +206,7 @@ class Mercury extends Widget_Base {
         $this->start_controls_section(
             'section_slider_settings',
             [
-                'label' => __('Slider Settings', 'bdthemes-prime-slider'),
+                'label' => __('Slider Settings', 'bdthemes-prime-slider-lite'),
             ]
         );
 
@@ -238,11 +227,10 @@ class Mercury extends Widget_Base {
         $this->add_control(
 			'loop',
 			[ 
-				'label'     => __( 'Loop', 'bdthemes-prime-slider' ),
+				'label'     => __( 'Loop', 'bdthemes-prime-slider-lite' ),
 				'type'      => Controls_Manager::SWITCHER,
 				'default'   => 'yes',
 				'condition' => [ 
-					'effect!' => [ 'slicer', 'tinder' ]
 				],
 			]
 		);
@@ -250,11 +238,10 @@ class Mercury extends Widget_Base {
 		$this->add_control(
 			'rewind',
 			[ 
-				'label'     => __( 'Rewind', 'bdthemes-prime-slider' ),
+				'label'     => __( 'Rewind', 'bdthemes-prime-slider-lite' ),
 				'type'      => Controls_Manager::SWITCHER,
 				'default'   => 'yes',
 				'condition' => [ 
-					'effect' => [ 'slicer', 'tinder' ]
 				],
 			]
 		);
@@ -262,7 +249,7 @@ class Mercury extends Widget_Base {
 		$this->add_control(
 			'mousewheel',
 			[ 
-				'label' => __( 'Mousewheel', 'bdthemes-prime-slider' ),
+				'label' => __( 'Mousewheel', 'bdthemes-prime-slider-lite' ),
 				'type'  => Controls_Manager::SWITCHER,
 			]
 		);
@@ -275,54 +262,16 @@ class Mercury extends Widget_Base {
         $this->add_control(
             'effect',
             [
-                'label'   => esc_html__( 'Swiper Effect', 'bdthemes-prime-slider' ) . BDTPS_CORE_PC,
+                'label'   => esc_html__( 'Swiper Effect', 'bdthemes-prime-slider-lite' ),
                 'type'    => Controls_Manager::SELECT,
                 'default' => 'slide',
                 'options' => [
-                    'slide' => esc_html__( 'Slide', 'bdthemes-prime-slider' ),
-                    'fade'  => esc_html__( 'Fade', 'bdthemes-prime-slider' ),
-                    'cube'  => esc_html__( 'Cube', 'bdthemes-prime-slider' ),
-                    'coverflow' => esc_html__( 'Coverflow', 'bdthemes-prime-slider' ),
-                    'flip'  => esc_html__( 'Flip', 'bdthemes-prime-slider' ),
-                    'shutters' => esc_html__( 'Shutters', 'bdthemes-prime-slider' ),
-                    'slicer' => esc_html__( 'Slicer', 'bdthemes-prime-slider' ),
-                    'tinder' => esc_html__( 'Tinder', 'bdthemes-prime-slider' ),
-                    'gl'    => esc_html__( 'GL', 'bdthemes-prime-slider' ),
-                    'creative' => esc_html__( 'Creative', 'bdthemes-prime-slider' ),
-                ],
-                'classes' => BDTPS_CORE_IS_PC
-            ]
-        );
-        //gl_shader control
-        $this->add_control(
-            'gl_shader',
-            [
-                'label'   => esc_html__( 'GL Shader', 'bdthemes-prime-slider' ),
-                'type'    => Controls_Manager::SELECT,
-                'default' => 'random',
-                'options' => [
-                    'random' => esc_html__( 'random', 'bdthemes-prime-slider'),
-                    'dots' => esc_html__( 'dots', 'bdthemes-prime-slider'),
-                    'flyeye' => esc_html__( 'flyeye', 'bdthemes-prime-slider'),
-                    'morph-x' => esc_html__( 'morph-x', 'bdthemes-prime-slider'),
-                    'morph-y' => esc_html__( 'morph-y', 'bdthemes-prime-slider'),
-                    'page-curl' => esc_html__( 'page-curl', 'bdthemes-prime-slider'),
-                    'peel-x' => esc_html__( 'peel-x', 'bdthemes-prime-slider'),
-                    'peel-y' => esc_html__( 'peel-y', 'bdthemes-prime-slider'),
-                    'polygons-fall' => esc_html__( 'polygons-fall', 'bdthemes-prime-slider'),
-                    'polygons-morph' => esc_html__( 'polygons-morph', 'bdthemes-prime-slider'),
-                    'polygons-wind' => esc_html__( 'polygons-wind', 'bdthemes-prime-slider'),
-                    'pixelize' => esc_html__( 'pixelize', 'bdthemes-prime-slider'),
-                    'ripple' => esc_html__( 'ripple', 'bdthemes-prime-slider'),
-                    'shutters' => esc_html__( 'shutters', 'bdthemes-prime-slider'),
-                    'slices' => esc_html__( 'slices', 'bdthemes-prime-slider'),
-                    'squares' => esc_html__( 'squares', 'bdthemes-prime-slider'),
-                    'stretch' => esc_html__( 'stretch', 'bdthemes-prime-slider'),
-                    'wave-x' => esc_html__( 'wave-x', 'bdthemes-prime-slider'),
-                    'wind' => esc_html__( 'wind', 'bdthemes-prime-slider'),
-                ],
-                'condition' => [
-                    'effect' => 'gl',
+                    'slide' => esc_html__( 'Slide', 'bdthemes-prime-slider-lite' ),
+                    'fade'  => esc_html__( 'Fade', 'bdthemes-prime-slider-lite' ),
+                    'cube'  => esc_html__( 'Cube', 'bdthemes-prime-slider-lite' ),
+                    'coverflow' => esc_html__( 'Coverflow', 'bdthemes-prime-slider-lite' ),
+                    'flip'  => esc_html__( 'Flip', 'bdthemes-prime-slider-lite' ),
+                    'creative' => esc_html__( 'Creative', 'bdthemes-prime-slider-lite' ),
                 ],
             ]
         );
@@ -331,15 +280,15 @@ class Mercury extends Widget_Base {
         $this->add_control(
             'creative_effect',
             [
-                'label'   => esc_html__( 'Creative Effect', 'bdthemes-prime-slider' ),
+                'label'   => esc_html__( 'Creative Effect', 'bdthemes-prime-slider-lite' ),
                 'type'    => Controls_Manager::SELECT,
                 'default' => 'creative-1',
                 'options' => [
-                    'creative-1' => esc_html__( 'Creative 1', 'bdthemes-prime-slider' ),
-                    'creative-2' => esc_html__( 'Creative 2', 'bdthemes-prime-slider' ),
-                    'creative-3' => esc_html__( 'Creative 3', 'bdthemes-prime-slider' ),
-                    'creative-4' => esc_html__( 'Creative 4', 'bdthemes-prime-slider' ),
-                    'creative-5' => esc_html__( 'Creative 5', 'bdthemes-prime-slider' ),
+                    'creative-1' => esc_html__( 'Creative 1', 'bdthemes-prime-slider-lite' ),
+                    'creative-2' => esc_html__( 'Creative 2', 'bdthemes-prime-slider-lite' ),
+                    'creative-3' => esc_html__( 'Creative 3', 'bdthemes-prime-slider-lite' ),
+                    'creative-4' => esc_html__( 'Creative 4', 'bdthemes-prime-slider-lite' ),
+                    'creative-5' => esc_html__( 'Creative 5', 'bdthemes-prime-slider-lite' ),
                 ],
                 'condition' => [
                     'effect' => 'creative',
@@ -350,7 +299,7 @@ class Mercury extends Widget_Base {
         $this->add_control(
             'show_navigation',
             [
-                'label' => __('Show Navigation', 'bdthemes-prime-slider'),
+                'label' => __('Show Navigation', 'bdthemes-prime-slider-lite'),
                 'type'  => Controls_Manager::SWITCHER,
                 'default' => 'yes',
                 'separator' => 'before'
@@ -360,17 +309,16 @@ class Mercury extends Widget_Base {
         $this->end_controls_section();
 
         /**
-         * Reveal Effects
+         * Extension point: add-ons (e.g. Prime Slider Pro) register their own
+         * controls here. This plugin registers none of its own.
          */
-        if ('on' === $reveal_effects) {
-            $this->register_reveal_effects();
-        }
+        $this->register_addon_controls();
 
         //style
         $this->start_controls_section(
             'section_style_layout',
             [
-                'label'     => __( 'Items', 'bdthemes-prime-slider' ),
+                'label'     => __( 'Items', 'bdthemes-prime-slider-lite' ),
                 'tab'       => Controls_Manager::TAB_STYLE,
             ]
         );
@@ -386,7 +334,7 @@ class Mercury extends Widget_Base {
         $this->add_responsive_control(
             'content_padding',
             [
-                'label' 	 => __('Content Padding', 'bdthemes-prime-slider'),
+                'label' 	 => __('Content Padding', 'bdthemes-prime-slider-lite'),
                 'type' 		 => Controls_Manager::DIMENSIONS,
                 'size_units' => ['px', 'em', '%'],
                 'selectors'  => [
@@ -400,7 +348,7 @@ class Mercury extends Widget_Base {
         $this->start_controls_section(
             'section_style_title',
             [
-                'label'     => esc_html__('Title', 'bdthemes-prime-slider'),
+                'label'     => esc_html__('Title', 'bdthemes-prime-slider-lite'),
                 'tab'       => Controls_Manager::TAB_STYLE,
                 'condition' => [
                     'show_title' => 'yes',
@@ -411,7 +359,7 @@ class Mercury extends Widget_Base {
         $this->add_control(
             'title_color',
             [
-                'label'     => esc_html__('Color', 'bdthemes-prime-slider'),
+                'label'     => esc_html__('Color', 'bdthemes-prime-slider-lite'),
                 'type'      => Controls_Manager::COLOR,
                 'selectors' => [
                     '{{WRAPPER}} .bdt-mercury-content-slider .bdt-title a' => 'color: {{VALUE}};',
@@ -422,7 +370,7 @@ class Mercury extends Widget_Base {
         $this->add_control(
             'title_hover_color',
             [
-                'label'     => esc_html__('Hover Color', 'bdthemes-prime-slider'),
+                'label'     => esc_html__('Hover Color', 'bdthemes-prime-slider-lite'),
                 'type'      => Controls_Manager::COLOR,
                 'selectors' => [
                     '{{WRAPPER}} .bdt-mercury-content-slider .bdt-title a:hover' => 'color: {{VALUE}};',
@@ -433,7 +381,7 @@ class Mercury extends Widget_Base {
         $this->add_responsive_control(
             'title_spacing',
             [
-                'label'      => esc_html__('Spacing', 'bdthemes-prime-slider'),
+                'label'      => esc_html__('Spacing', 'bdthemes-prime-slider-lite'),
                 'type'       => Controls_Manager::SLIDER,
                 'range' => [
                     'px' => [
@@ -451,7 +399,7 @@ class Mercury extends Widget_Base {
             Group_Control_Typography::get_type(),
             [
                 'name'      => 'title_typography',
-                'label'     => esc_html__('Typography', 'bdthemes-prime-slider'),
+                'label'     => esc_html__('Typography', 'bdthemes-prime-slider-lite'),
                 'selector'  => '{{WRAPPER}} .bdt-mercury-content-slider .bdt-title',
             ]
         );
@@ -460,7 +408,7 @@ class Mercury extends Widget_Base {
             Group_Control_Text_Shadow::get_type(),
             [
                 'name' => 'title_text_shadow',
-                'label' => __('Text Shadow', 'bdthemes-prime-slider'),
+                'label' => __('Text Shadow', 'bdthemes-prime-slider-lite'),
                 'selector' => '{{WRAPPER}} .bdt-mercury-content-slider .bdt-title a',
             ]
         );
@@ -471,7 +419,7 @@ class Mercury extends Widget_Base {
         $this->start_controls_section(
             'section_style_text',
             [
-                'label'     => esc_html__('Text', 'bdthemes-prime-slider'),
+                'label'     => esc_html__('Text', 'bdthemes-prime-slider-lite'),
                 'tab'       => Controls_Manager::TAB_STYLE,
                 'condition' => [
                     'show_excerpt' => 'yes',
@@ -482,7 +430,7 @@ class Mercury extends Widget_Base {
         $this->add_control(
             'text_color',
             [
-                'label'     => esc_html__('Color', 'bdthemes-prime-slider'),
+                'label'     => esc_html__('Color', 'bdthemes-prime-slider-lite'),
                 'type'      => Controls_Manager::COLOR,
                 'selectors' => [
                     '{{WRAPPER}} .bdt-mercury-content-slider .bdt-desc' => 'color: {{VALUE}};',
@@ -493,7 +441,7 @@ class Mercury extends Widget_Base {
         $this->add_responsive_control(
             'text_margin',
             [
-                'label' 	 => __('Margin', 'bdthemes-prime-slider'),
+                'label' 	 => __('Margin', 'bdthemes-prime-slider-lite'),
                 'type' 		 => Controls_Manager::DIMENSIONS,
                 'size_units' => ['px', 'em', '%'],
                 'selectors'  => [
@@ -505,7 +453,7 @@ class Mercury extends Widget_Base {
         $this->add_responsive_control(
             'text_width',
             [
-                'label' => esc_html__('Max Width', 'bdthemes-prime-slider'),
+                'label' => esc_html__('Max Width', 'bdthemes-prime-slider-lite'),
                 'type'  => Controls_Manager::SLIDER,
                 'range' => [
                     'px' => [
@@ -523,7 +471,7 @@ class Mercury extends Widget_Base {
             Group_Control_Typography::get_type(),
             [
                 'name'      => 'text_typography',
-                'label'     => esc_html__('Typography', 'bdthemes-prime-slider'),
+                'label'     => esc_html__('Typography', 'bdthemes-prime-slider-lite'),
                 'selector'  => '{{WRAPPER}} .bdt-mercury-content-slider .bdt-desc',
             ]
         );
@@ -533,7 +481,7 @@ class Mercury extends Widget_Base {
         $this->start_controls_section(
             'section_style_meta',
             [
-                'label'      => esc_html__( 'Meta', 'bdthemes-prime-slider' ),
+                'label'      => esc_html__( 'Meta', 'bdthemes-prime-slider-lite' ),
                 'tab'        => Controls_Manager::TAB_STYLE,
                 'conditions' => [
                     'relation' => 'or',
@@ -554,7 +502,7 @@ class Mercury extends Widget_Base {
         $this->add_control(
             'meta_color',
             [
-                'label'     => esc_html__( 'Color', 'bdthemes-prime-slider' ),
+                'label'     => esc_html__( 'Color', 'bdthemes-prime-slider-lite' ),
                 'type'      => Controls_Manager::COLOR,
                 'selectors' => [
                     '{{WRAPPER}} .bdt-mercury-content-slider .bdt-meta, {{WRAPPER}} .bdt-mercury-content-slider .bdt-author a' => 'color: {{VALUE}};',
@@ -565,7 +513,7 @@ class Mercury extends Widget_Base {
         $this->add_control(
             'meta_hover_color',
             [
-                'label'     => esc_html__( 'Author Hover Color', 'bdthemes-prime-slider' ),
+                'label'     => esc_html__( 'Author Hover Color', 'bdthemes-prime-slider-lite' ),
                 'type'      => Controls_Manager::COLOR,
                 'selectors' => [
                     '{{WRAPPER}} .bdt-mercury-content-slider .bdt-author a:hover' => 'color: {{VALUE}};',
@@ -576,7 +524,7 @@ class Mercury extends Widget_Base {
         $this->add_responsive_control(
             'meta_space_between',
             [
-                'label'     => esc_html__( 'Space Between', 'bdthemes-prime-slider' ),
+                'label'     => esc_html__( 'Space Between', 'bdthemes-prime-slider-lite' ),
                 'type'      => Controls_Manager::SLIDER,
                 'range'     => [
                     'px' => [
@@ -594,7 +542,7 @@ class Mercury extends Widget_Base {
             Group_Control_Typography::get_type(),
             [
                 'name'     => 'meta_typography',
-                'label'    => esc_html__( 'Typography', 'bdthemes-prime-slider' ),
+                'label'    => esc_html__( 'Typography', 'bdthemes-prime-slider-lite' ),
                 'selector' => '{{WRAPPER}} .bdt-mercury-content-slider .bdt-meta',
             ]
         );
@@ -605,7 +553,7 @@ class Mercury extends Widget_Base {
         $this->start_controls_section(
             'section_style_category',
             [
-                'label'     => esc_html__( 'Category', 'bdthemes-prime-slider' ),
+                'label'     => esc_html__( 'Category', 'bdthemes-prime-slider-lite' ),
                 'tab'       => Controls_Manager::TAB_STYLE,
                 'condition' => [
                     'show_category' => 'yes'
@@ -616,7 +564,7 @@ class Mercury extends Widget_Base {
         $this->add_responsive_control(
             'category_bottom_spacing',
             [
-                'label'     => esc_html__( 'Spacing', 'bdthemes-prime-slider' ),
+                'label'     => esc_html__( 'Spacing', 'bdthemes-prime-slider-lite' ),
                 'type'      => Controls_Manager::SLIDER,
                 'range'     => [
                     'px' => [
@@ -635,14 +583,14 @@ class Mercury extends Widget_Base {
         $this->start_controls_tab(
             'tab_category_normal',
             [
-                'label' => esc_html__( 'Normal', 'bdthemes-prime-slider' ),
+                'label' => esc_html__( 'Normal', 'bdthemes-prime-slider-lite' ),
             ]
         );
 
         $this->add_control(
             'category_color',
             [
-                'label'     => esc_html__( 'Color', 'bdthemes-prime-slider' ),
+                'label'     => esc_html__( 'Color', 'bdthemes-prime-slider-lite' ),
                 'type'      => Controls_Manager::COLOR,
                 'selectors' => [
                     '{{WRAPPER}} .bdt-mercury-content-slider .bdt-category a' => 'color: {{VALUE}};',
@@ -662,7 +610,7 @@ class Mercury extends Widget_Base {
             Group_Control_Border::get_type(),
             [
                 'name'           => 'category_border',
-                'label'          => __( 'Border', 'bdthemes-prime-slider' ),
+                'label'          => __( 'Border', 'bdthemes-prime-slider-lite' ),
                 'fields_options' => [
                     'border' => [
                         'default' => 'solid',
@@ -687,7 +635,7 @@ class Mercury extends Widget_Base {
         $this->add_responsive_control(
             'category_border_radius',
             [
-                'label'      => esc_html__( 'Border Radius', 'bdthemes-prime-slider' ),
+                'label'      => esc_html__( 'Border Radius', 'bdthemes-prime-slider-lite' ),
                 'type'       => Controls_Manager::DIMENSIONS,
                 'size_units' => [ 'px', '%' ],
                 'selectors'  => [
@@ -699,7 +647,7 @@ class Mercury extends Widget_Base {
         $this->add_responsive_control(
             'category_padding',
             [
-                'label'      => esc_html__( 'Padding', 'bdthemes-prime-slider' ),
+                'label'      => esc_html__( 'Padding', 'bdthemes-prime-slider-lite' ),
                 'type'       => Controls_Manager::DIMENSIONS,
                 'size_units' => [ 'px', 'em', '%' ],
                 'selectors'  => [
@@ -711,7 +659,7 @@ class Mercury extends Widget_Base {
         $this->add_responsive_control(
             'category_space_between',
             [
-                'label'     => esc_html__( 'Space Between', 'bdthemes-prime-slider' ),
+                'label'     => esc_html__( 'Space Between', 'bdthemes-prime-slider-lite' ),
                 'type'      => Controls_Manager::SLIDER,
                 'range'     => [
                     'px' => [
@@ -737,7 +685,7 @@ class Mercury extends Widget_Base {
             Group_Control_Typography::get_type(),
             [
                 'name'     => 'category_typography',
-                'label'    => esc_html__( 'Typography', 'bdthemes-prime-slider' ),
+                'label'    => esc_html__( 'Typography', 'bdthemes-prime-slider-lite' ),
                 'selector' => '{{WRAPPER}} .bdt-mercury-content-slider .bdt-category a',
             ]
         );
@@ -747,14 +695,14 @@ class Mercury extends Widget_Base {
         $this->start_controls_tab(
             'tab_category_hover',
             [
-                'label'     => esc_html__( 'Hover', 'bdthemes-prime-slider' ),
+                'label'     => esc_html__( 'Hover', 'bdthemes-prime-slider-lite' ),
             ]
         );
 
         $this->add_control(
             'category_hover_color',
             [
-                'label'     => esc_html__( 'Color', 'bdthemes-prime-slider' ),
+                'label'     => esc_html__( 'Color', 'bdthemes-prime-slider-lite' ),
                 'type'      => Controls_Manager::COLOR,
                 'selectors' => [
                     '{{WRAPPER}} .bdt-mercury-content-slider .bdt-category a:hover' => 'color: {{VALUE}};',
@@ -773,7 +721,7 @@ class Mercury extends Widget_Base {
         $this->add_control(
             'category_hover_border_color',
             [
-                'label'     => esc_html__( 'Border Color', 'bdthemes-prime-slider' ),
+                'label'     => esc_html__( 'Border Color', 'bdthemes-prime-slider-lite' ),
                 'type'      => Controls_Manager::COLOR,
                 'condition' => [
                     'category_border_border!' => '',
@@ -794,7 +742,7 @@ class Mercury extends Widget_Base {
         $this->start_controls_section(
             'section_style_navigation',
             [
-                'label'     => __( 'Navigation', 'bdthemes-prime-slider' ),
+                'label'     => __( 'Navigation', 'bdthemes-prime-slider-lite' ),
                 'tab'       => Controls_Manager::TAB_STYLE,
             ]
         );
@@ -804,14 +752,14 @@ class Mercury extends Widget_Base {
         $this->start_controls_tab(
             'tabs_nav_arrows_normal',
             [
-                'label'     => __( 'Normal', 'bdthemes-prime-slider' ),
+                'label'     => __( 'Normal', 'bdthemes-prime-slider-lite' ),
             ]
         );
 
         $this->add_control(
             'arrows_color',
             [
-                'label'     => __( 'Color', 'bdthemes-prime-slider' ),
+                'label'     => __( 'Color', 'bdthemes-prime-slider-lite' ),
                 'type'      => Controls_Manager::COLOR,
                 'selectors' => [
                     '{{WRAPPER}} .bdt-mercury-image-slider .bdt-navigation-wrap .bdt-button-next, {{WRAPPER}} .bdt-mercury-image-slider .bdt-navigation-wrap .bdt-button-prev' => 'color: {{VALUE}}',
@@ -838,7 +786,7 @@ class Mercury extends Widget_Base {
         $this->add_responsive_control(
             'arrows_border_radius',
             [
-                'label'      => esc_html__( 'Border Radius', 'bdthemes-prime-slider' ),
+                'label'      => esc_html__( 'Border Radius', 'bdthemes-prime-slider-lite' ),
                 'type'       => Controls_Manager::DIMENSIONS,
                 'size_units' => [ 'px', '%' ],
                 'selectors'  => [
@@ -850,7 +798,7 @@ class Mercury extends Widget_Base {
         $this->add_responsive_control(
             'arrows_size',
             [
-                'label'     => esc_html__( 'Size', 'bdthemes-prime-slider' ),
+                'label'     => esc_html__( 'Size', 'bdthemes-prime-slider-lite' ),
                 'type'      => Controls_Manager::SLIDER,
                 'selectors' => [
                     '{{WRAPPER}} .bdt-mercury-image-slider .bdt-navigation-wrap .bdt-button-next, {{WRAPPER}} .bdt-mercury-image-slider .bdt-navigation-wrap .bdt-button-prev' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}}; line-height: {{SIZE}}{{UNIT}};',
@@ -861,13 +809,12 @@ class Mercury extends Widget_Base {
         $this->add_responsive_control(
             'arrows_horizontal_offset',
             [
-                'label'     => esc_html__( 'Horizontal Offset', 'bdthemes-prime-slider' ) . BDTPS_CORE_PC,
+                'label'     => esc_html__( 'Horizontal Offset', 'bdthemes-prime-slider-lite' ),
                 'type'      => Controls_Manager::SLIDER,
                 'selectors' => [
                     '{{WRAPPER}} .bdt-mercury-image-slider .bdt-navigation-wrap .bdt-button-next' => 'right: {{SIZE}}px;',
                     '{{WRAPPER}} .bdt-mercury-image-slider .bdt-navigation-wrap .bdt-button-prev' => 'left: {{SIZE}}px;',
                 ],
-                'classes'    => BDTPS_CORE_IS_PC
             ]
         );
 
@@ -883,7 +830,7 @@ class Mercury extends Widget_Base {
             Group_Control_Typography::get_type(),
             [
                 'name'     => 'arrows_typography',
-                'label'    => esc_html__( 'Icon Typography', 'bdthemes-prime-slider' ),
+                'label'    => esc_html__( 'Icon Typography', 'bdthemes-prime-slider-lite' ),
                 'selector' => '{{WRAPPER}} .bdt-mercury-image-slider .bdt-navigation-wrap .bdt-button-next, {{WRAPPER}} .bdt-mercury-image-slider .bdt-navigation-wrap .bdt-button-prev',
             ]
         );
@@ -893,14 +840,14 @@ class Mercury extends Widget_Base {
         $this->start_controls_tab(
             'tabs_nav_arrows_hover',
             [
-                'label'     => __( 'Hover', 'bdthemes-prime-slider' ),
+                'label'     => __( 'Hover', 'bdthemes-prime-slider-lite' ),
             ]
         );
 
         $this->add_control(
             'arrows_hover_color',
             [
-                'label'     => __( 'Color', 'bdthemes-prime-slider' ),
+                'label'     => __( 'Color', 'bdthemes-prime-slider-lite' ),
                 'type'      => Controls_Manager::COLOR,
                 'selectors' => [
                     '{{WRAPPER}} .bdt-mercury-image-slider .bdt-navigation-wrap .bdt-button-next:hover, {{WRAPPER}} .bdt-mercury-image-slider .bdt-navigation-wrap .bdt-button-prev:hover' => 'color: {{VALUE}}',
@@ -919,7 +866,7 @@ class Mercury extends Widget_Base {
         $this->add_control(
             'arrows_hover_border_color',
             [
-                'label'     => esc_html__( 'Border Color', 'bdthemes-prime-slider' ),
+                'label'     => esc_html__( 'Border Color', 'bdthemes-prime-slider-lite' ),
                 'type'      => Controls_Manager::COLOR,
                 'condition' => [
                     'arrows_border_border!' => '',
@@ -1036,27 +983,10 @@ class Mercury extends Widget_Base {
         }
         ?>
         <div class="bdt-author">
-            <span class="bdt-by"><?php echo esc_html__( 'by', 'bdthemes-prime-slider' ) ?></span>
+            <span class="bdt-by"><?php echo esc_html__( 'by', 'bdthemes-prime-slider-lite' ) ?></span>
             <a class="bdt-author-name" href="<?php echo esc_url(get_author_posts_url( get_the_author_meta( 'ID' ) )); ?>">
                 <?php echo esc_html( get_the_author() ); ?>
             </a>
-        </div>
-        <?php
-    }
-
-    public function render_button() {
-        $settings   = $this->get_settings_for_display();
-        if ( ! $this->get_settings( 'show_button' ) ) {
-            return;
-        }
-        ?>
-        <div class="bdt-mercury-play-and-button-wrap">
-            <div class="bdt-mercury-button-wrap" data-swiper-parallax-y ="-50" data-swiper-parallax-duration="700">
-                <a href="<?php echo esc_url(get_permalink()); ?>">
-                    <span><?php echo esc_html( $settings['button_text'] ); ?></span>
-                    <i class="ps-wi-arrow-right"></i>
-                </a>
-            </div>
         </div>
         <?php
     }
@@ -1070,7 +1000,7 @@ class Mercury extends Widget_Base {
         /**
          * Reveal Effects
          */
-        $this->reveal_effects_attr('prime-slider-mercury');
+        $this->add_addon_render_attributes('prime-slider-mercury');
 
         $this->add_render_attribute( 'prime-slider-mercury', 'id', $id );
         $this->add_render_attribute( 'prime-slider-mercury', 'class', [ 'bdt-mercury-slider', 'elementor-swiper' ] );
@@ -1086,11 +1016,9 @@ class Mercury extends Widget_Base {
                             "speed"          => $settings["speed"]["size"],
                             "effect"        => isset($settings["effect"]) ? $settings["effect"] : 'slide',
                             "gl"             => [
-                                'shader' => isset($settings["gl_shader"]) ? $settings["gl_shader"] : 'random',
                             ],
                             "creativeEffect" => isset($settings["creative_effect"]) ? $settings["creative_effect"] : false,
                             "fadeEffect"     => ['crossFade' => true],
-                            "lazy"           => true,
                             "parallax"       => true,
                             "watchSlidesProgress" => true,
                             "slidesPerGroupAuto" => false,
@@ -1125,7 +1053,7 @@ class Mercury extends Widget_Base {
 				'class' => 'bdt-mercury-image-slider swiper',
 				'role' => 'region',
 				'aria-roledescription' => 'carousel',
-				'aria-label' => esc_attr( $this->get_title() . ' ' . esc_html__( 'Slider', 'bdthemes-prime-slider' ) ),
+				'aria-label' => esc_attr( $this->get_title() . ' ' . esc_html__( 'Slider', 'bdthemes-prime-slider-lite' ) ),
 				'dir' => $direction,
 			],
 		]);
@@ -1195,19 +1123,16 @@ class Mercury extends Widget_Base {
         $placeholder_image_src = Utils::get_placeholder_image_src();
         $image_src = wp_get_attachment_image_src(get_post_thumbnail_id($post_id), $size);
 
-        $gl = $settings['effect'] == 'gl' ? ' swiper-gl-image' : '';
-        $shutters = $settings['effect'] == 'shutters' ? ' swiper-shutters-image' : '';
-        $slicer = $settings['effect'] == 'slicer' ? ' swiper-slicer-image' : '';
 
         if (!$image_src) {
-            printf('<img src="%1$s" alt="%2$s" class="bdt-img %3$s swiper-lazy">', esc_url($placeholder_image_src), esc_html(get_the_title()), esc_attr($gl.$shutters.$slicer));
+            printf('<img src="%1$s" alt="%2$s" class="bdt-img swiper-lazy">', esc_url($placeholder_image_src), esc_html(get_the_title()));
         } else {
             print(wp_get_attachment_image(
                 get_post_thumbnail_id(),
                 $size,
                 false,
                 [
-                    'class' => 'bdt-img swiper-lazy' . esc_attr($gl.$shutters.$slicer),
+                    'class' => 'bdt-img swiper-lazy',
                     'alt' => esc_html(get_the_title())
                 ]
             ));

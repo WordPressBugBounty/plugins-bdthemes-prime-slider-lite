@@ -22,7 +22,7 @@ if (!defined('ABSPATH')) {
 class Dynamic_Select extends Base_Data_Control
 {
 
-	const TYPE = 'ps-dynamic-select';
+	const TYPE = 'bdtps-dynamic-select';
 
 	/**
 	 * Get control type.
@@ -106,13 +106,16 @@ class Dynamic_Select extends Base_Data_Control
 	 */
 	public function enqueue()
 	{
-		wp_enqueue_script('ps-dynamic-select', BDTPS_CORE_URL . 'traits/query-controls/assets/js/ps-dynamic-select.min.js', array('jquery'), BDTPS_CORE_VER);
+		wp_enqueue_script('bdtps-dynamic-select', BDTPS_CORE_URL . 'traits/query-controls/assets/js/ps-dynamic-select.min.js', array('jquery'), BDTPS_CORE_VER, true);
 
 		wp_localize_script(
-			'ps-dynamic-select',
-			'ps_dynamic_select',
+			'bdtps-dynamic-select',
+			'bdtps_dynamic_select',
 			[
-				'nonce' => wp_create_nonce('ps_dynamic_select'),
+				// The editor registers its control view under this exact name, so it
+				// is passed through rather than repeated as a literal in the script.
+				'control_type' => self::TYPE,
+				'nonce' => wp_create_nonce('bdtps_dynamic_select'),
 				'action' => 'prime_slider_dynamic_select_input_data',
 				'ajax_url' => admin_url('admin-ajax.php')
 			]

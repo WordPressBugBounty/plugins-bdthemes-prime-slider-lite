@@ -36,7 +36,7 @@ class Remote_Data_Handler {
     public static function init() {
         add_action('init', [__CLASS__, 'schedule_cron']);
         add_action(self::CRON_HOOK, [__CLASS__, 'cron_fetch_plugins']);
-        add_action('wp_ajax_ps_get_plugins', [__CLASS__, 'ajax_get_plugins']);
+        add_action('wp_ajax_bdtps_get_plugins', [__CLASS__, 'ajax_get_plugins']);
     }
 
     /**
@@ -56,14 +56,20 @@ class Remote_Data_Handler {
             return false;
         }
 
-        // Check if this is an AJAX request for our plugins
+        // Check if this is an AJAX request for our plugins. Read-only routing
+        // check (which action/page is being requested) — no form data is
+        // processed here, so nonce verification does not apply; the actual
+        // The bdtps_get_plugins handler verifies its own nonce + capability.
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- see comment above.
         if (wp_doing_ajax() && isset($_REQUEST['action'])) {
-            $action = sanitize_text_field($_REQUEST['action']);
-            if (in_array($action, ['ps_get_plugins'])) {
+            // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only routing check.
+            $action = sanitize_text_field(wp_unslash($_REQUEST['action']));
+            if (in_array($action, ['bdtps_get_plugins'])) {
                 return true;
             }
         }
 
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only check of the current admin page slug.
         $page = isset($_GET['page']) ? sanitize_text_field(wp_unslash($_GET['page'])) : '';
         return $page === 'prime_slider_options';
     }
@@ -147,13 +153,15 @@ class Remote_Data_Handler {
      * AJAX handler for getting plugins data
      */
     public static function ajax_get_plugins() {
+        // Respond with JSON on failure -- the caller parses the response as JSON,
+        // so wp_die() here surfaced only as a generic "unable to load" message.
         if (!current_user_can('manage_options')) {
-            wp_die(esc_html__('Security check failed.', 'bdthemes-prime-slider'));
+            wp_send_json_error(['message' => __('You do not have permission to do this.', 'bdthemes-prime-slider-lite')], 403);
         }
 
         // Verify nonce for security
         if (!check_ajax_referer('ps_get_plugins_nonce', 'nonce', false)) {
-            wp_die(esc_html__('Security check failed.', 'bdthemes-prime-slider'));
+            wp_send_json_error(['message' => __('Security check failed.', 'bdthemes-prime-slider-lite')], 403);
         }
 
         // Get cached data
@@ -172,7 +180,7 @@ class Remote_Data_Handler {
                 wp_send_json_success([
                     'plugins' => [],
                     'loading' => true,
-                    'message' => __('Loading plugin data...', 'bdthemes-prime-slider')
+                    'message' => __('Loading plugin data...', 'bdthemes-prime-slider-lite')
                 ]);
             }
         }
@@ -199,9 +207,9 @@ class Remote_Data_Handler {
             }
             
             $formatted_plugins[] = [
-                'name' => $data['name'] ?? '',
+                'name' => self::decode_api_text($data['name'] ?? ''),
                 'slug' => $data['slug'] ?? '',
-                'description' => $data['description'] ?? '',
+                'description' => self::decode_api_text($data['description'] ?? ''),
                 'logo' => $data['logo'] ?? '',
                 'rating' => $data['rating'] ?? 0,
                 'rating_percentage' => $data['rating_percentage'] ?? 0,
@@ -225,8 +233,32 @@ class Remote_Data_Handler {
         wp_send_json_success([
             'plugins' => $formatted_plugins,
             'loading' => false,
-            'message' => __('Plugin data loaded successfully.', 'bdthemes-prime-slider')
+            'message' => __('Plugin data loaded successfully.', 'bdthemes-prime-slider-lite')
         ]);
+    }
+
+    /**
+     * Decode display text coming from the WordPress.org plugins API.
+     *
+     * The API returns strings that are already HTML-encoded, e.g.
+     * "Element Pack Lite &#8211; Addons for Elementor". The renderer escapes
+     * again before injecting into the DOM, which turns the leading "&" into
+     * "&amp;" and prints the entity literally instead of an en dash. Decoding
+     * here means exactly one round of escaping happens, at output.
+     *
+     * Applied when building the response rather than when caching, so
+     * already-cached entries are corrected without waiting for the transient
+     * to expire.
+     *
+     * @param mixed $text Raw value from the API.
+     * @return string Plain text, still to be escaped at output.
+     */
+    private static function decode_api_text($text) {
+        if (!is_string($text) || '' === $text) {
+            return '';
+        }
+
+        return html_entity_decode($text, ENT_QUOTES | ENT_HTML5, 'UTF-8');
     }
 
     /**
@@ -297,33 +329,38 @@ class Remote_Data_Handler {
      */
     private static function format_last_updated($date_string) {
         if (empty($date_string)) {
-            return __('Unknown', 'bdthemes-prime-slider');
+            return __('Unknown', 'bdthemes-prime-slider-lite');
         }
         
         $date = strtotime($date_string);
         if (!$date) {
-            return __('Unknown', 'bdthemes-prime-slider');
+            return __('Unknown', 'bdthemes-prime-slider-lite');
         }
         
         $diff = current_time('timestamp') - $date;
         
         if ($diff < 60) {
-            return __('Just now', 'bdthemes-prime-slider');
+            return __('Just now', 'bdthemes-prime-slider-lite');
         } elseif ($diff < 3600) {
             $minutes = floor($diff / 60);
-            return sprintf(_n('%d minute ago', '%d minutes ago', $minutes, 'bdthemes-prime-slider'), $minutes);
+            /* translators: %d: number of minutes */
+            return sprintf(_n('%d minute ago', '%d minutes ago', $minutes, 'bdthemes-prime-slider-lite'), $minutes);
         } elseif ($diff < 86400) {
             $hours = floor($diff / 3600);
-            return sprintf(_n('%d hour ago', '%d hours ago', $hours, 'bdthemes-prime-slider'), $hours);
+            /* translators: %d: number of hours */
+            return sprintf(_n('%d hour ago', '%d hours ago', $hours, 'bdthemes-prime-slider-lite'), $hours);
         } elseif ($diff < 2592000) { // 30 days
             $days = floor($diff / 86400);
-            return sprintf(_n('%d day ago', '%d days ago', $days, 'bdthemes-prime-slider'), $days);
+            /* translators: %d: number of days */
+            return sprintf(_n('%d day ago', '%d days ago', $days, 'bdthemes-prime-slider-lite'), $days);
         } elseif ($diff < 31536000) { // 1 year
             $months = floor($diff / 2592000);
-            return sprintf(_n('%d month ago', '%d months ago', $months, 'bdthemes-prime-slider'), $months);
+            /* translators: %d: number of months */
+            return sprintf(_n('%d month ago', '%d months ago', $months, 'bdthemes-prime-slider-lite'), $months);
         } else {
             $years = floor($diff / 31536000);
-            return sprintf(_n('%d year ago', '%d years ago', $years, 'bdthemes-prime-slider'), $years);
+            /* translators: %d: number of years */
+            return sprintf(_n('%d year ago', '%d years ago', $years, 'bdthemes-prime-slider-lite'), $years);
         }
     }
 
@@ -569,8 +606,8 @@ if (!function_exists('ps_get_remote_plugins')) {
     }
 }
 
-if (!function_exists('ps_schedule_remote_fetch')) {
-    function ps_schedule_remote_fetch() {
+if (!function_exists('bdtps_schedule_remote_fetch')) {
+    function bdtps_schedule_remote_fetch() {
         return \PrimeSlider\SetupWizard\Remote_Data_Handler::schedule_remote_fetch();
     }
 }

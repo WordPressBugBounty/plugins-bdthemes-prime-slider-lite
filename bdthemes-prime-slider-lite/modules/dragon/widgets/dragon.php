@@ -23,7 +23,7 @@ class dragon extends Widget_Base {
 	}
 
 	public function get_title() {
-		return BDTPS . esc_html__('Dragon', 'bdthemes-prime-slider');
+		return BDTPS . esc_html__('Dragon', 'bdthemes-prime-slider-lite');
 	}
 
 	public function get_icon() {
@@ -39,24 +39,12 @@ class dragon extends Widget_Base {
 	}
 
 	public function get_style_depends() {
-		return ['ps-dragon'];
+		return ['bdtps-dragon'];
 	}
 
 	public function get_script_depends() {
-		$reveal_effects = prime_slider_option('reveal-effects', 'prime_slider_other_settings', 'off');
-		if ('on' === $reveal_effects) {
-			if ( true === _is_ps_pro_activated() ) {
-				return ['gsap', 'split-text', 'anime', 'revealFx', 'ps-animation-helper'];
-			} else {
-				return [];
-			}
-		} else {
-			if ( true === _is_ps_pro_activated() ) {
-				return ['gsap', 'split-text', 'ps-animation-helper'];
-			} else {
-				return [];
-			}
-		}
+		// Add-ons (e.g. Prime Slider Pro) append their own handles via this filter.
+		return $this->addon_script_depends( [] );
 	}
 
 	public function get_custom_help_url() {
@@ -71,12 +59,11 @@ class dragon extends Widget_Base {
 	}
 
 	protected function register_controls() {
-		$reveal_effects = prime_slider_option('reveal-effects', 'prime_slider_other_settings', 'off');
 
 		$this->start_controls_section(
 			'section_content_sliders',
 			[
-				'label' => esc_html__('Sliders', 'bdthemes-prime-slider'),
+				'label' => esc_html__('Sliders', 'bdthemes-prime-slider-lite'),
 			]
 		);
 
@@ -87,7 +74,7 @@ class dragon extends Widget_Base {
 		$repeater->start_controls_tab(
 			'tab_slider_content',
 			[
-				'label' => esc_html__('Content', 'bdthemes-prime-slider'),
+				'label' => esc_html__('Content', 'bdthemes-prime-slider-lite'),
 			]
 		);
 
@@ -116,7 +103,7 @@ class dragon extends Widget_Base {
 		$repeater->start_controls_tab(
 			'tab_slider_Optional',
 			[
-				'label' => esc_html__('Optional', 'bdthemes-prime-slider'),
+				'label' => esc_html__('Optional', 'bdthemes-prime-slider-lite'),
 			]
 		);
 
@@ -136,23 +123,23 @@ class dragon extends Widget_Base {
 		$this->add_control(
 			'slides',
 			[
-				'label'   => esc_html__('Items', 'bdthemes-prime-slider'),
+				'label'   => esc_html__('Items', 'bdthemes-prime-slider-lite'),
 				'type'    => Controls_Manager::REPEATER,
 				'fields'  => $repeater->get_controls(),
 				'default' => [
 					[
-						'sub_title' => esc_html__('Addons For Elementor', 'bdthemes-prime-slider'),
-						'title' => esc_html__('Prime Slider', 'bdthemes-prime-slider'),
+						'sub_title' => esc_html__('Addons For Elementor', 'bdthemes-prime-slider-lite'),
+						'title' => esc_html__('Prime Slider', 'bdthemes-prime-slider-lite'),
 						'image' => ['url' => BDTPS_CORE_ASSETS_URL . 'images/gallery/img-1.svg']
 					],
 					[
-						'sub_title' => esc_html__('Addons For Elementor', 'bdthemes-prime-slider'),
-						'title' => esc_html__('Creative Layout', 'bdthemes-prime-slider'),
+						'sub_title' => esc_html__('Addons For Elementor', 'bdthemes-prime-slider-lite'),
+						'title' => esc_html__('Creative Layout', 'bdthemes-prime-slider-lite'),
 						'image' => ['url' => BDTPS_CORE_ASSETS_URL . 'images/gallery/img-2.svg']
 					],
 					[
-						'sub_title' => esc_html__('Discover your Talents', 'bdthemes-prime-slider'),
-						'title' => esc_html__('On Elementor', 'bdthemes-prime-slider'),
+						'sub_title' => esc_html__('Discover your Talents', 'bdthemes-prime-slider-lite'),
+						'title' => esc_html__('On Elementor', 'bdthemes-prime-slider-lite'),
 						'image' => ['url' => BDTPS_CORE_ASSETS_URL . 'images/gallery/img-3.svg']
 					],
 				],
@@ -165,7 +152,7 @@ class dragon extends Widget_Base {
 		$this->start_controls_section(
 			'section_content_layout',
 			[
-				'label' => esc_html__('Additional Settings', 'bdthemes-prime-slider'),
+				'label' => esc_html__('Additional Settings', 'bdthemes-prime-slider-lite'),
 			]
 		);
 
@@ -207,11 +194,10 @@ class dragon extends Widget_Base {
 		$this->add_control(
 			'show_blur_effect',
 			[
-				'label'   => esc_html__('Show Blur Effect', 'bdthemes-prime-slider') . BDTPS_CORE_PC,
+				'label'   => esc_html__('Show Blur Effect', 'bdthemes-prime-slider-lite'),
 				'type'    => Controls_Manager::SWITCHER,
 				'default' => 'yes',
 				'prefix_class' => 'bdt-ps-blur-effect--',
-				'classes'   => BDTPS_CORE_IS_PC
 			]
 		);
 
@@ -233,7 +219,7 @@ class dragon extends Widget_Base {
 		$this->start_controls_section(
 			'section_content_animation',
 			[
-				'label' => esc_html__('Slider Settings', 'bdthemes-prime-slider'),
+				'label' => esc_html__('Slider Settings', 'bdthemes-prime-slider-lite'),
 			]
 		);
 
@@ -245,64 +231,16 @@ class dragon extends Widget_Base {
 		$this->end_controls_section();
 
 		/**
-         * Advanced Animation
-         */
-        $this->start_controls_section(
-            'section_advanced_animation',
-            [
-                'label'     => esc_html__('Advanced Animation', 'bdthemes-prime-slider') . BDTPS_CORE_PC,
-                'tab'       => Controls_Manager::TAB_CONTENT,
-            ]
-        );
-
-        $this->add_control(
-            'animation_status',
-            [
-                'label'   => esc_html__('Advanced Animation', 'bdthemes-prime-slider'),
-                'type'    => Controls_Manager::SWITCHER,
-                'classes'   => BDTPS_CORE_IS_PC
-            ]
-        );
-
-		if ( true === _is_ps_pro_activated() ) {
-
-			$this->add_control(
-				'animation_of',
-				[
-					'label'	   => __('Animation Of', 'bdthemes-prime-slider'),
-					'type' 	   => Controls_Manager::SELECT2,
-					'multiple' => true,
-					'options'  => [
-						'.bdt-sub-title-inner' => __('Sub Title', 'bdthemes-prime-slider'),
-						'.bdt-title-tag' => __('Title', 'bdthemes-prime-slider'),
-						'.bdt-slider-excerpt' => __('Excerpt', 'bdthemes-prime-slider'),
-					],
-					'default'  => ['.bdt-title-tag'],
-					'condition' => [
-						'animation_status' => 'yes'
-					]
-				]
-			);
-
-			/**
-			 * Advanced Animation
-			 */
-			$this->register_advanced_animation_controls();
-		}
-
-		$this->end_controls_section();
-		/**
-		 * Reveal Effects
+		 * Extension point: add-ons (e.g. Prime Slider Pro) register their own
+		 * controls here. This plugin registers none of its own.
 		 */
-		if ('on' === $reveal_effects) {
-			$this->register_reveal_effects();
-		}
+		$this->register_addon_controls();
 
 		//Style Start
 		$this->start_controls_section(
 			'section_style_sliders',
 			[
-				'label'     => esc_html__('Sliders', 'bdthemes-prime-slider'),
+				'label'     => esc_html__('Sliders', 'bdthemes-prime-slider-lite'),
 				'tab'       => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -310,23 +248,22 @@ class dragon extends Widget_Base {
 		$this->add_control(
 			'overlay',
 			[
-				'label'   => esc_html__('Overlay', 'bdthemes-prime-slider') . BDTPS_CORE_PC,
+				'label'   => esc_html__('Overlay', 'bdthemes-prime-slider-lite'),
 				'type'    => Controls_Manager::SELECT,
 				'default' => 'none',
 				'options' => [
-					'none'       => esc_html__('None', 'bdthemes-prime-slider'),
-					'background' => esc_html__('Background', 'bdthemes-prime-slider'),
-					'blend'      => esc_html__('Blend', 'bdthemes-prime-slider'),
+					'none'       => esc_html__('None', 'bdthemes-prime-slider-lite'),
+					'background' => esc_html__('Background', 'bdthemes-prime-slider-lite'),
+					'blend'      => esc_html__('Blend', 'bdthemes-prime-slider-lite'),
 				],
 				'separator' => 'before',
-				'classes'   => BDTPS_CORE_IS_PC
 			]
 		);
 
 		$this->add_control(
 			'overlay_color',
 			[
-				'label'     => esc_html__('Overlay Color', 'bdthemes-prime-slider'),
+				'label'     => esc_html__('Overlay Color', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::COLOR,
 				'condition' => [
 					'overlay' => ['background', 'blend'],
@@ -340,7 +277,7 @@ class dragon extends Widget_Base {
 		$this->add_control(
 			'blend_type',
 			[
-				'label'     => esc_html__('Blend Type', 'bdthemes-prime-slider'),
+				'label'     => esc_html__('Blend Type', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::SELECT,
 				'default'   => 'multiply',
 				'options'   => prime_slider_blend_options(),
@@ -362,7 +299,7 @@ class dragon extends Widget_Base {
 		$this->add_responsive_control(
 			'button_padding',
 			[
-				'label'      => esc_html__( 'Padding', 'bdthemes-prime-slider' ),
+				'label'      => esc_html__( 'Padding', 'bdthemes-prime-slider-lite' ),
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', 'em', '%' ],
 				'selectors'  => [
@@ -374,7 +311,7 @@ class dragon extends Widget_Base {
 		$this->add_responsive_control(
 			'content_margin',
 			[
-				'label'      => esc_html__( 'Margin', 'bdthemes-prime-slider' ),
+				'label'      => esc_html__( 'Margin', 'bdthemes-prime-slider-lite' ),
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', 'em', '%' ],
 				'selectors'  => [
@@ -386,7 +323,7 @@ class dragon extends Widget_Base {
 		$this->add_responsive_control(
 			'title_width',
 			[
-				'label' => esc_html__('Content Width', 'bdthemes-prime-slider'),
+				'label' => esc_html__('Content Width', 'bdthemes-prime-slider-lite'),
 				'type'  => Controls_Manager::SLIDER,
 				'range' => [
 					'px' => [
@@ -406,7 +343,7 @@ class dragon extends Widget_Base {
 		$this->start_controls_tab(
 			'slider_title_style',
 			[
-				'label' 	=> __('Title', 'bdthemes-prime-slider'),
+				'label' 	=> __('Title', 'bdthemes-prime-slider-lite'),
 				'condition' => [
 					'show_title' => ['yes'],
 				],
@@ -416,7 +353,7 @@ class dragon extends Widget_Base {
 		$this->add_control(
 			'title_color',
 			[
-				'label'     => esc_html__('Color', 'bdthemes-prime-slider'),
+				'label'     => esc_html__('Color', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .bdt-prime-slider .bdt-prime-slider-content .bdt-main-title .bdt-title-tag, {{WRAPPER}} .bdt-prime-slider .bdt-prime-slider-content .bdt-main-title .bdt-title-tag a' => 'color: {{VALUE}};',
@@ -430,7 +367,7 @@ class dragon extends Widget_Base {
 		$this->add_control(
 			'first_word_title_color',
 			[
-				'label'     => esc_html__( 'First Word Color', 'bdthemes-prime-slider' ),
+				'label'     => esc_html__( 'First Word Color', 'bdthemes-prime-slider-lite' ),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .bdt-prime-slider .bdt-prime-slider-content .bdt-main-title .frist-word' => 'color: {{VALUE}}; -webkit-text-stroke-color: {{VALUE}};',
@@ -442,7 +379,7 @@ class dragon extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name'     => 'title_typography',
-				'label'    => esc_html__('Typography', 'bdthemes-prime-slider'),
+				'label'    => esc_html__('Typography', 'bdthemes-prime-slider-lite'),
 				'selector' => '{{WRAPPER}} .bdt-prime-slider .bdt-prime-slider-content .bdt-main-title .bdt-title-tag',
 				'condition' => [
 					'show_title' => ['yes'],
@@ -454,7 +391,7 @@ class dragon extends Widget_Base {
             Group_Control_Text_Stroke::get_type(),
             [
                 'name' => 'title_text_stroke',
-				'label'    => esc_html__('Text Stroke', 'bdthemes-prime-slider'),
+				'label'    => esc_html__('Text Stroke', 'bdthemes-prime-slider-lite'),
                 'selector' => '{{WRAPPER}} .bdt-prime-slider .bdt-prime-slider-content .bdt-main-title .bdt-title-tag',
             ]
         );
@@ -462,7 +399,7 @@ class dragon extends Widget_Base {
 		$this->add_responsive_control(
 			'prime_slider_title_spacing',
 			[
-				'label' => esc_html__('Title Spacing', 'bdthemes-prime-slider'),
+				'label' => esc_html__('Title Spacing', 'bdthemes-prime-slider-lite'),
 				'type'  => Controls_Manager::SLIDER,
 				'range' => [
 					'px' => [
@@ -484,7 +421,7 @@ class dragon extends Widget_Base {
 		$this->start_controls_tab(
 			'slider_sub_title_style',
 			[
-				'label' 	=> __('Sub Title', 'bdthemes-prime-slider'),
+				'label' 	=> __('Sub Title', 'bdthemes-prime-slider-lite'),
 				'condition' => [
 					'show_sub_title' => ['yes'],
 				],
@@ -494,7 +431,7 @@ class dragon extends Widget_Base {
 		$this->add_control(
 			'sub_title_color',
 			[
-				'label'     => esc_html__('Color', 'bdthemes-prime-slider'),
+				'label'     => esc_html__('Color', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .bdt-prime-slider .bdt-prime-slider-content .bdt-sub-title-inner' => 'color: {{VALUE}};',
@@ -506,7 +443,7 @@ class dragon extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name'     => 'sub_title_typography',
-				'label'    => esc_html__('Typography', 'bdthemes-prime-slider'),
+				'label'    => esc_html__('Typography', 'bdthemes-prime-slider-lite'),
 				'selector' => '{{WRAPPER}} .bdt-prime-slider .bdt-prime-slider-content .bdt-sub-title-inner',
 			]
 		);
@@ -514,7 +451,7 @@ class dragon extends Widget_Base {
 		$this->add_responsive_control(
 			'prime_slider_sub_title_spacing',
 			[
-				'label' => esc_html__('Sub Title Spacing', 'bdthemes-prime-slider'),
+				'label' => esc_html__('Sub Title Spacing', 'bdthemes-prime-slider-lite'),
 				'type'  => Controls_Manager::SLIDER,
 				'range' => [
 					'px' => [
@@ -536,7 +473,7 @@ class dragon extends Widget_Base {
 		$this->start_controls_tab(
 			'slider_style_excerpt',
 			[
-				'label'     => esc_html__('Excerpt', 'bdthemes-prime-slider'),
+				'label'     => esc_html__('Excerpt', 'bdthemes-prime-slider-lite'),
 				'condition' => [
 					'show_excerpt' => ['yes'],
 				],
@@ -546,7 +483,7 @@ class dragon extends Widget_Base {
 		$this->add_control(
 			'excerpt_color',
 			[
-				'label'     => esc_html__('Color', 'bdthemes-prime-slider'),
+				'label'     => esc_html__('Color', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .bdt-prime-slider .bdt-slider-excerpt' => 'color: {{VALUE}};',
@@ -558,7 +495,7 @@ class dragon extends Widget_Base {
 			$this->add_control(
 				'excerpt_background_color',
 				[
-					'label'     => esc_html__('Background', 'bdthemes-prime-slider'),
+					'label'     => esc_html__('Background', 'bdthemes-prime-slider-lite'),
 					'type'      => Controls_Manager::COLOR,
 					'selectors' => [
 						'{{WRAPPER}} .bdt-prime-slider-skin-slice .bdt-slide-text-btn-area' => 'background: {{VALUE}};',
@@ -572,7 +509,7 @@ class dragon extends Widget_Base {
 			$this->add_control(
 				'excerpt_background_color',
 				[
-					'label'     => esc_html__('Background', 'bdthemes-prime-slider'),
+					'label'     => esc_html__('Background', 'bdthemes-prime-slider-lite'),
 					'type'      => Controls_Manager::COLOR,
 					'selectors' => [
 						'{{WRAPPER}} .bdt-prime-slider-skin-slice .bdt-slide-text-btn-area' => 'background: {{VALUE}};',
@@ -588,7 +525,7 @@ class dragon extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name'     => 'excerpt_typography',
-				'label'    => esc_html__('Typography', 'bdthemes-prime-slider'),
+				'label'    => esc_html__('Typography', 'bdthemes-prime-slider-lite'),
 				'selector' => '{{WRAPPER}} .bdt-prime-slider .bdt-slider-excerpt',
 			]
 		);
@@ -596,7 +533,7 @@ class dragon extends Widget_Base {
 		$this->add_responsive_control(
 			'excerpt_width',
 			[
-				'label' 	 	 => __('Width (px)', 'bdthemes-prime-slider'),
+				'label' 	 	 => __('Width (px)', 'bdthemes-prime-slider-lite'),
 				'type' 			 => Controls_Manager::SLIDER,
 				'default' 		 => [
 					'unit' => 'px',
@@ -623,7 +560,7 @@ class dragon extends Widget_Base {
 		$this->add_responsive_control(
 			'prime_slider_excerpt_spacing',
 			[
-				'label' 	=> esc_html__('Excerpt Spacing', 'bdthemes-prime-slider'),
+				'label' 	=> esc_html__('Excerpt Spacing', 'bdthemes-prime-slider-lite'),
 				'type'  	=> Controls_Manager::SLIDER,
 				'range' 	=> [
 					'px' 		=> [
@@ -645,7 +582,7 @@ class dragon extends Widget_Base {
 		$this->start_controls_tab(
 			'slider_button_style',
 			[
-				'label' 	=> __('Button', 'bdthemes-prime-slider'),
+				'label' 	=> __('Button', 'bdthemes-prime-slider-lite'),
 				'condition' => [
 					'show_button_text' => 'yes',
 				],
@@ -655,7 +592,7 @@ class dragon extends Widget_Base {
 		$this->add_control(
 			'slider_button_style_normal',
 			[
-				'label' 	=> esc_html__('Normal', 'bdthemes-prime-slider'),
+				'label' 	=> esc_html__('Normal', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::HEADING,
 				'separator' => 'before',
 			]
@@ -664,7 +601,7 @@ class dragon extends Widget_Base {
 		$this->add_control(
 			'slide_button_text_color',
 			[
-				'label' 	=> __('Text Color', 'bdthemes-prime-slider'),
+				'label' 	=> __('Text Color', 'bdthemes-prime-slider-lite'),
 				'type' 		=> Controls_Manager::COLOR,
 				'default' 	=> '',
 				'selectors' => [
@@ -677,7 +614,7 @@ class dragon extends Widget_Base {
 		$this->add_control(
 			'slide_button_icon_color',
 			[
-				'label' 	=> __('Icon Color', 'bdthemes-prime-slider'),
+				'label' 	=> __('Icon Color', 'bdthemes-prime-slider-lite'),
 				'type' 	 	=> Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .bdt-prime-slider-dragon .bdt-ps-dragon-button .bdt-ps-button-arrow, {{WRAPPER}} .bdt-prime-slider-dragon .bdt-ps-dragon-button .bdt-ps-button-small-circle' => 'background-color: {{VALUE}};',
@@ -689,7 +626,7 @@ class dragon extends Widget_Base {
 		$this->add_control(
 			'slide_button_circle_color',
 			[
-				'label' 	=> __('Circle Color', 'bdthemes-prime-slider'),
+				'label' 	=> __('Circle Color', 'bdthemes-prime-slider-lite'),
 				'type' 	 	=> Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .bdt-prime-slider-dragon .bdt-ps-dragon-button .bdt-ps-button-border-circle' => 'border-color: {{VALUE}};',
@@ -708,7 +645,7 @@ class dragon extends Widget_Base {
 		$this->add_control(
 			'slider_button_style_hover',
 			[
-				'label' 	=> esc_html__('Hover', 'bdthemes-prime-slider'),
+				'label' 	=> esc_html__('Hover', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::HEADING,
 				'separator' => 'before',
 			]
@@ -717,7 +654,7 @@ class dragon extends Widget_Base {
 		$this->add_control(
 			'slide_button_hover_text_color',
 			[
-				'label' 	=> __('Text Color', 'bdthemes-prime-slider'),
+				'label' 	=> __('Text Color', 'bdthemes-prime-slider-lite'),
 				'type' 		=> Controls_Manager::COLOR,
 				'default' 	=> '',
 				'selectors' => [
@@ -730,7 +667,7 @@ class dragon extends Widget_Base {
 		$this->add_control(
 			'slide_button_hover_circle_color',
 			[
-				'label' 	=> __('Circle Color', 'bdthemes-prime-slider'),
+				'label' 	=> __('Circle Color', 'bdthemes-prime-slider-lite'),
 				'type' 	 	=> Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .bdt-prime-slider-dragon .bdt-ps-dragon-button:hover .bdt-ps-button-border-circle' => 'border-color: {{VALUE}};',
@@ -747,7 +684,7 @@ class dragon extends Widget_Base {
 		$this->start_controls_section(
 			'section_style_social_icon',
 			[
-				'label'     => esc_html__('Social Link', 'bdthemes-prime-slider'),
+				'label'     => esc_html__('Social Link', 'bdthemes-prime-slider-lite'),
 				'tab'       => Controls_Manager::TAB_STYLE,
 				'condition' => [
 					'show_social_icon' => 'yes',
@@ -760,14 +697,14 @@ class dragon extends Widget_Base {
 		$this->start_controls_tab(
 			'tab_social_icon_normal',
 			[
-				'label' => esc_html__('Normal', 'bdthemes-prime-slider'),
+				'label' => esc_html__('Normal', 'bdthemes-prime-slider-lite'),
 			]
 		);
 
 		$this->add_control(
 			'social_icon_color',
 			[
-				'label'     => esc_html__('Text Color', 'bdthemes-prime-slider'),
+				'label'     => esc_html__('Text Color', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .bdt-prime-slider-dragon .bdt-prime-slider-social-icon a' => 'color: {{VALUE}};',
@@ -778,7 +715,7 @@ class dragon extends Widget_Base {
 		$this->add_control(
 			'social_icon_cirlce_color',
 			[
-				'label'     => esc_html__('Circle Color', 'bdthemes-prime-slider'),
+				'label'     => esc_html__('Circle Color', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .bdt-prime-slider-dragon .bdt-prime-slider-social-icon a:before' => 'border-color: {{VALUE}};',
@@ -789,7 +726,7 @@ class dragon extends Widget_Base {
 		$this->add_control(
 			'social_icon_spacing',
 			[
-				'label' => esc_html__('Spacing', 'bdthemes-prime-slider'),
+				'label' => esc_html__('Spacing', 'bdthemes-prime-slider-lite'),
 				'type'  => Controls_Manager::SLIDER,
 				'selectors' => [
 					'{{WRAPPER}} .bdt-prime-slider-dragon .bdt-prime-slider-social-icon a'    => 'margin-right: {{SIZE}}{{UNIT}};',
@@ -810,14 +747,14 @@ class dragon extends Widget_Base {
 		$this->start_controls_tab(
 			'tab_social_icon_hover',
 			[
-				'label' => esc_html__('Hover', 'bdthemes-prime-slider'),
+				'label' => esc_html__('Hover', 'bdthemes-prime-slider-lite'),
 			]
 		);
 
 		$this->add_control(
 			'social_icon_hover_color',
 			[
-				'label'     => esc_html__('Text Color', 'bdthemes-prime-slider'),
+				'label'     => esc_html__('Text Color', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .bdt-prime-slider-dragon .bdt-prime-slider-social-icon a:hover' => 'color: {{VALUE}};',
@@ -834,7 +771,7 @@ class dragon extends Widget_Base {
 		$this->start_controls_section(
 			'section_style_navigation',
 			[
-				'label'     => __('Navigation', 'bdthemes-prime-slider'),
+				'label'     => __('Navigation', 'bdthemes-prime-slider-lite'),
 				'tab'       => Controls_Manager::TAB_STYLE,
 				'condition' => [ 'show_navigation_dots' => 'yes' ],
 			]
@@ -843,7 +780,7 @@ class dragon extends Widget_Base {
 		$this->add_control(
 			'navigation_number_color',
 			[
-				'label'     => __('Color', 'bdthemes-prime-slider'),
+				'label'     => __('Color', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .bdt-prime-slider-dragon .bdt-dotnav li:after' => 'color: {{VALUE}}',
@@ -855,7 +792,7 @@ class dragon extends Widget_Base {
 		$this->add_control(
 			'navigation_number_hover_color',
 			[
-				'label'     => __('Hover Color', 'bdthemes-prime-slider'),
+				'label'     => __('Hover Color', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .bdt-prime-slider-dragon .bdt-dotnav li:hover:after' => 'color: {{VALUE}}',
@@ -866,7 +803,7 @@ class dragon extends Widget_Base {
 		$this->add_control(
 			'navigation_number_active_color',
 			[
-				'label'     => __('Active Color', 'bdthemes-prime-slider'),
+				'label'     => __('Active Color', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .bdt-prime-slider-dragon .bdt-dotnav li.bdt-active:after' => 'color: {{VALUE}}',
@@ -878,7 +815,7 @@ class dragon extends Widget_Base {
 		$this->add_responsive_control(
 			'navigation_number_size',
 			[
-				'label'     => __('Size', 'bdthemes-prime-slider'),
+				'label'     => __('Size', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::SLIDER,
 				'selectors' => [
 					'{{WRAPPER}} .bdt-prime-slider-dragon .bdt-dotnav li:after' => 'font-size: {{SIZE}}px',
@@ -889,12 +826,11 @@ class dragon extends Widget_Base {
 		$this->add_responsive_control(
 			'navigation_line_width',
 			[
-				'label'     => __('Line Width', 'bdthemes-prime-slider') . BDTPS_CORE_PC,
+				'label'     => __('Line Width', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::SLIDER,
 				'selectors' => [
 					'{{WRAPPER}} .bdt-prime-slider-dragon .bdt-dotnav li.bdt-active:before' => 'width: {{SIZE}}px',
 				],
-				'classes'   => BDTPS_CORE_IS_PC
 			]
 		);
 
@@ -909,13 +845,9 @@ class dragon extends Widget_Base {
 		/**
          * Advanced Animation
          */
-		$this->adv_anim('slideshow');
+		$this->add_addon_render_attributes('slideshow');
 		$this->add_render_attribute('slideshow', 'id', 'bdt-' . $this->get_id());
 
-		/**
-		 * Reveal Effects
-		 */
-		$this->reveal_effects_attr('slideshow');
 
 		/**
          * Slideshow Settings
@@ -1027,19 +959,16 @@ class dragon extends Widget_Base {
 		$parallax_title         = 'x: 200,-200; opacity: 1,1,0';
 		$parallax_text          = 'x: 300,-300; opacity: 1,1,0';
 
-		if ( true === _is_ps_pro_activated() ) {
-			if ($settings['animation_status'] == 'yes' && !empty($settings['animation_of'])) {
+		if ( ! empty( $settings['animation_status'] ) && 'yes' === $settings['animation_status'] && ! empty( $settings['animation_of'] ) ) {
+			if (in_array(".bdt-sub-title-inner", $settings['animation_of'])) {
+				$parallax_sub_title = '';
+			}
 
-				if (in_array(".bdt-sub-title-inner", $settings['animation_of'])) {
-					$parallax_sub_title = '';
-				}
-
-				if (in_array(".bdt-title-tag", $settings['animation_of'])) {
-					$parallax_title = '';
-				}
-				if (in_array(".bdt-slider-excerpt", $settings['animation_of'])) {
-					$parallax_text = '';
-				}
+			if (in_array(".bdt-title-tag", $settings['animation_of'])) {
+				$parallax_title = '';
+			}
+			if (in_array(".bdt-slider-excerpt", $settings['animation_of'])) {
+				$parallax_text = '';
 			}
 		}
 

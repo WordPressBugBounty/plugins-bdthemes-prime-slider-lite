@@ -26,7 +26,7 @@ class Mount extends Widget_Base {
 	}
 
 	public function get_title() {
-		return BDTPS . esc_html__('Mount', 'bdthemes-prime-slider');
+		return BDTPS . esc_html__('Mount', 'bdthemes-prime-slider-lite');
 	}
 
 	public function get_icon() {
@@ -42,24 +42,12 @@ class Mount extends Widget_Base {
 	}
 
 	public function get_style_depends() {
-		return ['ps-mount'];
+		return ['bdtps-mount'];
 	}
 
 	public function get_script_depends() {
-		$reveal_effects = prime_slider_option('reveal-effects', 'prime_slider_other_settings', 'off');
-		if ('on' === $reveal_effects) {
-			if ( true === _is_ps_pro_activated() ) {
-				return ['gsap', 'split-text', 'anime', 'revealFx', 'ps-animation-helper'];
-			} else {
-				return [];
-			}
-		} else {
-			if ( true === _is_ps_pro_activated() ) {
-				return ['gsap', 'split-text', 'ps-animation-helper'];
-			} else {
-				return [];
-			}
-		}
+		// Add-ons (e.g. Prime Slider Pro) append their own handles via this filter.
+		return $this->addon_script_depends( [] );
 	}
 
 	public function get_custom_help_url() {
@@ -74,12 +62,11 @@ class Mount extends Widget_Base {
 	}
 
 	protected function register_controls() {
-		$reveal_effects = prime_slider_option('reveal-effects', 'prime_slider_other_settings', 'off');
 
 		$this->start_controls_section(
 			'section_content_sliders',
 			[
-				'label' => esc_html__('Sliders', 'bdthemes-prime-slider'),
+				'label' => esc_html__('Sliders', 'bdthemes-prime-slider-lite'),
 			]
 		);
 
@@ -108,23 +95,23 @@ class Mount extends Widget_Base {
 		$this->add_control(
 			'slides',
 			[
-				'label'   => esc_html__('Slider Items', 'bdthemes-prime-slider'),
+				'label'   => esc_html__('Slider Items', 'bdthemes-prime-slider-lite'),
 				'type'    => Controls_Manager::REPEATER,
 				'fields'  => $repeater->get_controls(),
 				'default' => [
 					[
-						'sub_title' => esc_html__('This is a Label', 'bdthemes-prime-slider'),
-						'title'     => esc_html__('Mount Slider Item One', 'bdthemes-prime-slider'),
+						'sub_title' => esc_html__('This is a Label', 'bdthemes-prime-slider-lite'),
+						'title'     => esc_html__('Mount Slider Item One', 'bdthemes-prime-slider-lite'),
 						'image'     => ['url' => BDTPS_CORE_ASSETS_URL . 'images/gallery/img-1.svg']
 					],
 					[
-						'sub_title' => esc_html__('This is a Label', 'bdthemes-prime-slider'),
-						'title'     => esc_html__('Mount Slider Item Two', 'bdthemes-prime-slider'),
+						'sub_title' => esc_html__('This is a Label', 'bdthemes-prime-slider-lite'),
+						'title'     => esc_html__('Mount Slider Item Two', 'bdthemes-prime-slider-lite'),
 						'image'     => ['url' => BDTPS_CORE_ASSETS_URL . 'images/gallery/img-2.svg']
 					],
 					[
-						'sub_title' => esc_html__('This is a Label', 'bdthemes-prime-slider'),
-						'title'     => esc_html__('Mount Slider Item Three', 'bdthemes-prime-slider'),
+						'sub_title' => esc_html__('This is a Label', 'bdthemes-prime-slider-lite'),
+						'title'     => esc_html__('Mount Slider Item Three', 'bdthemes-prime-slider-lite'),
 						'image'     => ['url' => BDTPS_CORE_ASSETS_URL . 'images/gallery/img-3.svg']
 					],
 				],
@@ -137,7 +124,7 @@ class Mount extends Widget_Base {
 		$this->start_controls_section(
 			'section_content_layout',
 			[
-				'label' => esc_html__('Additional Options', 'bdthemes-prime-slider'),
+				'label' => esc_html__('Additional Options', 'bdthemes-prime-slider-lite'),
 			]
 		);
 
@@ -159,7 +146,7 @@ class Mount extends Widget_Base {
 		$this->add_control(
 		'show_social_share',
 			[
-				'label'   => esc_html__('Show Social Share', 'bdthemes-prime-slider'),
+				'label'   => esc_html__('Show Social Share', 'bdthemes-prime-slider-lite'),
 				'type'    => Controls_Manager::SWITCHER,
 				'default' => 'yes',
 			]
@@ -173,29 +160,28 @@ class Mount extends Widget_Base {
 		$this->add_control(
 			'show_navigation_dots',
 			[
-				'label'   => esc_html__('Show Pagination', 'bdthemes-prime-slider') . BDTPS_CORE_PC,
+				'label'   => esc_html__('Show Pagination', 'bdthemes-prime-slider-lite'),
 				'type'    => Controls_Manager::SWITCHER,
 				'default' => 'yes',
-				'classes'    => BDTPS_CORE_IS_PC
 			]
 		);
 
 		$this->add_responsive_control(
             'content_alignment',
             [
-                'label'   => esc_html__( 'Alignment', 'bdthemes-prime-slider' ),
+                'label'   => esc_html__( 'Alignment', 'bdthemes-prime-slider-lite' ),
                 'type'    => Controls_Manager::CHOOSE,
                 'options' => [
                     'left' => [
-                        'title' => esc_html__( 'Left', 'bdthemes-prime-slider' ),
+                        'title' => esc_html__( 'Left', 'bdthemes-prime-slider-lite' ),
                         'icon'  => 'eicon-text-align-left',
                     ],
                     'center' => [
-                        'title' => esc_html__( 'Center', 'bdthemes-prime-slider' ),
+                        'title' => esc_html__( 'Center', 'bdthemes-prime-slider-lite' ),
                         'icon'  => 'eicon-text-align-center',
                     ],
                     'right' => [
-                        'title' => esc_html__( 'Right', 'bdthemes-prime-slider' ),
+                        'title' => esc_html__( 'Right', 'bdthemes-prime-slider-lite' ),
                         'icon'  => 'eicon-text-align-right',
                     ],
                 ],
@@ -218,7 +204,7 @@ class Mount extends Widget_Base {
 		$this->start_controls_section(
 			'section_content_social_link',
 			[
-				'label' 	=> __('Social Link', 'bdthemes-prime-slider'),
+				'label' 	=> __('Social Link', 'bdthemes-prime-slider-lite'),
 				'condition' => [
 					'show_social_share' => 'yes',
 				],
@@ -228,10 +214,10 @@ class Mount extends Widget_Base {
 		$this->add_control(
 			'follow_us_text',
 			[
-				'label' => esc_html__('Follow Us Text', 'bdthemes-prime-slider'),
+				'label' => esc_html__('Follow Us Text', 'bdthemes-prime-slider-lite'),
 				'type'  => Controls_Manager::TEXT,
 				'dynamic' => [ 'active' => true ],
-				'default' => esc_html__('Follow Us', 'bdthemes-prime-slider'),
+				'default' => esc_html__('Follow Us', 'bdthemes-prime-slider-lite'),
 			]
 		);
 
@@ -240,7 +226,7 @@ class Mount extends Widget_Base {
 		$repeater->add_control(
 			'social_link_title',
 			[
-				'label'   => __('Title', 'bdthemes-prime-slider'),
+				'label'   => __('Title', 'bdthemes-prime-slider-lite'),
 				'type'    => Controls_Manager::TEXT,
 				'dynamic' => [ 'active' => true ],
 			]
@@ -249,7 +235,7 @@ class Mount extends Widget_Base {
         $repeater->add_control(
             'social_icon_link',
             [ 
-                'label'   => __( 'Link', 'bdthemes-prime-slider' ),
+                'label'   => __( 'Link', 'bdthemes-prime-slider-lite' ),
                 'type'    => Controls_Manager::URL,
 				'dynamic' => [ 'active' => true ],
             ]
@@ -265,19 +251,19 @@ class Mount extends Widget_Base {
 						'social_icon_link'       => [ 
                             'url' => 'http://www.facebook.com/bdthemes/',
                         ],
-						'social_link_title' => __('Fb', 'bdthemes-prime-slider'),
+						'social_link_title' => __('Fb', 'bdthemes-prime-slider-lite'),
 					],
 					[
 						'social_icon_link'       => [ 
 							'url' => 'http://www.twitter.com/bdthemes/',
 						],
-						'social_link_title' => __('Tw', 'bdthemes-prime-slider'),
+						'social_link_title' => __('Tw', 'bdthemes-prime-slider-lite'),
 					],
 					[
 						'social_icon_link'       => [ 
 							'url' => 'http://www.instagram.com/bdthemes/',
 						],
-						'social_link_title' => __('Ig', 'bdthemes-prime-slider'),
+						'social_link_title' => __('Ig', 'bdthemes-prime-slider-lite'),
 					],
 				],
 				'title_field' => '{{ social_link_title }}',
@@ -289,7 +275,7 @@ class Mount extends Widget_Base {
 		$this->start_controls_section(
 			'section_style_animation',
 			[
-				'label' => esc_html__('Slider Settings', 'bdthemes-prime-slider'),
+				'label' => esc_html__('Slider Settings', 'bdthemes-prime-slider-lite'),
 			]
 		);
 
@@ -301,64 +287,17 @@ class Mount extends Widget_Base {
 		$this->end_controls_section();
 
 		/**
-         * Advanced Animation
-         */
-		$this->start_controls_section(
-			'section_advanced_animation',
-			[
-				'label'     => esc_html__('Advanced Animation', 'bdthemes-prime-slider') . BDTPS_CORE_PC,
-				'tab'       => Controls_Manager::TAB_CONTENT,
-			]
-		);
-
-		$this->add_control(
-			'animation_status',
-			[
-				'label'   => esc_html__('Advanced Animation', 'bdthemes-prime-slider'),
-				'type'    => Controls_Manager::SWITCHER,
-				'classes'   => BDTPS_CORE_IS_PC,
-			]
-		);
-
-		if ( true === _is_ps_pro_activated() ) {
-
-			$this->add_control(
-				'animation_of',
-				[
-					'label'	   => __('Animation Of', 'bdthemes-prime-slider'),
-					'type' 	   => Controls_Manager::SELECT2,
-					'multiple' => true,
-					'options'  => [
-						'.bdt-sub-title-inner' => __('Sub Title', 'bdthemes-prime-slider'),
-						'.bdt-title-tag' => __('Title', 'bdthemes-prime-slider'),
-					],
-					'default'  => ['.bdt-title-tag'],
-					'condition' => [
-						'animation_status' => 'yes'
-					]
-				]
-			);
-
-			/**
-             * Advanced Animation
-             */
-            $this->register_advanced_animation_controls();
-		}
-
-		$this->end_controls_section();
-
-		/**
-		 * Reveal Effects
+		 * Extension point: add-ons (e.g. Prime Slider Pro) register their own
+		 * controls here. This plugin registers none of its own.
 		 */
-		if ('on' === $reveal_effects) {
-			$this->register_reveal_effects();
-		}
+		$this->register_addon_controls();
+
 
 		//Style Start
 		$this->start_controls_section(
 			'section_style_sliders',
 			[
-				'label'     => esc_html__('Sliders', 'bdthemes-prime-slider'),
+				'label'     => esc_html__('Sliders', 'bdthemes-prime-slider-lite'),
 				'tab'       => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -366,23 +305,22 @@ class Mount extends Widget_Base {
 		$this->add_control(
 			'overlay',
 			[
-				'label'   => esc_html__('Overlay', 'bdthemes-prime-slider') . BDTPS_CORE_PC,
+				'label'   => esc_html__('Overlay', 'bdthemes-prime-slider-lite'),
 				'type'    => Controls_Manager::SELECT,
 				'default' => 'none',
 				'options' => [
-					'none'       => esc_html__('None', 'bdthemes-prime-slider'),
-					'background' => esc_html__('Background', 'bdthemes-prime-slider'),
-					'blend'      => esc_html__('Blend', 'bdthemes-prime-slider'),
+					'none'       => esc_html__('None', 'bdthemes-prime-slider-lite'),
+					'background' => esc_html__('Background', 'bdthemes-prime-slider-lite'),
+					'blend'      => esc_html__('Blend', 'bdthemes-prime-slider-lite'),
 				],
 				'separator' => 'before',
-				'classes'    => BDTPS_CORE_IS_PC
 			]
 		);
 
 		$this->add_control(
 			'overlay_color',
 			[
-				'label'     => esc_html__('Overlay Color', 'bdthemes-prime-slider'),
+				'label'     => esc_html__('Overlay Color', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::COLOR,
 				'condition' => [
 					'overlay' => ['background', 'blend']
@@ -396,7 +334,7 @@ class Mount extends Widget_Base {
 		$this->add_control(
 			'blend_type',
 			[
-				'label'     => esc_html__('Blend Type', 'bdthemes-prime-slider'),
+				'label'     => esc_html__('Blend Type', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::SELECT,
 				'default'   => 'multiply',
 				'options'   => prime_slider_blend_options(),
@@ -409,7 +347,7 @@ class Mount extends Widget_Base {
 		$this->add_responsive_control(
 			'content_inner_padding',
 			[
-				'label'      => esc_html__('Content Padding', 'bdthemes-prime-slider'),
+				'label'      => esc_html__('Content Padding', 'bdthemes-prime-slider-lite'),
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => ['px', 'em', '%'],
 				'selectors'  => [
@@ -424,7 +362,7 @@ class Mount extends Widget_Base {
 		$this->start_controls_tab(
 			'slider_title_style',
 			[
-				'label' 	=> esc_html__('Title', 'bdthemes-prime-slider'),
+				'label' 	=> esc_html__('Title', 'bdthemes-prime-slider-lite'),
 				'condition' => [
 					'show_title' => ['yes'],
 				],
@@ -434,7 +372,7 @@ class Mount extends Widget_Base {
 		$this->add_responsive_control(
 			'title_width',
 			[
-				'label' => esc_html__('Title Width', 'bdthemes-prime-slider'),
+				'label' => esc_html__('Title Width', 'bdthemes-prime-slider-lite'),
 				'type'  => Controls_Manager::SLIDER,
 				'range' => [
 					'px' => [
@@ -454,7 +392,7 @@ class Mount extends Widget_Base {
 		$this->add_control(
 			'title_color',
 			[
-				'label'     => esc_html__('Color', 'bdthemes-prime-slider'),
+				'label'     => esc_html__('Color', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .bdt-prime-slider .bdt-prime-slider-content .bdt-main-title .bdt-title-tag' => 'color: {{VALUE}};',
@@ -468,7 +406,7 @@ class Mount extends Widget_Base {
 		$this->add_control(
 			'mount_title_hover_color',
 			[
-				'label'     => esc_html__('Hover Color', 'bdthemes-prime-slider'),
+				'label'     => esc_html__('Hover Color', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .bdt-prime-slider .bdt-prime-slider-content .bdt-main-title .bdt-title-tag:hover' => 'color: {{VALUE}};',
@@ -484,7 +422,7 @@ class Mount extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name'     => 'title_typography',
-				'label'    => esc_html__('Typography', 'bdthemes-prime-slider'),
+				'label'    => esc_html__('Typography', 'bdthemes-prime-slider-lite'),
 				'selector' => '{{WRAPPER}} .bdt-prime-slider .bdt-prime-slider-content .bdt-main-title .bdt-title-tag',
 				'condition' => [
 					'show_title' => ['yes'],
@@ -506,7 +444,7 @@ class Mount extends Widget_Base {
 		$this->add_responsive_control(
 			'prime_slider_title_spacing',
 			[
-				'label' => esc_html__('Title Spacing', 'bdthemes-prime-slider'),
+				'label' => esc_html__('Title Spacing', 'bdthemes-prime-slider-lite'),
 				'type'  => Controls_Manager::SLIDER,
 				'range' => [
 					'px' => [
@@ -526,9 +464,8 @@ class Mount extends Widget_Base {
 		$this->add_control(
 			'title_advanced_style',
 			[
-				'label' => esc_html__('Advanced Style', 'bdthemes-prime-slider') . BDTPS_CORE_PC,
+				'label' => esc_html__('Advanced Style', 'bdthemes-prime-slider-lite'),
 				'type'  => Controls_Manager::SWITCHER,
-				'classes'   => BDTPS_CORE_IS_PC,
 				'condition' => [ 'show_title' => 'yes' ],
 			]
 		);
@@ -536,7 +473,7 @@ class Mount extends Widget_Base {
 		$this->add_control(
             'first_word_title_color',
             [
-                'label'     => esc_html__('First Word Color', 'bdthemes-prime-slider'),
+                'label'     => esc_html__('First Word Color', 'bdthemes-prime-slider-lite'),
                 'type'      => Controls_Manager::COLOR,
                 'selectors' => [
                     '{{WRAPPER}} .bdt-prime-slider .bdt-prime-slider-content .bdt-main-title .bdt-title-tag .frist-word' => 'color: {{VALUE}};',
@@ -551,7 +488,7 @@ class Mount extends Widget_Base {
 			Group_Control_Background::get_type(),
 			[
 				'name' => 'title_background',
-				'label' => __( 'Background', 'bdthemes-prime-slider'),
+				'label' => __( 'Background', 'bdthemes-prime-slider-lite'),
 				'types' => [ 'classic', 'gradient' ],
 				'selector' => '{{WRAPPER}} .bdt-prime-slider .bdt-prime-slider-content .bdt-main-title .bdt-title-tag',
 				'condition' => [
@@ -564,7 +501,7 @@ class Mount extends Widget_Base {
 			Group_Control_Text_Shadow::get_type(),
 			[
 				'name' => 'title_text_shadow',
-				'label' => __( 'Text Shadow', 'bdthemes-prime-slider'),
+				'label' => __( 'Text Shadow', 'bdthemes-prime-slider-lite'),
 				'selector' => '{{WRAPPER}} .bdt-prime-slider .bdt-prime-slider-content .bdt-main-title .bdt-title-tag',
 				'condition' => [
 					'title_advanced_style' => 'yes'
@@ -586,7 +523,7 @@ class Mount extends Widget_Base {
 		$this->add_control(
 			'title_border_radius',
 			[
-				'label'		 => __('Border Radius', 'bdthemes-prime-slider'),
+				'label'		 => __('Border Radius', 'bdthemes-prime-slider-lite'),
 				'type' 		 => Controls_Manager::DIMENSIONS,
 				'size_units' => ['px', '%'],
 				'selectors'  => [
@@ -612,7 +549,7 @@ class Mount extends Widget_Base {
 		$this->add_responsive_control(
 			'title_text_padding',
 			[
-				'label' 	 => __('Padding', 'bdthemes-prime-slider'),
+				'label' 	 => __('Padding', 'bdthemes-prime-slider-lite'),
 				'type' 		 => Controls_Manager::DIMENSIONS,
 				'size_units' => ['px', 'em', '%'],
 				'selectors'  => [
@@ -629,7 +566,7 @@ class Mount extends Widget_Base {
 		$this->start_controls_tab(
 			'slider_sub_title_style',
 			[
-				'label' 	=> __('Sub Title', 'bdthemes-prime-slider'),
+				'label' 	=> __('Sub Title', 'bdthemes-prime-slider-lite'),
 				'condition' => [
 					'show_sub_title' => ['yes'],
 				],
@@ -639,7 +576,7 @@ class Mount extends Widget_Base {
 		$this->add_control(
 			'sub_title_color',
 			[
-				'label'     => esc_html__('Color', 'bdthemes-prime-slider'),
+				'label'     => esc_html__('Color', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .bdt-prime-slider .bdt-prime-slider-content .bdt-sub-title-inner' => 'color: {{VALUE}};',
@@ -658,7 +595,7 @@ class Mount extends Widget_Base {
 		$this->add_responsive_control(
 			'prime_slider_sub_title_spacing',
 			[
-				'label' => esc_html__('Sub Title Spacing', 'bdthemes-prime-slider'),
+				'label' => esc_html__('Sub Title Spacing', 'bdthemes-prime-slider-lite'),
 				'type'  => Controls_Manager::SLIDER,
 				'range' => [
 					'px' => [
@@ -684,7 +621,7 @@ class Mount extends Widget_Base {
 		$this->start_controls_section(
 			'section_style_social_icon',
 			[
-				'label'     => esc_html__('Social Share', 'bdthemes-prime-slider'),
+				'label'     => esc_html__('Social Share', 'bdthemes-prime-slider-lite'),
 				'tab'       => Controls_Manager::TAB_STYLE,
 				'condition' => [
 					'show_social_share' => 'yes',
@@ -695,7 +632,7 @@ class Mount extends Widget_Base {
 		$this->add_control(
 			'social_icon_text_color',
 			[
-				'label'     => esc_html__('Text Color', 'bdthemes-prime-slider'),
+				'label'     => esc_html__('Text Color', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .bdt-prime-slider-mount .bdt-prime-slider-social-icon h3' => 'color: {{VALUE}};',
@@ -716,14 +653,14 @@ class Mount extends Widget_Base {
 		$this->start_controls_tab(
 			'tab_social_icon_normal',
 			[
-				'label' => esc_html__('Normal', 'bdthemes-prime-slider'),
+				'label' => esc_html__('Normal', 'bdthemes-prime-slider-lite'),
 			]
 		);
 
 		$this->add_control(
 			'social_icon_color',
 			[
-				'label'     => esc_html__('Color', 'bdthemes-prime-slider'),
+				'label'     => esc_html__('Color', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .bdt-prime-slider .bdt-prime-slider-social-icon a' => 'color: {{VALUE}};',
@@ -752,7 +689,7 @@ class Mount extends Widget_Base {
 		$this->add_responsive_control(
 			'social_icon_padding',
 			[
-				'label'      => esc_html__('Padding', 'bdthemes-prime-slider'),
+				'label'      => esc_html__('Padding', 'bdthemes-prime-slider-lite'),
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => ['px', 'em', '%'],
 				'selectors'  => [
@@ -764,7 +701,7 @@ class Mount extends Widget_Base {
 		$this->add_responsive_control(
 			'social_icon_radius',
 			[
-				'label'      => esc_html__('Border Radius', 'bdthemes-prime-slider'),
+				'label'      => esc_html__('Border Radius', 'bdthemes-prime-slider-lite'),
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => ['px', '%'],
 				'selectors'  => [
@@ -784,7 +721,7 @@ class Mount extends Widget_Base {
 		$this->add_responsive_control(
 			'social_icon_spacing',
 			[
-				'label' => esc_html__('Spacing', 'bdthemes-prime-slider'),
+				'label' => esc_html__('Spacing', 'bdthemes-prime-slider-lite'),
 				'type'  => Controls_Manager::SLIDER,
 				'range' => [
 					'px' => [
@@ -810,14 +747,14 @@ class Mount extends Widget_Base {
 		$this->start_controls_tab(
 			'tab_social_icon_hover',
 			[
-				'label' => esc_html__('Hover', 'bdthemes-prime-slider'),
+				'label' => esc_html__('Hover', 'bdthemes-prime-slider-lite'),
 			]
 		);
 
 		$this->add_control(
 			'social_icon_hover_color',
 			[
-				'label'     => esc_html__('Color', 'bdthemes-prime-slider'),
+				'label'     => esc_html__('Color', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .bdt-prime-slider .bdt-prime-slider-social-icon a:hover' => 'color: {{VALUE}};',
@@ -836,7 +773,7 @@ class Mount extends Widget_Base {
 		$this->add_control(
 			'icon_hover_border_color',
 			[
-				'label'     => esc_html__('Border Color', 'bdthemes-prime-slider'),
+				'label'     => esc_html__('Border Color', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::COLOR,
 				'condition' => [
 					'social_icon_border_border!' => '',
@@ -856,7 +793,7 @@ class Mount extends Widget_Base {
 		$this->start_controls_section(
 			'section_style_navigation',
 			[
-				'label'     => __('Navigation', 'bdthemes-prime-slider'),
+				'label'     => __('Navigation', 'bdthemes-prime-slider-lite'),
 				'tab'       => Controls_Manager::TAB_STYLE,
 				'conditions' => [
 					'relation' => 'or',
@@ -879,7 +816,7 @@ class Mount extends Widget_Base {
 		$this->add_control(
 			'arrows_color',
 			[
-				'label'     => __('Arrows Color', 'bdthemes-prime-slider'),
+				'label'     => __('Arrows Color', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .bdt-prime-slider .bdt-prime-slider-previous svg, {{WRAPPER}} .bdt-prime-slider .bdt-prime-slider-next svg' => 'color: {{VALUE}}',
@@ -894,7 +831,7 @@ class Mount extends Widget_Base {
 		$this->add_control(
 			'arrows_hover_color',
 			[
-				'label'     => __('Arrows Hover Color', 'bdthemes-prime-slider'),
+				'label'     => __('Arrows Hover Color', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .bdt-prime-slider .bdt-prime-slider-previous:hover svg, {{WRAPPER}} .bdt-prime-slider .bdt-prime-slider-next:hover svg' => 'color: {{VALUE}}',
@@ -909,7 +846,7 @@ class Mount extends Widget_Base {
 		$this->add_responsive_control(
 			'arrows_spacing',
 			[
-				'label'      => __('Arrow Spacing', 'bdthemes-prime-slider'),
+				'label'      => __('Arrow Spacing', 'bdthemes-prime-slider-lite'),
 				'type'       => Controls_Manager::SLIDER,
 				'size_units' => ['px', '%', 'em'],
 				'range'      => [
@@ -939,7 +876,7 @@ class Mount extends Widget_Base {
 		$this->add_control(
 			'pagination_heading',
 			[
-				'label'     => __('Pagination', 'bdthemes-prime-slider'),
+				'label'     => __('Pagination', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::HEADING,
 				'condition' => [
 					'show_navigation_dots' => ['yes'],
@@ -951,7 +888,7 @@ class Mount extends Widget_Base {
 		$this->add_control(
 			'active_dot_number_color',
 			[
-				'label'     => __('Color', 'bdthemes-prime-slider'),
+				'label'     => __('Color', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .bdt-prime-slider-mount .bdt-ps-dotnav li a, {{WRAPPER}} .bdt-prime-slider-mount .bdt-ps-dotnav span' => 'color: {{VALUE}}',
@@ -967,7 +904,7 @@ class Mount extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' 		=> 'dots_size',
-				'label'     => __('Typography', 'bdthemes-prime-slider'),
+				'label'     => __('Typography', 'bdthemes-prime-slider-lite'),
 				'selector' 	=> '{{WRAPPER}} .bdt-prime-slider-mount .bdt-ps-dotnav li a, {{WRAPPER}} .bdt-prime-slider-mount .bdt-ps-dotnav span',
 				'condition' => [
 					'show_navigation_dots' => ['yes'],
@@ -989,13 +926,9 @@ class Mount extends Widget_Base {
 		/**
          * Advanced Animation
          */
-		$this->adv_anim('slideshow');
+		$this->add_addon_render_attributes('slideshow');
 		$this->add_render_attribute('slideshow', 'id', 'bdt-' . $this->get_id());
 
-		/**
-		 * Reveal Effects
-		 */
-		$this->reveal_effects_attr('slideshow');
 
 		/**
          * Slideshow Settings
@@ -1069,7 +1002,7 @@ class Mount extends Widget_Base {
 			<div <?php $this->print_render_attribute_string('social-icon'); ?>>
 
 				<h3>
-					<?php echo $settings['follow_us_text'] ? esc_html($settings['follow_us_text']) : esc_html__('Follow Us', 'bdthemes-prime-slider') ?>
+					<?php echo $settings['follow_us_text'] ? esc_html($settings['follow_us_text']) : esc_html__('Follow Us', 'bdthemes-prime-slider-lite') ?>
 				</h3>
 
 				<?php $this->render_social_link_repeater(); ?>

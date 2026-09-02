@@ -34,7 +34,7 @@ class Storker extends Widget_Base {
     }
 
     public function get_title() {
-        return BDTPS . esc_html__('Storker', 'bdthemes-prime-slider');
+        return BDTPS . esc_html__('Storker', 'bdthemes-prime-slider-lite');
     }
 
     public function get_icon() {
@@ -50,20 +50,12 @@ class Storker extends Widget_Base {
     }
 
     public function get_style_depends() {
-        return ['swiper', 'ps-storker', 'prime-slider-font'];
+        return ['swiper', 'bdtps-storker', 'prime-slider-font'];
     }
 
     public function get_script_depends() {
-        $reveal_effects = prime_slider_option('reveal-effects', 'prime_slider_other_settings', 'off');
-        if ('on' === $reveal_effects) {
-            if ( true === _is_ps_pro_activated() ) {
-                return ['swiper', 'shutters', 'gl', 'tinder', 'anime', 'revealFx', 'ps-storker'];
-            } else {
-                return ['swiper', 'shutters', 'gl', 'tinder', 'ps-storker'];
-            }
-        } else {
-            return ['swiper', 'shutters', 'gl', 'tinder', 'ps-storker'];
-        }
+    	// Add-ons (e.g. Prime Slider Pro) append their own handles via this filter.
+    	return $this->addon_script_depends( [ 'swiper', 'bdtps-storker' ] );
     }
 
     public function get_custom_help_url() {
@@ -75,18 +67,17 @@ class Storker extends Widget_Base {
     }
 
 	protected function register_controls() {
-        $reveal_effects = prime_slider_option('reveal-effects', 'prime_slider_other_settings', 'off');
         $this->start_controls_section(
             'section_content_layout',
             [
-                'label' => esc_html__('Layout', 'bdthemes-prime-slider'),
+                'label' => esc_html__('Layout', 'bdthemes-prime-slider-lite'),
             ]
         );
 
         $this->add_responsive_control(
             'item_height',
             [
-                'label' => esc_html__('Height', 'bdthemes-prime-slider'),
+                'label' => esc_html__('Height', 'bdthemes-prime-slider-lite'),
                 'type'  => Controls_Manager::SLIDER,
                 'size_units' => ['px', 'vh'],
                 'range' => [
@@ -108,7 +99,7 @@ class Storker extends Widget_Base {
         $this->add_responsive_control(
             'content_max_width',
             [
-                'label' => esc_html__('Content Max Width', 'bdthemes-prime-slider') . BDTPS_CORE_PC,
+                'label' => esc_html__('Content Max Width', 'bdthemes-prime-slider-lite'),
                 'type'  => Controls_Manager::SLIDER,
                 'range' => [
                     'px' => [
@@ -119,26 +110,25 @@ class Storker extends Widget_Base {
                 'selectors'   => [
                     '{{WRAPPER}} .bdt-prime-slider-storker .bdt-storker-content' => 'max-width: {{SIZE}}{{UNIT}};',
                 ],
-                'classes'   => BDTPS_CORE_IS_PC
             ]
         );
 
         $this->add_responsive_control(
             'content_alignment',
             [
-                'label'     => esc_html__('Alignment', 'bdthemes-prime-slider'),
+                'label'     => esc_html__('Alignment', 'bdthemes-prime-slider-lite'),
                 'type'      => Controls_Manager::CHOOSE,
                 'options'   => [
                     'left'   => [
-                        'title' => esc_html__('Left', 'bdthemes-prime-slider'),
+                        'title' => esc_html__('Left', 'bdthemes-prime-slider-lite'),
                         'icon'  => 'eicon-text-align-left',
                     ],
                     'center' => [
-                        'title' => esc_html__('Center', 'bdthemes-prime-slider'),
+                        'title' => esc_html__('Center', 'bdthemes-prime-slider-lite'),
                         'icon'  => 'eicon-text-align-center',
                     ],
                     'right'  => [
-                        'title' => esc_html__('Right', 'bdthemes-prime-slider'),
+                        'title' => esc_html__('Right', 'bdthemes-prime-slider-lite'),
                         'icon'  => 'eicon-text-align-right',
                     ],
                 ],
@@ -159,7 +149,7 @@ class Storker extends Widget_Base {
         $this->start_controls_section(
             'section_post_query_builder',
             [
-                'label' => __('Query', 'bdthemes-prime-slider'),
+                'label' => __('Query', 'bdthemes-prime-slider-lite'),
                 'tab' => Controls_Manager::TAB_CONTENT,
             ]
         );
@@ -179,7 +169,7 @@ class Storker extends Widget_Base {
         $this->start_controls_section(
             'section_additional_settings',
             [
-                'label' => esc_html__('Additional Options', 'bdthemes-prime-slider'),
+                'label' => esc_html__('Additional Options', 'bdthemes-prime-slider-lite'),
             ]
         );
 
@@ -223,7 +213,7 @@ class Storker extends Widget_Base {
         $this->start_controls_section(
             'section_slider_settings',
             [
-                'label' => __('Slider Settings', 'bdthemes-prime-slider'),
+                'label' => __('Slider Settings', 'bdthemes-prime-slider-lite'),
             ]
         );
 
@@ -240,11 +230,10 @@ class Storker extends Widget_Base {
         $this->add_control(
             'loop',
             [
-                'label'   => __('Loop', 'bdthemes-prime-slider'),
+                'label'   => __('Loop', 'bdthemes-prime-slider-lite'),
                 'type'    => Controls_Manager::SWITCHER,
                 'default' => 'yes',
                 'condition' => [
-					'swiper_effect!' => ['tinder']
 				],
             ]
         );
@@ -252,11 +241,10 @@ class Storker extends Widget_Base {
         $this->add_control(
 			'rewind',
 			[
-				'label'   => __( 'Rewind', 'bdthemes-prime-slider' ),
+				'label'   => __( 'Rewind', 'bdthemes-prime-slider-lite' ),
 				'type'    => Controls_Manager::SWITCHER,
 				'default' => 'yes',
 				'condition' => [
-					'swiper_effect' => ['tinder']
 				],
 			]
 		);
@@ -264,7 +252,7 @@ class Storker extends Widget_Base {
 		$this->add_control(
 			'mousewheel',
 			[
-				'label'   => __( 'Mousewheel', 'bdthemes-prime-slider' ),
+				'label'   => __( 'Mousewheel', 'bdthemes-prime-slider-lite' ),
 				'type'    => Controls_Manager::SWITCHER,
 			]
 		);
@@ -280,54 +268,16 @@ class Storker extends Widget_Base {
 		$this->add_control(
 			'swiper_effect',
 			[
-				'label'   => esc_html__( 'Swiper Effect', 'bdthemes-prime-slider' ) . BDTPS_CORE_PC,
+				'label'   => esc_html__( 'Swiper Effect', 'bdthemes-prime-slider-lite' ),
 				'type'    => Controls_Manager::SELECT,
 				'default' => 'fade',
 				'options' => [
-					'slide' => esc_html__( 'Slide', 'bdthemes-prime-slider' ),
-					'fade'  => esc_html__( 'Fade', 'bdthemes-prime-slider' ),
-					'cube'  => esc_html__( 'Cube', 'bdthemes-prime-slider' ),
-					'coverflow' => esc_html__( 'Coverflow', 'bdthemes-prime-slider' ),
-					'flip'  => esc_html__( 'Flip', 'bdthemes-prime-slider' ),
-					'shutters' => esc_html__( 'Shutters', 'bdthemes-prime-slider' ),
-					// 'slicer' => esc_html__( 'Slicer', 'bdthemes-prime-slider' ),
-					'tinder' => esc_html__( 'Tinder', 'bdthemes-prime-slider' ),
-					'gl'    => esc_html__( 'GL', 'bdthemes-prime-slider' ),
-					'creative' => esc_html__( 'Creative', 'bdthemes-prime-slider' ),
-				],
-                'classes' => BDTPS_CORE_IS_PC
-			]
-		);
-		//gl_shader control
-		$this->add_control(
-			'gl_shader',
-			[
-				'label'   => esc_html__( 'GL Shader', 'bdthemes-prime-slider' ),
-				'type'    => Controls_Manager::SELECT,
-				'default' => 'random',
-				'options' => [
-					'random' => esc_html__( 'random', 'bdthemes-prime-slider'),
-					'dots' => esc_html__( 'dots', 'bdthemes-prime-slider'),
-					'flyeye' => esc_html__( 'flyeye', 'bdthemes-prime-slider'),
-					'morph-x' => esc_html__( 'morph-x', 'bdthemes-prime-slider'),
-					'morph-y' => esc_html__( 'morph-y', 'bdthemes-prime-slider'),
-					'page-curl' => esc_html__( 'page-curl', 'bdthemes-prime-slider'),
-					'peel-x' => esc_html__( 'peel-x', 'bdthemes-prime-slider'),
-					'peel-y' => esc_html__( 'peel-y', 'bdthemes-prime-slider'),
-					'polygons-fall' => esc_html__( 'polygons-fall', 'bdthemes-prime-slider'),
-					'polygons-morph' => esc_html__( 'polygons-morph', 'bdthemes-prime-slider'),
-					'polygons-wind' => esc_html__( 'polygons-wind', 'bdthemes-prime-slider'),
-					'pixelize' => esc_html__( 'pixelize', 'bdthemes-prime-slider'),
-					'ripple' => esc_html__( 'ripple', 'bdthemes-prime-slider'),
-					'shutters' => esc_html__( 'shutters', 'bdthemes-prime-slider'),
-					'slices' => esc_html__( 'slices', 'bdthemes-prime-slider'),
-					'squares' => esc_html__( 'squares', 'bdthemes-prime-slider'),
-					'stretch' => esc_html__( 'stretch', 'bdthemes-prime-slider'),
-					'wave-x' => esc_html__( 'wave-x', 'bdthemes-prime-slider'),
-					'wind' => esc_html__( 'wind', 'bdthemes-prime-slider'),
-				],
-				'condition' => [
-					'swiper_effect' => 'gl',
+					'slide' => esc_html__( 'Slide', 'bdthemes-prime-slider-lite' ),
+					'fade'  => esc_html__( 'Fade', 'bdthemes-prime-slider-lite' ),
+					'cube'  => esc_html__( 'Cube', 'bdthemes-prime-slider-lite' ),
+					'coverflow' => esc_html__( 'Coverflow', 'bdthemes-prime-slider-lite' ),
+					'flip'  => esc_html__( 'Flip', 'bdthemes-prime-slider-lite' ),
+					'creative' => esc_html__( 'Creative', 'bdthemes-prime-slider-lite' ),
 				],
 			]
 		);
@@ -336,15 +286,15 @@ class Storker extends Widget_Base {
 		$this->add_control(
 			'creative_effect',
 			[
-				'label'   => esc_html__( 'Creative Effect', 'bdthemes-prime-slider' ),
+				'label'   => esc_html__( 'Creative Effect', 'bdthemes-prime-slider-lite' ),
 				'type'    => Controls_Manager::SELECT,
 				'default' => 'creative-1',
 				'options' => [
-					'creative-1' => esc_html__( 'Creative 1', 'bdthemes-prime-slider' ),
-					'creative-2' => esc_html__( 'Creative 2', 'bdthemes-prime-slider' ),
-					'creative-3' => esc_html__( 'Creative 3', 'bdthemes-prime-slider' ),
-					'creative-4' => esc_html__( 'Creative 4', 'bdthemes-prime-slider' ),
-					'creative-5' => esc_html__( 'Creative 5', 'bdthemes-prime-slider' ),
+					'creative-1' => esc_html__( 'Creative 1', 'bdthemes-prime-slider-lite' ),
+					'creative-2' => esc_html__( 'Creative 2', 'bdthemes-prime-slider-lite' ),
+					'creative-3' => esc_html__( 'Creative 3', 'bdthemes-prime-slider-lite' ),
+					'creative-4' => esc_html__( 'Creative 4', 'bdthemes-prime-slider-lite' ),
+					'creative-5' => esc_html__( 'Creative 5', 'bdthemes-prime-slider-lite' ),
 				],
 				'condition' => [
 					'swiper_effect' => 'creative',
@@ -360,17 +310,16 @@ class Storker extends Widget_Base {
         $this->end_controls_section();
 
         /**
-         * Reveal Effects
+         * Extension point: add-ons (e.g. Prime Slider Pro) register their own
+         * controls here. This plugin registers none of its own.
          */
-        if ('on' === $reveal_effects) {
-            $this->register_reveal_effects();
-        }
+        $this->register_addon_controls();
 
         //style
         $this->start_controls_section(
             'section_style_layout',
             [
-                'label'     => __('Sliders', 'bdthemes-prime-slider'),
+                'label'     => __('Sliders', 'bdthemes-prime-slider-lite'),
                 'tab'       => Controls_Manager::TAB_STYLE,
             ]
         );
@@ -379,12 +328,13 @@ class Storker extends Widget_Base {
             Group_Control_Background::get_type(),
             [
                 'name'           => 'item_adv_overlay_color',
-                'label'          => esc_html__('Overlay Color', 'bdthemes-prime-slider'),
+                'label'          => esc_html__('Overlay Color', 'bdthemes-prime-slider-lite'),
                 'types'          => ['classic', 'gradient'],
+                // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude -- Elementor widget query built from user-configured controls; caching/query shape is expected.
                 'exclude'        => ['image'],
                 'fields_options' => [
                     'background' => [
-                        'label'   => esc_html__('Overlay', 'bdthemes-prime-slider'),
+                        'label'   => esc_html__('Overlay', 'bdthemes-prime-slider-lite'),
                         'default' => 'classic',
                     ],
                     'color' => [
@@ -398,7 +348,7 @@ class Storker extends Widget_Base {
         $this->add_responsive_control(
             'content_padding',
             [
-                'label'      => __('Content Padding', 'bdthemes-prime-slider'),
+                'label'      => __('Content Padding', 'bdthemes-prime-slider-lite'),
                 'type'          => Controls_Manager::DIMENSIONS,
                 'size_units' => ['px', 'em', '%'],
                 'selectors'  => [
@@ -410,7 +360,7 @@ class Storker extends Widget_Base {
         $this->add_responsive_control(
             'content_margin',
             [
-                'label'      => __('Content Margin', 'bdthemes-prime-slider'),
+                'label'      => __('Content Margin', 'bdthemes-prime-slider-lite'),
                 'type'          => Controls_Manager::DIMENSIONS,
                 'size_units' => ['px', 'em', '%'],
                 'selectors'  => [
@@ -424,7 +374,7 @@ class Storker extends Widget_Base {
         $this->start_controls_section(
             'section_style_title',
             [
-                'label'     => esc_html__('Title', 'bdthemes-prime-slider'),
+                'label'     => esc_html__('Title', 'bdthemes-prime-slider-lite'),
                 'tab'       => Controls_Manager::TAB_STYLE,
                 'condition' => [
                     'show_title' => 'yes',
@@ -435,7 +385,7 @@ class Storker extends Widget_Base {
         $this->add_control(
             'title_color',
             [
-                'label'     => esc_html__('Color', 'bdthemes-prime-slider'),
+                'label'     => esc_html__('Color', 'bdthemes-prime-slider-lite'),
                 'type'      => Controls_Manager::COLOR,
                 'selectors' => [
                     '{{WRAPPER}} .bdt-prime-slider-storker .bdt-title a' => 'color: {{VALUE}};',
@@ -446,7 +396,7 @@ class Storker extends Widget_Base {
         $this->add_control(
             'title_hover_color',
             [
-                'label'     => esc_html__('Hover Color', 'bdthemes-prime-slider'),
+                'label'     => esc_html__('Hover Color', 'bdthemes-prime-slider-lite'),
                 'type'      => Controls_Manager::COLOR,
                 'selectors' => [
                     '{{WRAPPER}} .bdt-prime-slider-storker .bdt-title a:hover' => 'color: {{VALUE}};',
@@ -457,7 +407,7 @@ class Storker extends Widget_Base {
         $this->add_responsive_control(
             'title_spacing',
             [
-                'label'      => esc_html__('Spacing', 'bdthemes-prime-slider'),
+                'label'      => esc_html__('Spacing', 'bdthemes-prime-slider-lite'),
                 'type'       => Controls_Manager::SLIDER,
                 'range' => [
                     'px' => [
@@ -475,7 +425,7 @@ class Storker extends Widget_Base {
             Group_Control_Typography::get_type(),
             [
                 'name'      => 'title_typography',
-                'label'     => esc_html__('Typography', 'bdthemes-prime-slider'),
+                'label'     => esc_html__('Typography', 'bdthemes-prime-slider-lite'),
                 'selector'  => '{{WRAPPER}} .bdt-prime-slider-storker .bdt-title',
             ]
         );
@@ -484,7 +434,7 @@ class Storker extends Widget_Base {
             Group_Control_Text_Shadow::get_type(),
             [
                 'name' => 'title_text_shadow',
-                'label' => __('Text Shadow', 'bdthemes-prime-slider'),
+                'label' => __('Text Shadow', 'bdthemes-prime-slider-lite'),
                 'selector' => '{{WRAPPER}} .bdt-prime-slider-storker .bdt-title a',
             ]
         );
@@ -493,7 +443,7 @@ class Storker extends Widget_Base {
             Group_Control_Text_Stroke::get_type(),
             [
                 'name' => 'title_text_stroke',
-                'label' => __('Text Stroke', 'bdthemes-prime-slider'),
+                'label' => __('Text Stroke', 'bdthemes-prime-slider-lite'),
                 'selector' => '{{WRAPPER}} .bdt-prime-slider-storker .bdt-title',
             ]
         );
@@ -503,7 +453,7 @@ class Storker extends Widget_Base {
         $this->start_controls_section(
             'section_style_text',
             [
-                'label'     => esc_html__('Text', 'bdthemes-prime-slider'),
+                'label'     => esc_html__('Text', 'bdthemes-prime-slider-lite'),
                 'tab'       => Controls_Manager::TAB_STYLE,
                 'condition' => [
                     'show_excerpt' => 'yes',
@@ -514,7 +464,7 @@ class Storker extends Widget_Base {
         $this->add_control(
             'text_color',
             [
-                'label'     => esc_html__('Color', 'bdthemes-prime-slider'),
+                'label'     => esc_html__('Color', 'bdthemes-prime-slider-lite'),
                 'type'      => Controls_Manager::COLOR,
                 'selectors' => [
                     '{{WRAPPER}} .bdt-prime-slider-storker .bdt-storker-text' => 'color: {{VALUE}};',
@@ -525,7 +475,7 @@ class Storker extends Widget_Base {
         $this->add_responsive_control(
             'text_margin',
             [
-                'label'      => __('Margin', 'bdthemes-prime-slider'),
+                'label'      => __('Margin', 'bdthemes-prime-slider-lite'),
                 'type'          => Controls_Manager::DIMENSIONS,
                 'size_units' => ['px', 'em', '%'],
                 'selectors'  => [
@@ -537,7 +487,7 @@ class Storker extends Widget_Base {
         $this->add_responsive_control(
             'text_width',
             [
-                'label' => esc_html__('Max Width', 'bdthemes-prime-slider'),
+                'label' => esc_html__('Max Width', 'bdthemes-prime-slider-lite'),
                 'type'  => Controls_Manager::SLIDER,
                 'range' => [
                     'px' => [
@@ -555,7 +505,7 @@ class Storker extends Widget_Base {
             Group_Control_Typography::get_type(),
             [
                 'name'      => 'text_typography',
-                'label'     => esc_html__('Typography', 'bdthemes-prime-slider'),
+                'label'     => esc_html__('Typography', 'bdthemes-prime-slider-lite'),
                 'selector'  => '{{WRAPPER}} .bdt-prime-slider-storker .bdt-storker-text',
             ]
         );
@@ -565,7 +515,7 @@ class Storker extends Widget_Base {
         $this->start_controls_section(
             'section_style_meta',
             [
-                'label'      => esc_html__('Meta', 'bdthemes-prime-slider'),
+                'label'      => esc_html__('Meta', 'bdthemes-prime-slider-lite'),
                 'tab'        => Controls_Manager::TAB_STYLE,
                 'conditions' => [
                     'relation' => 'or',
@@ -586,7 +536,7 @@ class Storker extends Widget_Base {
         $this->add_control(
             'meta_color',
             [
-                'label'     => esc_html__('Color', 'bdthemes-prime-slider'),
+                'label'     => esc_html__('Color', 'bdthemes-prime-slider-lite'),
                 'type'      => Controls_Manager::COLOR,
                 'selectors' => [
                     '{{WRAPPER}} .bdt-prime-slider-storker .bdt-storker-meta, {{WRAPPER}} .bdt-prime-slider-storker .bdt-storker-meta .bdt-author-name-wrap .bdt-author-name' => 'color: {{VALUE}};',
@@ -597,7 +547,7 @@ class Storker extends Widget_Base {
         $this->add_control(
             'meta_hover_color',
             [
-                'label'     => esc_html__('Hover Color', 'bdthemes-prime-slider'),
+                'label'     => esc_html__('Hover Color', 'bdthemes-prime-slider-lite'),
                 'type'      => Controls_Manager::COLOR,
                 'selectors' => [
                     '{{WRAPPER}} .bdt-prime-slider-storker .bdt-storker-meta .bdt-author-name-wrap .bdt-author-name:hover' => 'color: {{VALUE}};',
@@ -608,7 +558,7 @@ class Storker extends Widget_Base {
         $this->add_responsive_control(
             'meta_spacing',
             [
-                'label'     => esc_html__('Spacing', 'bdthemes-prime-slider'),
+                'label'     => esc_html__('Spacing', 'bdthemes-prime-slider-lite'),
                 'type'      => Controls_Manager::SLIDER,
                 'range'     => [
                     'px' => [
@@ -625,7 +575,7 @@ class Storker extends Widget_Base {
         $this->add_responsive_control(
             'meta_space_between',
             [
-                'label'     => esc_html__('Space Between', 'bdthemes-prime-slider'),
+                'label'     => esc_html__('Space Between', 'bdthemes-prime-slider-lite'),
                 'type'      => Controls_Manager::SLIDER,
                 'range'     => [
                     'px' => [
@@ -643,7 +593,7 @@ class Storker extends Widget_Base {
             Group_Control_Typography::get_type(),
             [
                 'name'     => 'meta_typography',
-                'label'    => esc_html__('Typography', 'bdthemes-prime-slider'),
+                'label'    => esc_html__('Typography', 'bdthemes-prime-slider-lite'),
                 'selector' => '{{WRAPPER}} .bdt-prime-slider-storker .bdt-storker-meta',
             ]
         );
@@ -653,7 +603,7 @@ class Storker extends Widget_Base {
         $this->start_controls_section(
             'section_style_button',
             [
-                'label'     => esc_html__('Button', 'bdthemes-prime-slider'),
+                'label'     => esc_html__('Button', 'bdthemes-prime-slider-lite'),
                 'tab'       => Controls_Manager::TAB_STYLE,
                 'condition' => [
                     'show_button' => 'yes'
@@ -666,14 +616,14 @@ class Storker extends Widget_Base {
         $this->start_controls_tab(
             'tab_button_normal',
             [
-                'label' => esc_html__('Normal', 'bdthemes-prime-slider'),
+                'label' => esc_html__('Normal', 'bdthemes-prime-slider-lite'),
             ]
         );
 
         $this->add_control(
             'button_color',
             [
-                'label'     => esc_html__('Color', 'bdthemes-prime-slider'),
+                'label'     => esc_html__('Color', 'bdthemes-prime-slider-lite'),
                 'type'      => Controls_Manager::COLOR,
                 'selectors' => [
                     '{{WRAPPER}} .bdt-prime-slider-storker .bdt-storker-btn a' => 'color: {{VALUE}};',
@@ -700,7 +650,7 @@ class Storker extends Widget_Base {
         $this->add_responsive_control(
             'button_border_radius',
             [
-                'label'      => esc_html__('Border Radius', 'bdthemes-prime-slider'),
+                'label'      => esc_html__('Border Radius', 'bdthemes-prime-slider-lite'),
                 'type'       => Controls_Manager::DIMENSIONS,
                 'size_units' => ['px', '%'],
                 'selectors'  => [
@@ -712,7 +662,7 @@ class Storker extends Widget_Base {
         $this->add_responsive_control(
             'button_padding',
             [
-                'label'      => esc_html__('Padding', 'bdthemes-prime-slider'),
+                'label'      => esc_html__('Padding', 'bdthemes-prime-slider-lite'),
                 'type'       => Controls_Manager::DIMENSIONS,
                 'size_units' => ['px', 'em', '%'],
                 'selectors'  => [
@@ -733,7 +683,7 @@ class Storker extends Widget_Base {
             Group_Control_Typography::get_type(),
             [
                 'name'     => 'button_typography',
-                'label'    => esc_html__('Typography', 'bdthemes-prime-slider'),
+                'label'    => esc_html__('Typography', 'bdthemes-prime-slider-lite'),
                 'selector' => '{{WRAPPER}} .bdt-prime-slider-storker .bdt-storker-btn a',
             ]
         );
@@ -743,7 +693,7 @@ class Storker extends Widget_Base {
         $this->start_controls_tab(
             'tab_button_hover',
             [
-                'label' => esc_html__('Hover', 'bdthemes-prime-slider'),
+                'label' => esc_html__('Hover', 'bdthemes-prime-slider-lite'),
                 'condition' => [
                     'show_button' => 'yes'
                 ]
@@ -753,7 +703,7 @@ class Storker extends Widget_Base {
         $this->add_control(
             'button_hover_color',
             [
-                'label'     => esc_html__('Color', 'bdthemes-prime-slider'),
+                'label'     => esc_html__('Color', 'bdthemes-prime-slider-lite'),
                 'type'      => Controls_Manager::COLOR,
                 'selectors' => [
                     '{{WRAPPER}} .bdt-prime-slider-storker .bdt-storker-btn a:hover' => 'color: {{VALUE}};',
@@ -772,7 +722,7 @@ class Storker extends Widget_Base {
         $this->add_control(
             'button_hover_border_color',
             [
-                'label'     => esc_html__('Border Color', 'bdthemes-prime-slider'),
+                'label'     => esc_html__('Border Color', 'bdthemes-prime-slider-lite'),
                 'type'      => Controls_Manager::COLOR,
                 'condition' => [
                     'button_border_border!' => '',
@@ -792,7 +742,7 @@ class Storker extends Widget_Base {
         $this->start_controls_section(
             'section_style_category',
             [
-                'label'     => esc_html__('Category', 'bdthemes-prime-slider'),
+                'label'     => esc_html__('Category', 'bdthemes-prime-slider-lite'),
                 'tab'       => Controls_Manager::TAB_STYLE,
                 'condition' => [
                     'show_category' => 'yes'
@@ -803,7 +753,7 @@ class Storker extends Widget_Base {
         $this->add_responsive_control(
             'category_bottom_spacing',
             [
-                'label'     => esc_html__('Spacing', 'bdthemes-prime-slider'),
+                'label'     => esc_html__('Spacing', 'bdthemes-prime-slider-lite'),
                 'type'      => Controls_Manager::SLIDER,
                 'range'     => [
                     'px' => [
@@ -822,14 +772,14 @@ class Storker extends Widget_Base {
         $this->start_controls_tab(
             'tab_category_normal',
             [
-                'label' => esc_html__('Normal', 'bdthemes-prime-slider'),
+                'label' => esc_html__('Normal', 'bdthemes-prime-slider-lite'),
             ]
         );
 
         $this->add_control(
             'category_color',
             [
-                'label'     => esc_html__('Color', 'bdthemes-prime-slider'),
+                'label'     => esc_html__('Color', 'bdthemes-prime-slider-lite'),
                 'type'      => Controls_Manager::COLOR,
                 'selectors' => [
                     '{{WRAPPER}} .bdt-prime-slider-storker .bdt-storker-category a' => 'color: {{VALUE}};',
@@ -856,7 +806,7 @@ class Storker extends Widget_Base {
         $this->add_responsive_control(
             'category_border_radius',
             [
-                'label'      => esc_html__('Border Radius', 'bdthemes-prime-slider'),
+                'label'      => esc_html__('Border Radius', 'bdthemes-prime-slider-lite'),
                 'type'       => Controls_Manager::DIMENSIONS,
                 'size_units' => ['px', '%'],
                 'selectors'  => [
@@ -868,7 +818,7 @@ class Storker extends Widget_Base {
         $this->add_responsive_control(
             'category_padding',
             [
-                'label'      => esc_html__('Padding', 'bdthemes-prime-slider'),
+                'label'      => esc_html__('Padding', 'bdthemes-prime-slider-lite'),
                 'type'       => Controls_Manager::DIMENSIONS,
                 'size_units' => ['px', 'em', '%'],
                 'selectors'  => [
@@ -880,7 +830,7 @@ class Storker extends Widget_Base {
         $this->add_responsive_control(
             'category_space_between',
             [
-                'label'     => esc_html__('Space Between', 'bdthemes-prime-slider'),
+                'label'     => esc_html__('Space Between', 'bdthemes-prime-slider-lite'),
                 'type'      => Controls_Manager::SLIDER,
                 'range'     => [
                     'px' => [
@@ -906,7 +856,7 @@ class Storker extends Widget_Base {
             Group_Control_Typography::get_type(),
             [
                 'name'     => 'category_typography',
-                'label'    => esc_html__('Typography', 'bdthemes-prime-slider'),
+                'label'    => esc_html__('Typography', 'bdthemes-prime-slider-lite'),
                 'selector' => '{{WRAPPER}} .bdt-prime-slider-storker .bdt-storker-category a',
             ]
         );
@@ -916,14 +866,14 @@ class Storker extends Widget_Base {
         $this->start_controls_tab(
             'tab_category_hover',
             [
-                'label'     => esc_html__('Hover', 'bdthemes-prime-slider'),
+                'label'     => esc_html__('Hover', 'bdthemes-prime-slider-lite'),
             ]
         );
 
         $this->add_control(
             'category_hover_color',
             [
-                'label'     => esc_html__('Color', 'bdthemes-prime-slider'),
+                'label'     => esc_html__('Color', 'bdthemes-prime-slider-lite'),
                 'type'      => Controls_Manager::COLOR,
                 'selectors' => [
                     '{{WRAPPER}} .bdt-prime-slider-storker .bdt-storker-category a:hover' => 'color: {{VALUE}};',
@@ -942,7 +892,7 @@ class Storker extends Widget_Base {
         $this->add_control(
             'category_hover_border_color',
             [
-                'label'     => esc_html__('Border Color', 'bdthemes-prime-slider'),
+                'label'     => esc_html__('Border Color', 'bdthemes-prime-slider-lite'),
                 'type'      => Controls_Manager::COLOR,
                 'condition' => [
                     'category_border_border!' => '',
@@ -963,7 +913,7 @@ class Storker extends Widget_Base {
         $this->start_controls_section(
             'section_style_thumbs',
             [
-                'label'     => esc_html__('Thumbs Slider', 'bdthemes-prime-slider'),
+                'label'     => esc_html__('Thumbs Slider', 'bdthemes-prime-slider-lite'),
                 'tab'       => Controls_Manager::TAB_STYLE,
             ]
         );
@@ -971,20 +921,19 @@ class Storker extends Widget_Base {
         $this->add_responsive_control(
             'thumbs_height',
             [
-                'label'     => esc_html__('Height(%)', 'bdthemes-prime-slider') . BDTPS_CORE_PC,
+                'label'     => esc_html__('Height(%)', 'bdthemes-prime-slider-lite'),
                 'type'      => Controls_Manager::SLIDER,
                 'selectors' => [
                     '{{WRAPPER}} .bdt-storker-thumbs' => 'height: {{SIZE}}%;',
                 ],
                 'render_type' => 'template',
-                'classes'   => BDTPS_CORE_IS_PC
             ]
         );
 
         $this->add_responsive_control(
             'thumbs_margin',
             [
-                'label'      => __('Margin', 'bdthemes-prime-slider'),
+                'label'      => __('Margin', 'bdthemes-prime-slider-lite'),
                 'type'          => Controls_Manager::DIMENSIONS,
                 'size_units' => ['px', 'em', '%'],
                 'selectors'  => [
@@ -996,7 +945,7 @@ class Storker extends Widget_Base {
         $this->add_control(
             'thumb_line_color',
             [
-                'label'     => esc_html__('Animated Line Color', 'bdthemes-prime-slider'),
+                'label'     => esc_html__('Animated Line Color', 'bdthemes-prime-slider-lite'),
                 'type'      => Controls_Manager::COLOR,
                 'selectors' => [
                     '{{WRAPPER}} .bdt-storker-thumbs .bdt-item.swiper-slide-active::after' => 'background: {{VALUE}};',
@@ -1009,7 +958,7 @@ class Storker extends Widget_Base {
         $this->start_controls_tab(
             'tab_thumbs_normal',
             [
-                'label' => esc_html__('Normal', 'bdthemes-prime-slider'),
+                'label' => esc_html__('Normal', 'bdthemes-prime-slider-lite'),
             ]
         );
 
@@ -1032,7 +981,7 @@ class Storker extends Widget_Base {
         $this->add_responsive_control(
             'thumbs_border_radius',
             [
-                'label'      => esc_html__('Border Radius', 'bdthemes-prime-slider'),
+                'label'      => esc_html__('Border Radius', 'bdthemes-prime-slider-lite'),
                 'type'       => Controls_Manager::DIMENSIONS,
                 'size_units' => ['px', '%'],
                 'selectors'  => [
@@ -1044,7 +993,7 @@ class Storker extends Widget_Base {
         $this->add_responsive_control(
             'thumbs_padding',
             [
-                'label'      => esc_html__('Padding', 'bdthemes-prime-slider'),
+                'label'      => esc_html__('Padding', 'bdthemes-prime-slider-lite'),
                 'type'       => Controls_Manager::DIMENSIONS,
                 'size_units' => ['px', 'em', '%'],
                 'selectors'  => [
@@ -1056,7 +1005,7 @@ class Storker extends Widget_Base {
         $this->add_control(
             'thumb_title_heading',
             [
-                'label'     => esc_html__('TITLE', 'bdthemes-prime-slider'),
+                'label'     => esc_html__('TITLE', 'bdthemes-prime-slider-lite'),
                 'type'      => Controls_Manager::HEADING,
                 'separator' => 'before'
             ]
@@ -1065,7 +1014,7 @@ class Storker extends Widget_Base {
         $this->add_control(
             'thumb_title_color',
             [
-                'label'     => esc_html__('Color', 'bdthemes-prime-slider'),
+                'label'     => esc_html__('Color', 'bdthemes-prime-slider-lite'),
                 'type'      => Controls_Manager::COLOR,
                 'selectors' => [
                     '{{WRAPPER}} .bdt-storker-thumbs .bdt-title a' => 'color: {{VALUE}};',
@@ -1077,7 +1026,7 @@ class Storker extends Widget_Base {
             Group_Control_Typography::get_type(),
             [
                 'name'      => 'thumb_title_typography',
-                'label'     => esc_html__('Typography', 'bdthemes-prime-slider'),
+                'label'     => esc_html__('Typography', 'bdthemes-prime-slider-lite'),
                 'selector'  => '{{WRAPPER}} .bdt-storker-thumbs .bdt-title',
             ]
         );
@@ -1085,7 +1034,7 @@ class Storker extends Widget_Base {
         $this->add_control(
             'thumb_arrow_heading',
             [
-                'label'     => esc_html__('ARROWS', 'bdthemes-prime-slider'),
+                'label'     => esc_html__('ARROWS', 'bdthemes-prime-slider-lite'),
                 'type'      => Controls_Manager::HEADING,
                 'separator' => 'before'
             ]
@@ -1094,7 +1043,7 @@ class Storker extends Widget_Base {
         $this->add_control(
             'thumb_arrows_color',
             [
-                'label'     => esc_html__('Color', 'bdthemes-prime-slider'),
+                'label'     => esc_html__('Color', 'bdthemes-prime-slider-lite'),
                 'type'      => Controls_Manager::COLOR,
                 'selectors' => [
                     '{{WRAPPER}} .bdt-storker-thumbs .bdt-storker-arrow a' => 'color: {{VALUE}};',
@@ -1121,7 +1070,7 @@ class Storker extends Widget_Base {
         $this->add_responsive_control(
             'thumb_arrows_border_radius',
             [
-                'label'      => esc_html__('Border Radius', 'bdthemes-prime-slider'),
+                'label'      => esc_html__('Border Radius', 'bdthemes-prime-slider-lite'),
                 'type'       => Controls_Manager::DIMENSIONS,
                 'size_units' => ['px', '%'],
                 'selectors'  => [
@@ -1133,7 +1082,7 @@ class Storker extends Widget_Base {
         $this->add_responsive_control(
             'thumb_arrows_padding',
             [
-                'label'      => esc_html__('Padding', 'bdthemes-prime-slider'),
+                'label'      => esc_html__('Padding', 'bdthemes-prime-slider-lite'),
                 'type'       => Controls_Manager::DIMENSIONS,
                 'size_units' => ['px', 'em', '%'],
                 'selectors'  => [
@@ -1146,7 +1095,7 @@ class Storker extends Widget_Base {
             Group_Control_Typography::get_type(),
             [
                 'name'      => 'thumb_arrows_typography',
-                'label'     => esc_html__('Typography', 'bdthemes-prime-slider'),
+                'label'     => esc_html__('Typography', 'bdthemes-prime-slider-lite'),
                 'selector'  => '{{WRAPPER}} .bdt-storker-thumbs .bdt-storker-arrow a',
             ]
         );
@@ -1156,7 +1105,7 @@ class Storker extends Widget_Base {
         $this->start_controls_tab(
             'tab_thumbs_hover',
             [
-                'label' => esc_html__('Hover', 'bdthemes-prime-slider'),
+                'label' => esc_html__('Hover', 'bdthemes-prime-slider-lite'),
             ]
         );
 
@@ -1171,7 +1120,7 @@ class Storker extends Widget_Base {
         $this->add_control(
             'thumbs_hover_border_color',
             [
-                'label'     => esc_html__('Border Color', 'bdthemes-prime-slider'),
+                'label'     => esc_html__('Border Color', 'bdthemes-prime-slider-lite'),
                 'type'      => Controls_Manager::COLOR,
                 'condition' => [
                     'thumbs_border_border!' => '',
@@ -1185,7 +1134,7 @@ class Storker extends Widget_Base {
         $this->add_control(
             'thumb_title_hover_color',
             [
-                'label'     => esc_html__('Title Color', 'bdthemes-prime-slider'),
+                'label'     => esc_html__('Title Color', 'bdthemes-prime-slider-lite'),
                 'type'      => Controls_Manager::COLOR,
                 'selectors' => [
                     '{{WRAPPER}} .bdt-storker-thumbs .bdt-item:hover .bdt-title a' => 'color: {{VALUE}};',
@@ -1197,7 +1146,7 @@ class Storker extends Widget_Base {
         $this->add_control(
             'thumb_arrows_hover_heading',
             [
-                'label'     => esc_html__('ARROWS', 'bdthemes-prime-slider'),
+                'label'     => esc_html__('ARROWS', 'bdthemes-prime-slider-lite'),
                 'type'      => Controls_Manager::HEADING,
                 'separator' => 'before'
             ]
@@ -1206,7 +1155,7 @@ class Storker extends Widget_Base {
         $this->add_control(
             'thumb_arrows_hover_color',
             [
-                'label'     => esc_html__('Color', 'bdthemes-prime-slider'),
+                'label'     => esc_html__('Color', 'bdthemes-prime-slider-lite'),
                 'type'      => Controls_Manager::COLOR,
                 'selectors' => [
                     '{{WRAPPER}} .bdt-storker-thumbs .bdt-item:hover .bdt-storker-arrow a' => 'color: {{VALUE}};',
@@ -1225,7 +1174,7 @@ class Storker extends Widget_Base {
         $this->add_control(
             'thumb_arrows_hover_border_color',
             [
-                'label'     => esc_html__('Border Color', 'bdthemes-prime-slider'),
+                'label'     => esc_html__('Border Color', 'bdthemes-prime-slider-lite'),
                 'type'      => Controls_Manager::COLOR,
                 'condition' => [
                     'thumb_arrows_border_border!' => '',
@@ -1239,7 +1188,7 @@ class Storker extends Widget_Base {
         $this->add_responsive_control(
             'thumb_arrows_hover_padding',
             [
-                'label'      => esc_html__('Padding', 'bdthemes-prime-slider'),
+                'label'      => esc_html__('Padding', 'bdthemes-prime-slider-lite'),
                 'type'       => Controls_Manager::DIMENSIONS,
                 'size_units' => ['px', 'em', '%'],
                 'selectors'  => [
@@ -1253,7 +1202,7 @@ class Storker extends Widget_Base {
         $this->start_controls_tab(
             'tab_thumbs_active',
             [
-                'label' => esc_html__('Active', 'bdthemes-prime-slider'),
+                'label' => esc_html__('Active', 'bdthemes-prime-slider-lite'),
             ]
         );
 
@@ -1268,7 +1217,7 @@ class Storker extends Widget_Base {
         $this->add_control(
             'thumbs_active_border_color',
             [
-                'label'     => esc_html__('Border Color', 'bdthemes-prime-slider'),
+                'label'     => esc_html__('Border Color', 'bdthemes-prime-slider-lite'),
                 'type'      => Controls_Manager::COLOR,
                 'condition' => [
                     'thumbs_border_border!' => '',
@@ -1282,7 +1231,7 @@ class Storker extends Widget_Base {
         $this->add_control(
             'thumb_title_active_color',
             [
-                'label'     => esc_html__('Title Color', 'bdthemes-prime-slider'),
+                'label'     => esc_html__('Title Color', 'bdthemes-prime-slider-lite'),
                 'type'      => Controls_Manager::COLOR,
                 'selectors' => [
                     '{{WRAPPER}} .bdt-storker-thumbs .bdt-item.swiper-slide-active .bdt-title a' => 'color: {{VALUE}};',
@@ -1294,7 +1243,7 @@ class Storker extends Widget_Base {
         $this->add_control(
             'thumb_arrows_active_heading',
             [
-                'label'     => esc_html__('ARROWS', 'bdthemes-prime-slider'),
+                'label'     => esc_html__('ARROWS', 'bdthemes-prime-slider-lite'),
                 'type'      => Controls_Manager::HEADING,
                 'separator' => 'before'
             ]
@@ -1303,7 +1252,7 @@ class Storker extends Widget_Base {
         $this->add_control(
             'thumb_arrows_active_color',
             [
-                'label'     => esc_html__('Color', 'bdthemes-prime-slider'),
+                'label'     => esc_html__('Color', 'bdthemes-prime-slider-lite'),
                 'type'      => Controls_Manager::COLOR,
                 'selectors' => [
                     '{{WRAPPER}} .bdt-storker-thumbs .bdt-item.swiper-slide-active .bdt-storker-arrow a' => 'color: {{VALUE}};',
@@ -1322,7 +1271,7 @@ class Storker extends Widget_Base {
         $this->add_control(
             'thumb_arrows_active_border_color',
             [
-                'label'     => esc_html__('Border Color', 'bdthemes-prime-slider'),
+                'label'     => esc_html__('Border Color', 'bdthemes-prime-slider-lite'),
                 'type'      => Controls_Manager::COLOR,
                 'condition' => [
                     'thumb_arrows_border_border!' => '',
@@ -1336,7 +1285,7 @@ class Storker extends Widget_Base {
         $this->add_responsive_control(
             'thumb_arrows_active_padding',
             [
-                'label'      => esc_html__('Padding', 'bdthemes-prime-slider'),
+                'label'      => esc_html__('Padding', 'bdthemes-prime-slider-lite'),
                 'type'       => Controls_Manager::DIMENSIONS,
                 'size_units' => ['px', 'em', '%'],
                 'selectors'  => [
@@ -1355,7 +1304,7 @@ class Storker extends Widget_Base {
         $this->start_controls_section(
             'section_style_navigation',
             [
-                'label'     => __('Navigation', 'bdthemes-prime-slider'),
+                'label'     => __('Navigation', 'bdthemes-prime-slider-lite'),
                 'tab'       => Controls_Manager::TAB_STYLE,
                 'condition' => [
                     'show_navigation_dots' => 'yes'
@@ -1366,7 +1315,7 @@ class Storker extends Widget_Base {
         $this->add_responsive_control(
             'dots_nnx_position',
             [
-                'label'          => __('Dots Horizontal Offset', 'bdthemes-prime-slider'),
+                'label'          => __('Dots Horizontal Offset', 'bdthemes-prime-slider-lite'),
                 'type'           => Controls_Manager::SLIDER,
                 'range'          => [
                     'px' => [
@@ -1383,7 +1332,7 @@ class Storker extends Widget_Base {
         $this->add_responsive_control(
             'dots_nny_position',
             [
-                'label'          => __('Dots Vertical Offset', 'bdthemes-prime-slider'),
+                'label'          => __('Dots Vertical Offset', 'bdthemes-prime-slider-lite'),
                 'type'           => Controls_Manager::SLIDER,
                 'range'          => [
                     'px' => [
@@ -1402,14 +1351,14 @@ class Storker extends Widget_Base {
         $this->start_controls_tab(
             'tabs_nav_dots_normal',
             [
-                'label'     => __('Normal', 'bdthemes-prime-slider'),
+                'label'     => __('Normal', 'bdthemes-prime-slider-lite'),
             ]
         );
 
         $this->add_control(
             'dots_color',
             [
-                'label'     => __('Color', 'bdthemes-prime-slider'),
+                'label'     => __('Color', 'bdthemes-prime-slider-lite'),
                 'type'      => Controls_Manager::COLOR,
                 'selectors' => [
                     '{{WRAPPER}} .bdt-storker-pagination .swiper-pagination .swiper-pagination-bullet' => 'background: {{VALUE}}',
@@ -1420,7 +1369,7 @@ class Storker extends Widget_Base {
         $this->add_responsive_control(
             'dots_space_between',
             [
-                'label'     => __('Space Between', 'bdthemes-prime-slider'),
+                'label'     => __('Space Between', 'bdthemes-prime-slider-lite'),
                 'type'      => Controls_Manager::SLIDER,
                 'selectors' => [
                     '{{WRAPPER}} .bdt-storker-pagination .swiper-pagination-bullet' => 'margin-right: {{SIZE}}{{UNIT}};',
@@ -1431,7 +1380,7 @@ class Storker extends Widget_Base {
         $this->add_responsive_control(
             'dots_size',
             [
-                'label'     => __('Size', 'bdthemes-prime-slider'),
+                'label'     => __('Size', 'bdthemes-prime-slider-lite'),
                 'type'      => Controls_Manager::SLIDER,
                 'range'     => [
                     'px' => [
@@ -1451,16 +1400,15 @@ class Storker extends Widget_Base {
         $this->add_control(
             'advanced_dots_size',
             [
-                'label'     => __('Advanced Size', 'bdthemes-prime-slider') . BDTPS_CORE_PC,
+                'label'     => __('Advanced Size', 'bdthemes-prime-slider-lite'),
                 'type'      => Controls_Manager::SWITCHER,
-                'classes'   => BDTPS_CORE_IS_PC
             ]
         );
 
         $this->add_responsive_control(
             'advanced_dots_width',
             [
-                'label'     => __('Width(px)', 'bdthemes-prime-slider'),
+                'label'     => __('Width(px)', 'bdthemes-prime-slider-lite'),
                 'type'      => Controls_Manager::SLIDER,
                 'range'     => [
                     'px' => [
@@ -1480,7 +1428,7 @@ class Storker extends Widget_Base {
         $this->add_responsive_control(
             'advanced_dots_height',
             [
-                'label'     => __('Height(px)', 'bdthemes-prime-slider'),
+                'label'     => __('Height(px)', 'bdthemes-prime-slider-lite'),
                 'type'      => Controls_Manager::SLIDER,
                 'range'     => [
                     'px' => [
@@ -1500,7 +1448,7 @@ class Storker extends Widget_Base {
         $this->add_responsive_control(
             'advanced_dots_radius',
             [
-                'label'      => esc_html__('Border Radius', 'bdthemes-prime-slider'),
+                'label'      => esc_html__('Border Radius', 'bdthemes-prime-slider-lite'),
                 'type'       => Controls_Manager::DIMENSIONS,
                 'size_units' => ['px', '%'],
                 'selectors'  => [
@@ -1525,14 +1473,14 @@ class Storker extends Widget_Base {
         $this->start_controls_tab(
             'tabs_nav_dots_active',
             [
-                'label'     => __('Active', 'bdthemes-prime-slider'),
+                'label'     => __('Active', 'bdthemes-prime-slider-lite'),
             ]
         );
 
         $this->add_control(
             'active_dot_color',
             [
-                'label'     => __('Color', 'bdthemes-prime-slider'),
+                'label'     => __('Color', 'bdthemes-prime-slider-lite'),
                 'type'      => Controls_Manager::COLOR,
                 'selectors' => [
                     '{{WRAPPER}} .bdt-storker-pagination .swiper-pagination .swiper-pagination-bullet.swiper-pagination-bullet-active' => 'background: {{VALUE}}',
@@ -1543,7 +1491,7 @@ class Storker extends Widget_Base {
         $this->add_responsive_control(
             'active_dots_size',
             [
-                'label'     => __('Size', 'bdthemes-prime-slider'),
+                'label'     => __('Size', 'bdthemes-prime-slider-lite'),
                 'type'      => Controls_Manager::SLIDER,
                 'range'     => [
                     'px' => [
@@ -1564,7 +1512,7 @@ class Storker extends Widget_Base {
         $this->add_responsive_control(
             'active_advanced_dots_width',
             [
-                'label'     => __('Width(px)', 'bdthemes-prime-slider'),
+                'label'     => __('Width(px)', 'bdthemes-prime-slider-lite'),
                 'type'      => Controls_Manager::SLIDER,
                 'range'     => [
                     'px' => [
@@ -1584,7 +1532,7 @@ class Storker extends Widget_Base {
         $this->add_responsive_control(
             'active_advanced_dots_height',
             [
-                'label'     => __('Height(px)', 'bdthemes-prime-slider'),
+                'label'     => __('Height(px)', 'bdthemes-prime-slider-lite'),
                 'type'      => Controls_Manager::SLIDER,
                 'range'     => [
                     'px' => [
@@ -1605,7 +1553,7 @@ class Storker extends Widget_Base {
         $this->add_responsive_control(
             'active_advanced_dots_radius',
             [
-                'label'      => esc_html__('Border Radius', 'bdthemes-prime-slider'),
+                'label'      => esc_html__('Border Radius', 'bdthemes-prime-slider-lite'),
                 'type'       => Controls_Manager::DIMENSIONS,
                 'size_units' => ['px', '%'],
                 'selectors'  => [
@@ -1620,19 +1568,19 @@ class Storker extends Widget_Base {
         $this->add_responsive_control(
             'active_advanced_dots_align',
             [
-                'label'   => __('Alignment', 'bdthemes-prime-slider'),
+                'label'   => __('Alignment', 'bdthemes-prime-slider-lite'),
                 'type'    => Controls_Manager::CHOOSE,
                 'options' => [
                     'flex-start' => [
-                        'title' => __('Top', 'bdthemes-prime-slider'),
+                        'title' => __('Top', 'bdthemes-prime-slider-lite'),
                         'icon'  => 'eicon-v-align-top',
                     ],
                     'center' => [
-                        'title' => __('Center', 'bdthemes-prime-slider'),
+                        'title' => __('Center', 'bdthemes-prime-slider-lite'),
                         'icon'  => 'eicon-v-align-middle',
                     ],
                     'flex-end' => [
-                        'title' => __('Bottom', 'bdthemes-prime-slider'),
+                        'title' => __('Bottom', 'bdthemes-prime-slider-lite'),
                         'icon'  => 'eicon-v-align-bottom',
                     ],
                 ],
@@ -1684,19 +1632,16 @@ class Storker extends Widget_Base {
         $placeholder_image_src = Utils::get_placeholder_image_src();
         $image_src = wp_get_attachment_image_src(get_post_thumbnail_id($post_id), $size);
 
-        $gl = $settings['swiper_effect'] == 'gl' ? ' swiper-gl-image' : '';
-		$shutters = $settings['swiper_effect'] == 'shutters' ? ' swiper-shutters-image' : '';
-		// $slicer = $settings['swiper_effect'] == 'slicer' ? ' swiper-slicer-image' : '';
 
         if (!$image_src) {
-            printf('<img src="%1$s" alt="%2$s" class="bdt-storker-img %3$s">', esc_url($placeholder_image_src), esc_html(get_the_title()), esc_attr($gl.$shutters));
+            printf('<img src="%1$s" alt="%2$s" class="bdt-storker-img">', esc_url($placeholder_image_src), esc_html(get_the_title()));
         } else {
             print(wp_get_attachment_image(
                 get_post_thumbnail_id(),
                 $size,
                 false,
                 [
-                    'class' => 'bdt-storker-img' . esc_attr($gl.$shutters),
+                    'class' => 'bdt-storker-img',
                     'alt' => esc_html(get_the_title())
                 ]
             ));
@@ -1771,7 +1716,7 @@ class Storker extends Widget_Base {
         }
         ?>
         <div class="bdt-author-name-wrap">
-            <span class="bdt-by"><?php echo esc_html__('By', 'bdthemes-prime-slider') ?></span>
+            <span class="bdt-by"><?php echo esc_html__('By', 'bdthemes-prime-slider-lite') ?></span>
             <a class="bdt-author-name" href="<?php echo esc_url( get_author_posts_url( get_the_author_meta('ID') ) ); ?>">
                 <?php echo esc_html( get_the_author() ); ?>
             </a>
@@ -1806,7 +1751,7 @@ class Storker extends Widget_Base {
         /**
 		 * Reveal Effects
 		 */
-		$this->reveal_effects_attr('prime-slider-storker');
+		$this->add_addon_render_attributes('prime-slider-storker');
 
         $this->add_render_attribute(
             [
@@ -1819,7 +1764,6 @@ class Storker extends Widget_Base {
                             "speed"          => $settings["speed"]["size"],
                             "effect"        => isset($settings["swiper_effect"]) ? $settings["swiper_effect"] : 'fade',
 							"gl"             => [
-								'shader' => isset($settings["gl_shader"]) ? $settings["gl_shader"] : 'random',
 							],
 							"creativeEffect" => isset($settings["creative_effect"]) ? $settings["creative_effect"] : false,
                             "fadeEffect"     => ['crossFade' => true],
@@ -1853,7 +1797,7 @@ class Storker extends Widget_Base {
 				'class' => 'swiper-storker swiper',
 				'role' => 'region',
 				'aria-roledescription' => 'carousel',
-				'aria-label' => esc_attr( $this->get_title() . ' ' . esc_html__( 'Slider', 'bdthemes-prime-slider' ) ),
+				'aria-label' => esc_attr( $this->get_title() . ' ' . esc_html__( 'Slider', 'bdthemes-prime-slider-lite' ) ),
 				'dir' => $direction,
 			],
 		]);

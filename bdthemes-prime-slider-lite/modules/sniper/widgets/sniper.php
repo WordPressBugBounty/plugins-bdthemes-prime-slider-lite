@@ -23,7 +23,7 @@ class Sniper extends Widget_Base {
 	}
 
 	public function get_title() {
-		return BDTPS . esc_html__('Sniper', 'bdthemes-prime-slider');
+		return BDTPS . esc_html__('Sniper', 'bdthemes-prime-slider-lite');
 	}
 
 	public function get_icon() {
@@ -39,10 +39,11 @@ class Sniper extends Widget_Base {
 	}
 
 	public function get_style_depends() {
-		return ['swiper', 'ps-sniper'];
+		return ['swiper', 'bdtps-sniper'];
 	}
 	public function get_script_depends() {
-		return ['swiper', 'shutters', 'gl', 'slicer', 'tinder', 'ps-sniper'];
+		// Add-ons (e.g. Prime Slider Pro) append their own handles via this filter.
+		return $this->addon_script_depends( [ 'swiper', 'bdtps-sniper' ] );
 	}
 
 	public function get_custom_help_url() {
@@ -61,7 +62,7 @@ class Sniper extends Widget_Base {
 		$this->start_controls_section(
 			'section_content_sliders',
 			[
-				'label' => esc_html__('Sliders', 'bdthemes-prime-slider'),
+				'label' => esc_html__('Sliders', 'bdthemes-prime-slider-lite'),
 			]
 		);
 
@@ -90,33 +91,33 @@ class Sniper extends Widget_Base {
 		$this->add_control(
 			'slides',
 			[
-				'label'   => esc_html__('Slider Items', 'bdthemes-prime-slider'),
+				'label'   => esc_html__('Slider Items', 'bdthemes-prime-slider-lite'),
 				'type'    => Controls_Manager::REPEATER,
 				'fields'  => $repeater->get_controls(),
 				'default' => [
 					[
-						'sub_title' => esc_html__('Sub Title 1', 'bdthemes-prime-slider'),
-						'title' 	=> esc_html__('Sniper Slide 1', 'bdthemes-prime-slider'),
+						'sub_title' => esc_html__('Sub Title 1', 'bdthemes-prime-slider-lite'),
+						'title' 	=> esc_html__('Sniper Slide 1', 'bdthemes-prime-slider-lite'),
 						'image' 	=> ['url' => BDTPS_CORE_ASSETS_URL . 'images/gallery/item-1.png']
 					],
 					[
-						'sub_title' => esc_html__('Sub Title 2', 'bdthemes-prime-slider'),
-						'title' 	=> esc_html__('Sniper Slide 2', 'bdthemes-prime-slider'),
+						'sub_title' => esc_html__('Sub Title 2', 'bdthemes-prime-slider-lite'),
+						'title' 	=> esc_html__('Sniper Slide 2', 'bdthemes-prime-slider-lite'),
 						'image' 	=> ['url' => BDTPS_CORE_ASSETS_URL . 'images/gallery/item-2.png']
 					],
 					[
-						'sub_title' => esc_html__('Sub Title 3', 'bdthemes-prime-slider'),
-						'title' 	=> esc_html__('Sniper Slide 3', 'bdthemes-prime-slider'),
+						'sub_title' => esc_html__('Sub Title 3', 'bdthemes-prime-slider-lite'),
+						'title' 	=> esc_html__('Sniper Slide 3', 'bdthemes-prime-slider-lite'),
 						'image' 	=> ['url' => BDTPS_CORE_ASSETS_URL . 'images/gallery/item-3.png']
 					],
 					[
-						'sub_title' => esc_html__('Sub Title 4', 'bdthemes-prime-slider'),
-						'title' 	=> esc_html__('Sniper Slide 4', 'bdthemes-prime-slider'),
+						'sub_title' => esc_html__('Sub Title 4', 'bdthemes-prime-slider-lite'),
+						'title' 	=> esc_html__('Sniper Slide 4', 'bdthemes-prime-slider-lite'),
 						'image' 	=> ['url' => BDTPS_CORE_ASSETS_URL . 'images/gallery/item-4.png']
 					],
 					[	
-						'sub_title' => esc_html__('Sub Title 5', 'bdthemes-prime-slider'),
-						'title' 	=> esc_html__('Sniper Slide 5', 'bdthemes-prime-slider'),
+						'sub_title' => esc_html__('Sub Title 5', 'bdthemes-prime-slider-lite'),
+						'title' 	=> esc_html__('Sniper Slide 5', 'bdthemes-prime-slider-lite'),
 						'image' 	=> ['url' => BDTPS_CORE_ASSETS_URL . 'images/gallery/item-5.png']
 					],
 				],
@@ -129,14 +130,14 @@ class Sniper extends Widget_Base {
 		$this->start_controls_section(
 			'section_content_layout',
 			[
-				'label' => esc_html__('Additional Options', 'bdthemes-prime-slider'),
+				'label' => esc_html__('Additional Options', 'bdthemes-prime-slider-lite'),
 			]
 		);
 
 		$this->add_responsive_control(
 			'item_height',
 			[
-				'label' => esc_html__('Height', 'bdthemes-prime-slider'),
+				'label' => esc_html__('Height', 'bdthemes-prime-slider-lite'),
 				'type'  => Controls_Manager::SLIDER,
 				'size_units' => [ '%', 'px', 'vh' ],
 				'range' => [
@@ -182,19 +183,19 @@ class Sniper extends Widget_Base {
 		$this->add_responsive_control(
             'content_alignment',
             [
-                'label'   => esc_html__( 'Alignment', 'bdthemes-prime-slider' ),
+                'label'   => esc_html__( 'Alignment', 'bdthemes-prime-slider-lite' ),
                 'type'    => Controls_Manager::CHOOSE,
                 'options' => [
                     'left' => [
-                        'title' => esc_html__( 'Left', 'bdthemes-prime-slider' ),
+                        'title' => esc_html__( 'Left', 'bdthemes-prime-slider-lite' ),
                         'icon'  => 'eicon-text-align-left',
                     ],
                     'center' => [
-                        'title' => esc_html__( 'Center', 'bdthemes-prime-slider' ),
+                        'title' => esc_html__( 'Center', 'bdthemes-prime-slider-lite' ),
                         'icon'  => 'eicon-text-align-center',
                     ],
                     'right' => [
-                        'title' => esc_html__( 'Right', 'bdthemes-prime-slider' ),
+                        'title' => esc_html__( 'Right', 'bdthemes-prime-slider-lite' ),
                         'icon'  => 'eicon-text-align-right',
                     ],
                 ],
@@ -214,7 +215,7 @@ class Sniper extends Widget_Base {
 		$this->start_controls_section(
 			'section_slider_settings',
 			[
-				'label' => __('Slider Settings', 'bdthemes-prime-slider'),
+				'label' => __('Slider Settings', 'bdthemes-prime-slider-lite'),
 			]
 		);
 
@@ -227,7 +228,7 @@ class Sniper extends Widget_Base {
 			'slides_to_scroll',
 			[
 				'type'      => Controls_Manager::SELECT,
-				'label'     => esc_html__( 'Slides to Scroll', 'bdthemes-prime-slider' ),
+				'label'     => esc_html__( 'Slides to Scroll', 'bdthemes-prime-slider-lite' ),
 				'default'        => 1,
 				'tablet_default' => 1,
 				'mobile_default' => 1,
@@ -245,8 +246,8 @@ class Sniper extends Widget_Base {
 		$this->add_control(
 			'centered_slides',
 			[
-				'label'   => __( 'Center Slide', 'bdthemes-prime-slider' ),
-				'description'   => __( 'Use even items from Layout > Columns settings for better preview.', 'bdthemes-prime-slider' ),
+				'label'   => __( 'Center Slide', 'bdthemes-prime-slider-lite' ),
+				'description'   => __( 'Use even items from Layout > Columns settings for better preview.', 'bdthemes-prime-slider-lite' ),
 				'type'    => Controls_Manager::SWITCHER,
 				'default' => 'yes'
 			]
@@ -283,7 +284,7 @@ class Sniper extends Widget_Base {
 		$this->start_controls_section(
 			'section_style_sliders',
 			[
-				'label'     => esc_html__('Sliders', 'bdthemes-prime-slider'),
+				'label'     => esc_html__('Sliders', 'bdthemes-prime-slider-lite'),
 				'tab'       => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -291,7 +292,7 @@ class Sniper extends Widget_Base {
 		$this->add_control(
 			'background_color',
 			[
-				'label'     => esc_html__('Background Color', 'bdthemes-prime-slider'),
+				'label'     => esc_html__('Background Color', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .bdt-sniper-slider' => 'background-color: {{VALUE}};'
@@ -303,13 +304,14 @@ class Sniper extends Widget_Base {
 			Group_Control_Background::get_type(),
 			[
 				'name' => 'image_background',
-				'label' => esc_html__('Background', 'bdthemes-prime-slider'),
+				'label' => esc_html__('Background', 'bdthemes-prime-slider-lite'),
 				'types' => ['classic', 'gradient'],
+				// phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude -- Elementor widget query built from user-configured controls; caching/query shape is expected.
 				'exclude' => ['image'],
 				'selector' => '{{WRAPPER}} .bdt-sniper-slider .bdt-ps-iamge-overlay::before',
 				'fields_options' => [
 					'background' => [
-						'label' => esc_html__('Overlay Color', 'bdthemes-prime-slider'),
+						'label' => esc_html__('Overlay Color', 'bdthemes-prime-slider-lite'),
 						'default' => 'gradient',
 					],
 					'color' => [
@@ -336,7 +338,7 @@ class Sniper extends Widget_Base {
 		$this->start_controls_tab(
 			'slider_title_style',
 			[
-				'label' 	=> __('Title', 'bdthemes-prime-slider'),
+				'label' 	=> __('Title', 'bdthemes-prime-slider-lite'),
 				'condition' => [
 					'show_title' => ['yes'],
 				],
@@ -346,7 +348,7 @@ class Sniper extends Widget_Base {
 		$this->add_control(
 			'title_color',
 			[
-				'label'     => esc_html__('Color', 'bdthemes-prime-slider'),
+				'label'     => esc_html__('Color', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .bdt-sniper-slider .bdt-title, {{WRAPPER}} .bdt-sniper-slider .bdt-title a' => 'color: {{VALUE}};',
@@ -360,7 +362,7 @@ class Sniper extends Widget_Base {
 		$this->add_control(
 			'title_hover_color',
 			[
-				'label'     => esc_html__('Hover Color', 'bdthemes-prime-slider'),
+				'label'     => esc_html__('Hover Color', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .bdt-sniper-slider .bdt-title:hover, {{WRAPPER}} .bdt-sniper-slider .bdt-title a:hover' => 'color: {{VALUE}};',
@@ -374,7 +376,7 @@ class Sniper extends Widget_Base {
 		$this->add_control(
 			'title_active_color',
 			[
-				'label'     => esc_html__('Active Color', 'bdthemes-prime-slider') . BDTPS_CORE_PC,
+				'label'     => esc_html__('Active Color', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .bdt-sniper-slider .swiper-slide-active .bdt-title, {{WRAPPER}} .bdt-sniper-slider .swiper-slide-active .bdt-title a' => 'color: {{VALUE}};',
@@ -382,14 +384,13 @@ class Sniper extends Widget_Base {
 				'condition' => [
 					'show_title' => ['yes'],
 				],
-				'classes'   => BDTPS_CORE_IS_PC,
 			]
 		);
 
 		$this->add_control(
             'first_word_title_color',
             [
-                'label'     => esc_html__('First Word Color', 'bdthemes-prime-slider'),
+                'label'     => esc_html__('First Word Color', 'bdthemes-prime-slider-lite'),
                 'type'      => Controls_Manager::COLOR,
                 'selectors' => [
                     '{{WRAPPER}} .bdt-sniper-slider .bdt-title .frist-word' => 'color: {{VALUE}};',
@@ -403,7 +404,7 @@ class Sniper extends Widget_Base {
 		$this->add_control(
             'first_word_title_active_color',
             [
-                'label'     => esc_html__('First Word Active Color', 'bdthemes-prime-slider') . BDTPS_CORE_PC,
+                'label'     => esc_html__('First Word Active Color', 'bdthemes-prime-slider-lite'),
                 'type'      => Controls_Manager::COLOR,
                 'selectors' => [
                     '{{WRAPPER}} .bdt-sniper-slider .swiper-slide-active .bdt-title .frist-word' => 'color: {{VALUE}};',
@@ -411,7 +412,6 @@ class Sniper extends Widget_Base {
                 'condition' => [
 					'show_title' => ['yes'],
 				],
-				'classes'   => BDTPS_CORE_IS_PC,
             ]
         );
 
@@ -419,7 +419,7 @@ class Sniper extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name'     => 'title_typography',
-				'label'    => esc_html__('Typography', 'bdthemes-prime-slider'),
+				'label'    => esc_html__('Typography', 'bdthemes-prime-slider-lite'),
 				'selector' => '{{WRAPPER}} .bdt-sniper-slider .bdt-title',
 				'condition' => [
 					'show_title' => ['yes'],
@@ -454,7 +454,7 @@ class Sniper extends Widget_Base {
 		$this->start_controls_tab(
 			'slider_sub_title_style',
 			[
-				'label' 	=> __('Sub Title', 'bdthemes-prime-slider'),
+				'label' 	=> __('Sub Title', 'bdthemes-prime-slider-lite'),
 				'condition' => [
 					'show_sub_title' => ['yes'],
 				],
@@ -464,7 +464,7 @@ class Sniper extends Widget_Base {
 		$this->add_control(
 			'sub_title_color',
 			[
-				'label'     => esc_html__('Color', 'bdthemes-prime-slider'),
+				'label'     => esc_html__('Color', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .bdt-sniper-slider .bdt-sub-title' => 'color: {{VALUE}};',
@@ -476,7 +476,7 @@ class Sniper extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name'     => 'sub_title_typography',
-				'label'    => esc_html__('Typography', 'bdthemes-prime-slider'),
+				'label'    => esc_html__('Typography', 'bdthemes-prime-slider-lite'),
 				'selector' => '{{WRAPPER}} .bdt-sniper-slider .bdt-sub-title',
 			]
 		);
@@ -484,7 +484,7 @@ class Sniper extends Widget_Base {
 		$this->add_responsive_control(
 			'prime_slider_sub_title_spacing',
 			[
-				'label' => esc_html__('Sub Title Spacing', 'bdthemes-prime-slider'),
+				'label' => esc_html__('Sub Title Spacing', 'bdthemes-prime-slider-lite'),
 				'type'  => Controls_Manager::SLIDER,
 				'range' => [
 					'px' => [
@@ -506,23 +506,21 @@ class Sniper extends Widget_Base {
 		$this->start_controls_tab(
 			'slider_grid_line_style',
 			[
-				'label' 	=> __('Grid Line', 'bdthemes-prime-slider'),
+				'label' 	=> __('Grid Line', 'bdthemes-prime-slider-lite'),
 				'condition' => [
 					'show_sub_title' => ['yes'],
 				],
-				'classes'   => BDTPS_CORE_IS_PC,
 			]
 		);
 
 		$this->add_control(
 			'grid_line_color',
 			[
-				'label'     => esc_html__('Grid Line Color', 'bdthemes-prime-slider') . BDTPS_CORE_PC,
+				'label'     => esc_html__('Grid Line Color', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .bdt-sniper-slider .bdt-grid-line span' => 'border-color: {{VALUE}};',
 				],
-				'classes'   => BDTPS_CORE_IS_PC,
 			]
 		);
 
@@ -535,7 +533,7 @@ class Sniper extends Widget_Base {
 		$this->start_controls_section(
 			'section_style_navigation',
 			[
-				'label'     => __('Navigation', 'bdthemes-prime-slider'),
+				'label'     => __('Navigation', 'bdthemes-prime-slider-lite'),
 				'tab'       => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -544,7 +542,7 @@ class Sniper extends Widget_Base {
 		$this->add_control(
 			'arrows_color',
 			[
-				'label'     => __('Arrows Color', 'bdthemes-prime-slider'),
+				'label'     => __('Arrows Color', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .bdt-sniper-slider .bdt-navigation-wrap .bdt-nav-btn' => 'color: {{VALUE}}',
@@ -560,7 +558,7 @@ class Sniper extends Widget_Base {
 		$this->add_control(
 			'arrows_hover_color',
 			[
-				'label'     => __('Arrows Hover Color', 'bdthemes-prime-slider'),
+				'label'     => __('Arrows Hover Color', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .bdt-sniper-slider .bdt-navigation-wrap .bdt-nav-btn:hover' => 'color: {{VALUE}}',
@@ -575,16 +573,19 @@ class Sniper extends Widget_Base {
 		$this->add_control(
 			'Fraction_pag_heading',
 			[
-				'label' => esc_html__( 'Fraction Pagination', 'bdthemes-prime-slider' ),
-				'type' => Controls_Manager::HEADING,
+				'label' 	=> esc_html__( 'Fraction Pagination', 'bdthemes-prime-slider-lite' ),
+				'type' 		=> Controls_Manager::HEADING,
 				'separator' => 'before',
+				'condition' => [
+					'show_navigation_dots' => ['yes'],
+				],
 			]
 		);
 		
 		$this->add_control(
 			'pagination_color',
 			[
-				'label'     => __('Pagination Color', 'bdthemes-prime-slider'),
+				'label'     => __('Pagination Color', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .bdt-sniper-slider .bdt-pagination-wrap .bdt-pagination' => 'color: {{VALUE}}',
@@ -598,7 +599,7 @@ class Sniper extends Widget_Base {
 		$this->add_control(
 			'pagination_total_color',
 			[
-				'label'     => __('Pagination Total Color', 'bdthemes-prime-slider'),
+				'label'     => __('Pagination Total Color', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .bdt-sniper-slider .bdt-pagination-wrap .swiper-pagination-total' => 'color: {{VALUE}}',
@@ -614,11 +615,11 @@ class Sniper extends Widget_Base {
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			[
-				'name'     => 'pagination_typography',
-				'label'    => esc_html__('Typography', 'bdthemes-prime-slider'),
-				'selector' => '{{WRAPPER}} .bdt-sniper-slider .bdt-pagination-wrap .bdt-pagination',
+				'name'      => 'pagination_typography',
+				'label'     => esc_html__('Typography', 'bdthemes-prime-slider-lite'),
+				'selector'  => '{{WRAPPER}} .bdt-sniper-slider .bdt-pagination-wrap .bdt-pagination',
 				'condition' => [
-					'show_title' => ['yes'],
+					'show_navigation_dots' => ['yes'],
 				],
 			]
 		);
@@ -626,7 +627,7 @@ class Sniper extends Widget_Base {
 		$this->add_control(
 			'scrollbar_heading',
 			[
-				'label' => esc_html__( 'Scrollbar', 'bdthemes-prime-slider' ),
+				'label' => esc_html__( 'Scrollbar', 'bdthemes-prime-slider-lite' ),
 				'type' => Controls_Manager::HEADING,
 				'separator' => 'before',
 			]
@@ -635,7 +636,7 @@ class Sniper extends Widget_Base {
 		$this->add_control(
 			'scrollbar_line_color',
 			[
-				'label'     => __('line Color', 'bdthemes-prime-slider'),
+				'label'     => __('line Color', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .bdt-sniper-slider .bdt-pagination-wrap .swiper-scrollbar' => 'background: {{VALUE}}',
@@ -646,7 +647,7 @@ class Sniper extends Widget_Base {
 		$this->add_control(
 			'scrollbar_active_color',
 			[
-				'label'     => __('Active Line Color', 'bdthemes-prime-slider'),
+				'label'     => __('Active Line Color', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .bdt-sniper-slider .bdt-pagination-wrap .swiper-scrollbar::before' => 'background: {{VALUE}}',
@@ -676,11 +677,9 @@ class Sniper extends Widget_Base {
 							"speed"          => $settings["speed"]["size"],
 							"effect"        => isset($settings["swiper_effect"]) ? $settings["swiper_effect"] : 'slide',
 							"gl"             => [
-								'shader' => isset($settings["gl_shader"]) ? $settings["gl_shader"] : 'random',
 							],
 							"creativeEffect" => isset($settings["creative_effect"]) ? $settings["creative_effect"] : false,
 							"fadeEffect"     => ['crossFade' => true],
-							"lazy"           => true,
 							"parallax"       => true,
 							"watchSlidesProgress" => true,
 							"slidesPerGroupAuto" => false,
@@ -717,7 +716,7 @@ class Sniper extends Widget_Base {
 				'class' => 'bdt-main-slider swiper',
 				'role' => 'region',
 				'aria-roledescription' => 'carousel',
-				'aria-label' => esc_attr( $this->get_title() . ' ' . esc_html__( 'Slider', 'bdthemes-prime-slider' ) ),
+				'aria-label' => esc_attr( $this->get_title() . ' ' . esc_html__( 'Slider', 'bdthemes-prime-slider-lite' ) ),
 				'dir' => $direction,
 			],
 		]);
@@ -752,11 +751,12 @@ class Sniper extends Widget_Base {
 			<div thumbsSlider="" class="bdt-thumbs-slider">
                 <div class="swiper-wrapper">
 
-				<?php foreach ($settings['slides'] as $slide) : 
+				<?php foreach ($settings['slides'] as $slide) :
+					$title_link_key = 'title-link-' . $slide['_id'];
 					if ($slide['title'] && ! empty($slide['title_link']['url'])) {
-						$this->add_link_attributes( 'title-link', $slide['title_link'], true );
+						$this->add_link_attributes( $title_link_key, $slide['title_link'], true );
 					}
-					
+
 					?>
 					<div class="swiper-slide bdt-item">
                         <div class="bdt-content">
@@ -770,7 +770,7 @@ class Sniper extends Widget_Base {
 							<?php if ($slide['title'] && ('yes' == $settings['show_title'])) : ?>
 								<<?php echo esc_attr(Utils::get_valid_html_tag($settings['title_html_tag'])); ?> class="bdt-title">
 									<?php if ('' !== $slide['title_link']['url']) : ?>
-										<a <?php $this->print_render_attribute_string('title-link'); ?>>
+										<a <?php $this->print_render_attribute_string($title_link_key); ?>>
 										<?php endif; ?>
 										<?php echo wp_kses( prime_slider_first_word( $slide['title'] ), [ 'span' => [ 'class' => [] ] ] ); ?>
 										<?php if ('' !== $slide['title_link']['url']) : ?>

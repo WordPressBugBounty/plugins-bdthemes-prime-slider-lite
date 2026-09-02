@@ -31,7 +31,7 @@ class Vertex extends Widget_Base {
     }
 
     public function get_title() {
-        return BDTPS . esc_html__('Vertex', 'bdthemes-prime-slider');
+        return BDTPS . esc_html__('Vertex', 'bdthemes-prime-slider-lite');
     }
 
     public function get_icon() {
@@ -47,20 +47,12 @@ class Vertex extends Widget_Base {
     }
 
     public function get_style_depends() {
-        return ['swiper', 'ps-vertex', 'prime-slider-font'];
+        return ['swiper', 'bdtps-vertex', 'prime-slider-font'];
     }
 
     public function get_script_depends() {
-        $reveal_effects = prime_slider_option('reveal-effects', 'prime_slider_other_settings', 'off');
-        if ('on' === $reveal_effects) {
-            if ( true === _is_ps_pro_activated() ) {
-                return ['swiper', 'anime', 'revealFx', 'ps-vertex'];
-            } else {
-                return ['swiper', 'ps-vertex'];
-            }
-        } else {
-            return ['swiper', 'ps-vertex'];
-        }
+    	// Add-ons (e.g. Prime Slider Pro) append their own handles via this filter.
+    	return $this->addon_script_depends( [ 'swiper', 'bdtps-vertex' ] );
     }
 
     public function get_custom_help_url() {
@@ -72,18 +64,17 @@ class Vertex extends Widget_Base {
     }
 
 	protected function register_controls() {
-        $reveal_effects = prime_slider_option('reveal-effects', 'prime_slider_other_settings', 'off');
         $this->start_controls_section(
             'section_content_layout',
             [
-                'label' => esc_html__('Layout', 'bdthemes-prime-slider'),
+                'label' => esc_html__('Layout', 'bdthemes-prime-slider-lite'),
             ]
         );
 
         $this->add_responsive_control(
             'columns',
             [
-                'label'          => __('Columns', 'bdthemes-prime-slider') . BDTPS_CORE_PC,
+                'label'          => __('Columns', 'bdthemes-prime-slider-lite'),
                 'type'           => Controls_Manager::SELECT,
                 'default'        => 3,
                 'tablet_default' => 3,
@@ -93,17 +84,16 @@ class Vertex extends Widget_Base {
                     3 => '3',
                     5 => '5',
                 ],
-                'classes'   => BDTPS_CORE_IS_PC
             ]
         );
 
         $this->add_control(
 			'image_size_toggle',
             [
-                'label'        => __( 'Image Size', 'bdthemes-prime-slider' ) . BDTPS_CORE_NC,
+                'label'        => __( 'Image Size', 'bdthemes-prime-slider-lite' ) . BDTPS_CORE_NC,
                 'type'         => Controls_Manager::POPOVER_TOGGLE,
-                'label_off'    => __( 'None', 'bdthemes-prime-slider' ),
-				'label_on'     => __( 'Custom', 'bdthemes-prime-slider' ),
+                'label_off'    => __( 'None', 'bdthemes-prime-slider-lite' ),
+				'label_on'     => __( 'Custom', 'bdthemes-prime-slider-lite' ),
 				'return_value' => 'yes',
                 'default'     => 'yes',
             ]
@@ -113,7 +103,7 @@ class Vertex extends Widget_Base {
         $this->add_responsive_control(
             'slider_height',
             [
-                'label' => esc_html__('Height', 'bdthemes-prime-slider'),
+                'label' => esc_html__('Height', 'bdthemes-prime-slider-lite'),
                 'type'  => Controls_Manager::SLIDER,
                 'range' => [
                     'px' => [
@@ -134,7 +124,7 @@ class Vertex extends Widget_Base {
         $this->add_responsive_control(
             'slider_image_width',
             [
-                'label' => esc_html__('Width', 'bdthemes-prime-slider'),
+                'label' => esc_html__('Width', 'bdthemes-prime-slider-lite'),
                 'type'  => Controls_Manager::SLIDER,
                 'range' => [
                     'px' => [
@@ -156,7 +146,7 @@ class Vertex extends Widget_Base {
         $this->add_responsive_control(
             'vertical_spacing',
             [
-                'label' => esc_html__('Vertical Spacing', 'bdthemes-prime-slider') . BDTPS_CORE_PC,
+                'label' => esc_html__('Vertical Spacing', 'bdthemes-prime-slider-lite'),
                 'type'  => Controls_Manager::SLIDER,
                 'range' => [
                     'px' => [
@@ -167,26 +157,25 @@ class Vertex extends Widget_Base {
                 'selectors' => [
                     '{{WRAPPER}} .bdt-vertex-slider .swiper-vertex' => 'padding: {{SIZE}}{{UNIT}} 0;',
                 ],
-                'classes'   => BDTPS_CORE_IS_PC
             ]
         );
 
         $this->add_responsive_control(
             'content_alignment',
             [
-                'label'     => esc_html__('Alignment', 'bdthemes-prime-slider'),
+                'label'     => esc_html__('Alignment', 'bdthemes-prime-slider-lite'),
                 'type'      => Controls_Manager::CHOOSE,
                 'options'   => [
                     'left'   => [
-                        'title' => esc_html__('Left', 'bdthemes-prime-slider'),
+                        'title' => esc_html__('Left', 'bdthemes-prime-slider-lite'),
                         'icon'  => 'eicon-text-align-left',
                     ],
                     'center' => [
-                        'title' => esc_html__('Center', 'bdthemes-prime-slider'),
+                        'title' => esc_html__('Center', 'bdthemes-prime-slider-lite'),
                         'icon'  => 'eicon-text-align-center',
                     ],
                     'right'  => [
-                        'title' => esc_html__('Right', 'bdthemes-prime-slider'),
+                        'title' => esc_html__('Right', 'bdthemes-prime-slider-lite'),
                         'icon'  => 'eicon-text-align-right',
                     ],
                 ],
@@ -217,7 +206,7 @@ class Vertex extends Widget_Base {
         $this->start_controls_section(
             'section_post_query_builder',
             [
-                'label' => __('Query', 'bdthemes-prime-slider'),
+                'label' => __('Query', 'bdthemes-prime-slider-lite'),
                 'tab' => Controls_Manager::TAB_CONTENT,
             ]
         );
@@ -229,7 +218,7 @@ class Vertex extends Widget_Base {
         $this->start_controls_section(
             'section_slider_settings',
             [
-                'label' => __('Slider Settings', 'bdthemes-prime-slider'),
+                'label' => __('Slider Settings', 'bdthemes-prime-slider-lite'),
             ]
         );
 
@@ -242,7 +231,7 @@ class Vertex extends Widget_Base {
             'slides_to_scroll',
             [
                 'type'      => Controls_Manager::SELECT,
-                'label'     => esc_html__('Slides to Scroll', 'bdthemes-prime-slider'),
+                'label'     => esc_html__('Slides to Scroll', 'bdthemes-prime-slider-lite'),
                 'default'        => 1,
                 'tablet_default' => 1,
                 'mobile_default' => 1,
@@ -260,8 +249,8 @@ class Vertex extends Widget_Base {
         $this->add_control(
             'centered_slides',
             [
-                'label'   => __('Center Slide', 'bdthemes-prime-slider'),
-                'description'   => __('Use even items from Layout > Columns settings for better preview.', 'bdthemes-prime-slider'),
+                'label'   => __('Center Slide', 'bdthemes-prime-slider-lite'),
+                'description'   => __('Use even items from Layout > Columns settings for better preview.', 'bdthemes-prime-slider-lite'),
                 'type'    => Controls_Manager::SWITCHER,
                 'default' => 'yes'
             ]
@@ -290,17 +279,16 @@ class Vertex extends Widget_Base {
         $this->end_controls_section();
 
         /**
-         * Reveal Effects
+         * Extension point: add-ons (e.g. Prime Slider Pro) register their own
+         * controls here. This plugin registers none of its own.
          */
-        if ('on' === $reveal_effects) {
-            $this->register_reveal_effects();
-        }
+        $this->register_addon_controls();
 
         //style
         $this->start_controls_section(
             'section_style_layout',
             [
-                'label'     => __('Sliders', 'bdthemes-prime-slider'),
+                'label'     => __('Sliders', 'bdthemes-prime-slider-lite'),
                 'tab'       => Controls_Manager::TAB_STYLE,
             ]
         );
@@ -308,7 +296,7 @@ class Vertex extends Widget_Base {
         $this->add_responsive_control(
             'content_padding',
             [
-                'label'      => __('Content Padding', 'bdthemes-prime-slider'),
+                'label'      => __('Content Padding', 'bdthemes-prime-slider-lite'),
                 'type'          => Controls_Manager::DIMENSIONS,
                 'size_units' => ['px', 'em', '%'],
                 'selectors'  => [
@@ -320,7 +308,7 @@ class Vertex extends Widget_Base {
         $this->add_responsive_control(
             'item_border_radius',
             [
-                'label'      => esc_html__('Border Radius', 'bdthemes-prime-slider'),
+                'label'      => esc_html__('Border Radius', 'bdthemes-prime-slider-lite'),
                 'type'       => Controls_Manager::DIMENSIONS,
                 'size_units' => ['px', '%'],
                 'selectors'  => [
@@ -332,7 +320,7 @@ class Vertex extends Widget_Base {
         $this->add_control(
             'border_style_color',
             [
-                'label'     => esc_html__('Border Line Color', 'bdthemes-prime-slider'),
+                'label'     => esc_html__('Border Line Color', 'bdthemes-prime-slider-lite'),
                 'type'      => Controls_Manager::COLOR,
                 'selectors' => [
                     '{{WRAPPER}} .bdt-vertex-slider .swiper-vertex::before' => 'background: {{VALUE}};',
@@ -345,7 +333,7 @@ class Vertex extends Widget_Base {
         $this->add_responsive_control(
             'border_width_type',
             [
-                'label'     => esc_html__('Border Line Width', 'bdthemes-prime-slider') . BDTPS_CORE_PC,
+                'label'     => esc_html__('Border Line Width', 'bdthemes-prime-slider-lite'),
                 'type'      => Controls_Manager::SLIDER,
                 'range' => [
                     'px' => [
@@ -357,7 +345,6 @@ class Vertex extends Widget_Base {
                     '{{WRAPPER}} .bdt-vertex-slider .swiper-vertex::before' => 'height: {{SIZE}}{{UNIT}};',
                     '{{WRAPPER}} .bdt-vertex-slider .bdt-img-wrap .bdt-img' => 'border-width: {{SIZE}}{{UNIT}};',
                 ],
-                'classes'   => BDTPS_CORE_IS_PC
             ]
         );
 
@@ -366,7 +353,7 @@ class Vertex extends Widget_Base {
         $this->start_controls_section(
             'section_style_title',
             [
-                'label'     => esc_html__('Title', 'bdthemes-prime-slider'),
+                'label'     => esc_html__('Title', 'bdthemes-prime-slider-lite'),
                 'tab'       => Controls_Manager::TAB_STYLE,
                 'condition' => [
                     'show_title' => 'yes',
@@ -377,7 +364,7 @@ class Vertex extends Widget_Base {
         $this->add_control(
             'title_color',
             [
-                'label'     => esc_html__('Color', 'bdthemes-prime-slider'),
+                'label'     => esc_html__('Color', 'bdthemes-prime-slider-lite'),
                 'type'      => Controls_Manager::COLOR,
                 'selectors' => [
                     '{{WRAPPER}} .bdt-vertex-slider .bdt-title a' => 'color: {{VALUE}};',
@@ -388,7 +375,7 @@ class Vertex extends Widget_Base {
         $this->add_control(
             'title_hover_color',
             [
-                'label'     => esc_html__('Hover Color', 'bdthemes-prime-slider'),
+                'label'     => esc_html__('Hover Color', 'bdthemes-prime-slider-lite'),
                 'type'      => Controls_Manager::COLOR,
                 'selectors' => [
                     '{{WRAPPER}} .bdt-vertex-slider .bdt-title a:hover' => 'color: {{VALUE}};',
@@ -400,7 +387,7 @@ class Vertex extends Widget_Base {
             Group_Control_Typography::get_type(),
             [
                 'name'      => 'title_typography',
-                'label'     => esc_html__('Typography', 'bdthemes-prime-slider'),
+                'label'     => esc_html__('Typography', 'bdthemes-prime-slider-lite'),
                 'selector'  => '{{WRAPPER}} .bdt-vertex-slider .bdt-title',
             ]
         );
@@ -409,7 +396,7 @@ class Vertex extends Widget_Base {
             Group_Control_Text_Shadow::get_type(),
             [
                 'name' => 'title_text_shadow',
-                'label' => __('Text Shadow', 'bdthemes-prime-slider'),
+                'label' => __('Text Shadow', 'bdthemes-prime-slider-lite'),
                 'selector' => '{{WRAPPER}} .bdt-vertex-slider .bdt-title a',
             ]
         );
@@ -417,7 +404,7 @@ class Vertex extends Widget_Base {
             Group_Control_Text_Stroke::get_type(),
             [
                 'name' => 'title_text_stroke',
-                'label' => __('Text Stroke', 'bdthemes-prime-slider') . BDTPS_CORE_NC,
+                'label' => __('Text Stroke', 'bdthemes-prime-slider-lite') . BDTPS_CORE_NC,
                 'selector' => '{{WRAPPER}} .bdt-vertex-slider .bdt-title a',
             ]
         );
@@ -427,7 +414,7 @@ class Vertex extends Widget_Base {
         $this->start_controls_section(
             'section_style_category',
             [
-                'label'     => esc_html__('Category', 'bdthemes-prime-slider'),
+                'label'     => esc_html__('Category', 'bdthemes-prime-slider-lite'),
                 'tab'       => Controls_Manager::TAB_STYLE,
                 'condition' => [
                     'show_category' => 'yes'
@@ -438,7 +425,7 @@ class Vertex extends Widget_Base {
         $this->add_responsive_control(
             'category_bottom_spacing',
             [
-                'label'     => esc_html__('Spacing', 'bdthemes-prime-slider'),
+                'label'     => esc_html__('Spacing', 'bdthemes-prime-slider-lite'),
                 'type'      => Controls_Manager::SLIDER,
                 'range'     => [
                     'px' => [
@@ -457,14 +444,14 @@ class Vertex extends Widget_Base {
         $this->start_controls_tab(
             'tab_category_normal',
             [
-                'label' => esc_html__('Normal', 'bdthemes-prime-slider'),
+                'label' => esc_html__('Normal', 'bdthemes-prime-slider-lite'),
             ]
         );
 
         $this->add_control(
             'category_color',
             [
-                'label'     => esc_html__('Color', 'bdthemes-prime-slider'),
+                'label'     => esc_html__('Color', 'bdthemes-prime-slider-lite'),
                 'type'      => Controls_Manager::COLOR,
                 'selectors' => [
                     '{{WRAPPER}} .bdt-vertex-slider .bdt-category a' => 'color: {{VALUE}};',
@@ -491,7 +478,7 @@ class Vertex extends Widget_Base {
         $this->add_responsive_control(
             'category_border_radius',
             [
-                'label'      => esc_html__('Border Radius', 'bdthemes-prime-slider'),
+                'label'      => esc_html__('Border Radius', 'bdthemes-prime-slider-lite'),
                 'type'       => Controls_Manager::DIMENSIONS,
                 'size_units' => ['px', '%'],
                 'selectors'  => [
@@ -503,7 +490,7 @@ class Vertex extends Widget_Base {
         $this->add_responsive_control(
             'category_padding',
             [
-                'label'      => esc_html__('Padding', 'bdthemes-prime-slider'),
+                'label'      => esc_html__('Padding', 'bdthemes-prime-slider-lite'),
                 'type'       => Controls_Manager::DIMENSIONS,
                 'size_units' => ['px', 'em', '%'],
                 'selectors'  => [
@@ -515,7 +502,7 @@ class Vertex extends Widget_Base {
         $this->add_responsive_control(
             'category_space_between',
             [
-                'label'     => esc_html__('Space Between', 'bdthemes-prime-slider'),
+                'label'     => esc_html__('Space Between', 'bdthemes-prime-slider-lite'),
                 'type'      => Controls_Manager::SLIDER,
                 'range'     => [
                     'px' => [
@@ -541,7 +528,7 @@ class Vertex extends Widget_Base {
             Group_Control_Typography::get_type(),
             [
                 'name'     => 'category_typography',
-                'label'    => esc_html__('Typography', 'bdthemes-prime-slider'),
+                'label'    => esc_html__('Typography', 'bdthemes-prime-slider-lite'),
                 'selector' => '{{WRAPPER}} .bdt-vertex-slider .bdt-category a',
             ]
         );
@@ -551,14 +538,14 @@ class Vertex extends Widget_Base {
         $this->start_controls_tab(
             'tab_category_hover',
             [
-                'label'     => esc_html__('Hover', 'bdthemes-prime-slider'),
+                'label'     => esc_html__('Hover', 'bdthemes-prime-slider-lite'),
             ]
         );
 
         $this->add_control(
             'category_hover_color',
             [
-                'label'     => esc_html__('Color', 'bdthemes-prime-slider'),
+                'label'     => esc_html__('Color', 'bdthemes-prime-slider-lite'),
                 'type'      => Controls_Manager::COLOR,
                 'selectors' => [
                     '{{WRAPPER}} .bdt-vertex-slider .bdt-category a:hover' => 'color: {{VALUE}};',
@@ -577,7 +564,7 @@ class Vertex extends Widget_Base {
         $this->add_control(
             'category_hover_border_color',
             [
-                'label'     => esc_html__('Border Color', 'bdthemes-prime-slider'),
+                'label'     => esc_html__('Border Color', 'bdthemes-prime-slider-lite'),
                 'type'      => Controls_Manager::COLOR,
                 'condition' => [
                     'category_border_border!' => '',
@@ -598,7 +585,7 @@ class Vertex extends Widget_Base {
         $this->start_controls_section(
             'section_style_navigation',
             [
-                'label'     => __('Navigation', 'bdthemes-prime-slider'),
+                'label'     => __('Navigation', 'bdthemes-prime-slider-lite'),
                 'tab'       => Controls_Manager::TAB_STYLE,
             ]
         );
@@ -608,14 +595,14 @@ class Vertex extends Widget_Base {
         $this->start_controls_tab(
             'tabs_nav_arrows_normal',
             [
-                'label'     => __('Normal', 'bdthemes-prime-slider'),
+                'label'     => __('Normal', 'bdthemes-prime-slider-lite'),
             ]
         );
 
         $this->add_control(
             'arrows_color',
             [
-                'label'     => __('Color', 'bdthemes-prime-slider'),
+                'label'     => __('Color', 'bdthemes-prime-slider-lite'),
                 'type'      => Controls_Manager::COLOR,
                 'selectors' => [
                     '{{WRAPPER}} .bdt-vertex-slider .bdt-navigation-wrap .bdt-navigation-next, {{WRAPPER}} .bdt-vertex-slider .bdt-navigation-wrap .bdt-navigation-prev' => 'color: {{VALUE}}',
@@ -642,7 +629,7 @@ class Vertex extends Widget_Base {
         $this->add_responsive_control(
             'arrows_border_radius',
             [
-                'label'      => esc_html__('Border Radius', 'bdthemes-prime-slider'),
+                'label'      => esc_html__('Border Radius', 'bdthemes-prime-slider-lite'),
                 'type'       => Controls_Manager::DIMENSIONS,
                 'size_units' => ['px', '%'],
                 'selectors'  => [
@@ -663,14 +650,14 @@ class Vertex extends Widget_Base {
             Group_Control_Typography::get_type(),
             [
                 'name'     => 'arrows_typography',
-                'label'    => esc_html__('Icon Typography (Deprecated)', 'bdthemes-prime-slider'),
+                'label'    => esc_html__('Icon Typography (Deprecated)', 'bdthemes-prime-slider-lite'),
                 'selector' => '{{WRAPPER}} .bdt-vertex-slider .bdt-navigation-wrap .bdt-navigation-next, {{WRAPPER}} .bdt-vertex-slider .bdt-navigation-wrap .bdt-navigation-prev',
             ]
         );
         $this->add_responsive_control(
             'arrows_size',
             [
-                'label'     => esc_html__('Size', 'bdthemes-prime-slider'),
+                'label'     => esc_html__('Size', 'bdthemes-prime-slider-lite'),
                 'type'      => Controls_Manager::SLIDER,
                 'size_units' => ['px'],
                 'range'     => [
@@ -687,7 +674,7 @@ class Vertex extends Widget_Base {
         $this->add_responsive_control(
             'arrows_icon_size',
             [
-                'label'     => esc_html__('Icon Size', 'bdthemes-prime-slider'),
+                'label'     => esc_html__('Icon Size', 'bdthemes-prime-slider-lite'),
                 'type'      => Controls_Manager::SLIDER,
                 'selectors' => [
                     '{{WRAPPER}} .bdt-vertex-slider .bdt-navigation-wrap .bdt-navigation-next, {{WRAPPER}} .bdt-vertex-slider .bdt-navigation-wrap .bdt-navigation-prev' => 'font-size: {{SIZE}}{{UNIT}};',
@@ -700,14 +687,14 @@ class Vertex extends Widget_Base {
         $this->start_controls_tab(
             'tabs_nav_arrows_hover',
             [
-                'label'     => __('Hover', 'bdthemes-prime-slider'),
+                'label'     => __('Hover', 'bdthemes-prime-slider-lite'),
             ]
         );
 
         $this->add_control(
             'arrows_hover_color',
             [
-                'label'     => __('Color', 'bdthemes-prime-slider'),
+                'label'     => __('Color', 'bdthemes-prime-slider-lite'),
                 'type'      => Controls_Manager::COLOR,
                 'selectors' => [
                     '{{WRAPPER}} .bdt-vertex-slider .bdt-navigation-wrap .bdt-navigation-next:hover, {{WRAPPER}} .bdt-vertex-slider .bdt-navigation-wrap .bdt-navigation-prev:hover' => 'color: {{VALUE}}',
@@ -726,7 +713,7 @@ class Vertex extends Widget_Base {
         $this->add_control(
             'arrows_hover_border_color',
             [
-                'label'     => esc_html__('Border Color', 'bdthemes-prime-slider'),
+                'label'     => esc_html__('Border Color', 'bdthemes-prime-slider-lite'),
                 'type'      => Controls_Manager::COLOR,
                 'condition' => [
                     'arrows_border_border!' => '',
@@ -795,7 +782,7 @@ class Vertex extends Widget_Base {
         /**
 		 * Reveal Effects
 		 */
-		$this->reveal_effects_attr('prime-slider-vertex');
+		$this->add_addon_render_attributes('prime-slider-vertex');
 
         $elementor_vp_lg = get_option('elementor_viewport_lg');
         $elementor_vp_md = get_option('elementor_viewport_md');
@@ -850,7 +837,7 @@ class Vertex extends Widget_Base {
 				'class' => 'swiper-vertex swiper',
 				'role' => 'region',
 				'aria-roledescription' => 'carousel',
-				'aria-label' => esc_attr( $this->get_title() . ' ' . esc_html__( 'Slider', 'bdthemes-prime-slider' ) ),
+				'aria-label' => esc_attr( $this->get_title() . ' ' . esc_html__( 'Slider', 'bdthemes-prime-slider-lite' ) ),
 				'dir' => $direction,
 			],
 		]);

@@ -11,8 +11,8 @@ use PrimeSlider\Admin\ModuleService;
 if (!defined('ABSPATH')) exit; // Exit if accessed directly
 
 // Settings Filters
-if (!function_exists('ps_is_dashboard_enabled')) {
-    function ps_is_dashboard_enabled() {
+if (!function_exists('bdtps_is_dashboard_enabled')) {
+    function bdtps_is_dashboard_enabled() {
         return apply_filters('PrimeSlider/settings/dashboard', true);
     }
 }

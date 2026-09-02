@@ -15,7 +15,7 @@ class Skin_Locate extends Elementor_Skin_Base {
     }
 
     public function get_title() {
-        return esc_html__('Locate', 'bdthemes-prime-slider');
+        return esc_html__('Locate', 'bdthemes-prime-slider-lite');
     }
 
 
@@ -34,7 +34,7 @@ class Skin_Locate extends Elementor_Skin_Base {
 			<div <?php $this->parent->print_render_attribute_string('social-icon'); ?>>
 
 				<?php if ($label) : ?>
-					<h3><?php esc_html_e('Follow Us', 'bdthemes-prime-slider'); ?></h3>
+					<h3><?php esc_html_e('Follow Us', 'bdthemes-prime-slider-lite'); ?></h3>
 				<?php endif; ?>
 
                 <?php
@@ -76,10 +76,10 @@ class Skin_Locate extends Elementor_Skin_Base {
                         <div class="bdt-flex" <?php echo esc_attr($is_rtl); ?>>
                             <a class="bdt-prime-slider-previous" href="#" bdt-slideshow-item="previous">
                                 <i class="ps-wi-arrow-left-5"></i>
-                                <span class="bdt-slider-nav-text"><?php esc_html_e( 'Prev', 'bdthemes-prime-slider' ) ?></span>
+                                <span class="bdt-slider-nav-text"><?php esc_html_e( 'Prev', 'bdthemes-prime-slider-lite' ) ?></span>
                             </a>
                             <a class="bdt-prime-slider-next" href="#" bdt-slideshow-item="next">
-                                <span class="bdt-slider-nav-text"><?php esc_html_e( 'Next', 'bdthemes-prime-slider' ) ?></span>
+                                <span class="bdt-slider-nav-text"><?php esc_html_e( 'Next', 'bdthemes-prime-slider-lite' ) ?></span>
                                 <i class="ps-wi-arrow-right-5"></i>
                             </a>
                         </div>
@@ -138,25 +138,24 @@ class Skin_Locate extends Elementor_Skin_Base {
             $parallax_button 	    = 'data-bdt-slideshow-parallax="y: 150,0,-100; opacity: 1,1,0"';
         }
 
-        if ( true === _is_ps_pro_activated() ) {
-            if ($settings['animation_status'] == 'yes' && !empty($settings['animation_of'])) {
-
-                if (in_array(".bdt-ps-sub-title", $settings['animation_of'])) {
-                    $parallax_sub_title = '';
-                }
-                if (in_array(".bdt-title-tag", $settings['animation_of'])) {
-                    $parallax_title = '';
-                }
-                if (in_array(".bdt-slider-excerpt", $settings['animation_of'])) {
-                    $parallax_excerpt = '';
-                }
-            }
+        if ( ! empty( $settings['animation_status'] ) && 'yes' === $settings['animation_status'] && ! empty( $settings['animation_of'] ) ) {
+        	if (in_array(".bdt-ps-sub-title", $settings['animation_of'])) {
+        	    $parallax_sub_title = '';
+        	}
+        	if (in_array(".bdt-title-tag", $settings['animation_of'])) {
+        	    $parallax_title = '';
+        	}
+        	if (in_array(".bdt-slider-excerpt", $settings['animation_of'])) {
+        	    $parallax_excerpt = '';
+        	}
         }
+
+        $title_link_key = 'title-link-' . $slide_content['_id'];
 
         if ($slide_content['title']) {
-            $this->parent->add_link_attributes('title-link', $slide_content['title_link'], true);
+            $this->parent->add_link_attributes($title_link_key, $slide_content['title_link'], true);
         }
-        
+
 
         ?>
             <div class="bdt-slideshow-content-wrapper">
@@ -177,7 +176,7 @@ class Skin_Locate extends Elementor_Skin_Base {
                                     <<?php echo esc_attr(Utils::get_valid_html_tag($settings['title_html_tag'])); ?> 
                                     class="bdt-title-tag" data-reveal="reveal-active" <?php echo wp_kses_post($parallax_title); ?>>
                                         <?php if ('' !== $slide_content['title_link']['url']) : ?>
-                                            <a <?php $this->parent->print_render_attribute_string('title-link');?>>
+                                            <a <?php $this->parent->print_render_attribute_string($title_link_key);?>>
                                             <?php endif; ?>
                                             <?php echo wp_kses_post(prime_slider_first_word($slide_content['title'])); ?>
                                             <?php if ('' !== $slide_content['title_link']['url']) : ?>

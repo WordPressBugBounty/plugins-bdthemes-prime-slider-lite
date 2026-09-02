@@ -26,7 +26,7 @@ class Omatic extends Widget_Base {
 	}
 
 	public function get_title() {
-		return BDTPS . esc_html__('Omatic', 'bdthemes-prime-slider');
+		return BDTPS . esc_html__('Omatic', 'bdthemes-prime-slider-lite');
 	}
 
 	public function get_icon() {
@@ -42,10 +42,11 @@ class Omatic extends Widget_Base {
 	}
 
 	public function get_style_depends() {
-		return ['swiper', 'prime-slider-font', 'ps-omatic'];
+		return ['swiper', 'prime-slider-font', 'bdtps-omatic'];
 	}
 	public function get_script_depends() {
-		return ['swiper', 'shutters', 'gl', 'slicer', 'tinder', 'ps-omatic'];
+		// Add-ons (e.g. Prime Slider Pro) append their own handles via this filter.
+		return $this->addon_script_depends( [ 'swiper', 'bdtps-omatic' ] );
 	}
 
 	public function get_custom_help_url() {
@@ -64,7 +65,7 @@ class Omatic extends Widget_Base {
 		$this->start_controls_section(
 			'section_content_sliders',
 			[
-				'label' => esc_html__('Slider Items', 'bdthemes-prime-slider'),
+				'label' => esc_html__('Slider Items', 'bdthemes-prime-slider-lite'),
 				'tab'   => Controls_Manager::TAB_CONTENT,
 			]
 		);
@@ -75,7 +76,7 @@ class Omatic extends Widget_Base {
 		$repeater->start_controls_tab(
 			'tab_item_content',
 			[
-				'label' => esc_html__( 'Content', 'bdthemes-prime-slider' ),
+				'label' => esc_html__( 'Content', 'bdthemes-prime-slider-lite' ),
 			]
 		);
 
@@ -99,7 +100,7 @@ class Omatic extends Widget_Base {
 		$repeater->start_controls_tab(
 			'tab_item_content_optional',
 			[
-				'label' => esc_html__( 'Optional', 'bdthemes-prime-slider' ),
+				'label' => esc_html__( 'Optional', 'bdthemes-prime-slider-lite' ),
 			]
 		);
 
@@ -120,23 +121,23 @@ class Omatic extends Widget_Base {
 		$this->add_control(
 			'slides',
 			[
-				'label'   => esc_html__('Items', 'bdthemes-prime-slider'),
+				'label'   => esc_html__('Items', 'bdthemes-prime-slider-lite'),
 				'type'    => Controls_Manager::REPEATER,
 				'fields'  => $repeater->get_controls(),
 				'default' => [
 					[
-						'sub_title' => esc_html__('Explore', 'bdthemes-prime-slider'),
-						'title'     => esc_html__('Ps Item One', 'bdthemes-prime-slider'),
+						'sub_title' => esc_html__('Explore', 'bdthemes-prime-slider-lite'),
+						'title'     => esc_html__('Ps Item One', 'bdthemes-prime-slider-lite'),
 						'image'     => ['url' => BDTPS_CORE_ASSETS_URL . 'images/gallery/item-1.png']
 					],
 					[
-						'sub_title' => esc_html__('Explore', 'bdthemes-prime-slider'),
-						'title'     => esc_html__('Ps Item Two', 'bdthemes-prime-slider'),
+						'sub_title' => esc_html__('Explore', 'bdthemes-prime-slider-lite'),
+						'title'     => esc_html__('Ps Item Two', 'bdthemes-prime-slider-lite'),
 						'image'     => ['url' => BDTPS_CORE_ASSETS_URL . 'images/gallery/item-4.png']
 					],
 					[
-						'sub_title' => esc_html__('Explore', 'bdthemes-prime-slider'),
-						'title'     => esc_html__('Ps Item Three', 'bdthemes-prime-slider'),
+						'sub_title' => esc_html__('Explore', 'bdthemes-prime-slider-lite'),
+						'title'     => esc_html__('Ps Item Three', 'bdthemes-prime-slider-lite'),
 						'image'     => ['url' => BDTPS_CORE_ASSETS_URL . 'images/gallery/item-5.png']
 					],
 				],
@@ -149,14 +150,14 @@ class Omatic extends Widget_Base {
 		$this->start_controls_section(
 			'section_content_layout',
 			[
-				'label' => esc_html__('Additional Settings', 'bdthemes-prime-slider'),
+				'label' => esc_html__('Additional Settings', 'bdthemes-prime-slider-lite'),
 			]
 		);
 
 		$this->add_responsive_control(
 			'slider_height',
 			[
-				'label' => esc_html__('Slider Height', 'bdthemes-prime-slider'),
+				'label' => esc_html__('Slider Height', 'bdthemes-prime-slider-lite'),
 				'type'  => Controls_Manager::SLIDER,
 				'size_units' => [ '%', 'px', 'vh' ],
 				'range' => [
@@ -183,7 +184,7 @@ class Omatic extends Widget_Base {
 		$this->add_responsive_control(
 			'content_vertical_spacing',
 			[
-				'label' => esc_html__('Content Vertical Spacing', 'bdthemes-prime-slider'),
+				'label' => esc_html__('Content Vertical Spacing', 'bdthemes-prime-slider-lite'),
 				'type'  => Controls_Manager::SLIDER,
 				'selectors'   => [
 					'{{WRAPPER}} .bdt-omatic-slider .bdt-slide-content' => 'top: {{SIZE}}%;',
@@ -227,7 +228,7 @@ class Omatic extends Widget_Base {
 		$this->start_controls_section(
 			'section_slider_settings',
 			[
-				'label' => __('Slider Settings', 'bdthemes-prime-slider'),
+				'label' => __('Slider Settings', 'bdthemes-prime-slider-lite'),
 			]
 		);
 
@@ -269,7 +270,7 @@ class Omatic extends Widget_Base {
 		$this->start_controls_section(
 			'section_style_image',
 			[
-				'label'     => esc_html__('Image', 'bdthemes-prime-slider'),
+				'label'     => esc_html__('Image', 'bdthemes-prime-slider-lite'),
 				'tab'       => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -277,13 +278,13 @@ class Omatic extends Widget_Base {
 		$this->add_control(
 			'overlay_type',
 			[
-				'label'   => esc_html__( 'Overlay', 'bdthemes-prime-slider' ),
+				'label'   => esc_html__( 'Overlay', 'bdthemes-prime-slider-lite' ),
 				'type'    => Controls_Manager::SELECT,
 				'default' => 'none',
 				'options' => [
-					'none'       => esc_html__( 'None', 'bdthemes-prime-slider' ),
-					'background' => esc_html__( 'Background', 'bdthemes-prime-slider' ),
-					'blend'      => esc_html__( 'Blend', 'bdthemes-prime-slider' ),
+					'none'       => esc_html__( 'None', 'bdthemes-prime-slider-lite' ),
+					'background' => esc_html__( 'Background', 'bdthemes-prime-slider-lite' ),
+					'blend'      => esc_html__( 'Blend', 'bdthemes-prime-slider-lite' ),
 				],
 			]
 		);
@@ -292,8 +293,9 @@ class Omatic extends Widget_Base {
 			Group_Control_Background::get_type(),
 			[
 				'name' => 'overlay_color',
-				'label' => esc_html__( 'Background', 'bdthemes-prime-slider' ),
+				'label' => esc_html__( 'Background', 'bdthemes-prime-slider-lite' ),
 				'types' => [ 'classic', 'gradient' ],
+				// phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude -- Elementor widget query built from user-configured controls; caching/query shape is expected.
 				'exclude' => [ 'image' ],
 				'selector' => '{{WRAPPER}} .bdt-omatic-slider .bdt-img-wrap::before',
 				'fields_options' => [
@@ -310,7 +312,7 @@ class Omatic extends Widget_Base {
 		$this->add_control(
 			'blend_type',
 			[
-				'label'     => esc_html__( 'Blend Type', 'bdthemes-prime-slider' ),
+				'label'     => esc_html__( 'Blend Type', 'bdthemes-prime-slider-lite' ),
 				'type'      => Controls_Manager::SELECT,
 				'default'   => 'multiply',
 				'options'   => prime_slider_blend_options(),
@@ -326,9 +328,10 @@ class Omatic extends Widget_Base {
 		$this->add_control(
 			'glassmorphism_effect',
 			[
-				'label' => esc_html__('Glassmorphism', 'bdthemes-prime-slider'),
+				'label' => esc_html__('Glassmorphism', 'bdthemes-prime-slider-lite'),
 				'type'  => Controls_Manager::SWITCHER,
-				'description' => sprintf(esc_html__('This feature will not work in the Firefox browser untill you enable browser compatibility so please %1s look here %2s', 'bdthemes-prime-slider'), '<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility" target="_blank">', '</a>'),
+				/* translators: 1: opening link tag, 2: closing link tag */
+				'description' => sprintf(esc_html__('This feature will not work in the Firefox browser untill you enable browser compatibility so please %1$s look here %2$s', 'bdthemes-prime-slider-lite'), '<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility" target="_blank">', '</a>'),
 
 			]
 		);
@@ -336,7 +339,7 @@ class Omatic extends Widget_Base {
 		$this->add_control(
 			'glassmorphism_blur_level',
 			[
-				'label'       => esc_html__('Blur Level', 'bdthemes-prime-slider'),
+				'label'       => esc_html__('Blur Level', 'bdthemes-prime-slider-lite'),
 				'type'        => Controls_Manager::SLIDER,
 				'range'       => [
 					'px' => [
@@ -370,7 +373,7 @@ class Omatic extends Widget_Base {
 		$this->add_responsive_control(
 			'slider_image_border_radius',
 			[
-				'label'      => __('Border Radius', 'bdthemes-prime-slider'),
+				'label'      => __('Border Radius', 'bdthemes-prime-slider-lite'),
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => ['px', '%'],
 				'selectors'  => [
@@ -382,7 +385,7 @@ class Omatic extends Widget_Base {
 		$this->add_responsive_control(
 			'slider_image_margin',
 			[
-				'label'      => esc_html__( 'Margin', 'bdthemes-prime-slider' ),
+				'label'      => esc_html__( 'Margin', 'bdthemes-prime-slider-lite' ),
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', 'em', '%' ],
 				'selectors'  => [
@@ -397,7 +400,7 @@ class Omatic extends Widget_Base {
 		$this->start_controls_section(
 			'section_style_title',
 			[
-				'label'     => esc_html__('Title', 'bdthemes-prime-slider'),
+				'label'     => esc_html__('Title', 'bdthemes-prime-slider-lite'),
 				'tab'       => Controls_Manager::TAB_STYLE,
 				'condition' => [
 					'show_title' => 'yes'
@@ -408,7 +411,7 @@ class Omatic extends Widget_Base {
 		$this->add_control(
 			'title_color',
 			[
-				'label'     => esc_html__('Color', 'bdthemes-prime-slider'),
+				'label'     => esc_html__('Color', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .bdt-omatic-slider .bdt-title, {{WRAPPER}} .bdt-omatic-slider .bdt-title a' => 'color: {{VALUE}};',
@@ -419,7 +422,7 @@ class Omatic extends Widget_Base {
 		$this->add_control(
 			'title_hover_color',
 			[
-				'label'     => esc_html__('Hover Color', 'bdthemes-prime-slider'),
+				'label'     => esc_html__('Hover Color', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .bdt-omatic-slider .bdt-title:hover, {{WRAPPER}} .bdt-omatic-slider .bdt-title a:hover' => 'color: {{VALUE}};',
@@ -430,7 +433,7 @@ class Omatic extends Widget_Base {
 		$this->add_control(
             'first_word_title_color',
             [
-                'label'     => esc_html__('First Word Color', 'bdthemes-prime-slider'),
+                'label'     => esc_html__('First Word Color', 'bdthemes-prime-slider-lite'),
                 'type'      => Controls_Manager::COLOR,
                 'selectors' => [
                     '{{WRAPPER}} .bdt-omatic-slider .bdt-title .frist-word' => 'color: {{VALUE}};',
@@ -442,8 +445,9 @@ class Omatic extends Widget_Base {
 			Group_Control_Background::get_type(),
 			[
 				'name' => 'title_background_color',
-				'label' => esc_html__('Background', 'bdthemes-prime-slider'),
+				'label' => esc_html__('Background', 'bdthemes-prime-slider-lite'),
 				'types' => ['classic', 'gradient'],
+				// phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude -- Elementor widget query built from user-configured controls; caching/query shape is expected.
 				'exclude' => ['image'],
 				'selector' => '{{WRAPPER}} .bdt-omatic-slider .bdt-title',
 			]
@@ -460,7 +464,7 @@ class Omatic extends Widget_Base {
 		$this->add_responsive_control(
 			'title_border_radius',
 			[
-				'label'      => esc_html__( 'Border Radius', 'bdthemes-prime-slider' ),
+				'label'      => esc_html__( 'Border Radius', 'bdthemes-prime-slider-lite' ),
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%'],
 				'selectors'  => [
@@ -473,7 +477,7 @@ class Omatic extends Widget_Base {
 		$this->add_responsive_control(
 			'title_padding',
 			[
-				'label'      => esc_html__( 'Padding', 'bdthemes-prime-slider' ),
+				'label'      => esc_html__( 'Padding', 'bdthemes-prime-slider-lite' ),
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', 'em', '%' ],
 				'selectors'  => [
@@ -485,7 +489,7 @@ class Omatic extends Widget_Base {
 		$this->add_responsive_control(
 			'title_margin',
 			[
-				'label'      => __( 'Margin', 'bdthemes-prime-slider' ),
+				'label'      => __( 'Margin', 'bdthemes-prime-slider-lite' ),
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%', 'em' ],
 				'selectors'  => [
@@ -501,7 +505,7 @@ class Omatic extends Widget_Base {
 				'selector' => '{{WRAPPER}} .bdt-omatic-slider .bdt-title',
 				'fields_options' => [
                     'text_stroke_type' => [
-                        'label' => esc_html__( 'Text Stroke', 'bdthemes-prime-slider' ),
+                        'label' => esc_html__( 'Text Stroke', 'bdthemes-prime-slider-lite' ),
                     ],
                 ],
 			]
@@ -511,7 +515,7 @@ class Omatic extends Widget_Base {
 			Group_Control_Text_Shadow::get_type(),
 			[
 				'name' => 'title_text_shadow',
-				'label' => __('Text Shadow', 'bdthemes-prime-slider'),
+				'label' => __('Text Shadow', 'bdthemes-prime-slider-lite'),
 				'selector' => '{{WRAPPER}} .bdt-omatic-slider .bdt-title',
 			]
 		);
@@ -520,7 +524,7 @@ class Omatic extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name'     => 'title_typography',
-				'label'    => esc_html__('Typography', 'bdthemes-prime-slider'),
+				'label'    => esc_html__('Typography', 'bdthemes-prime-slider-lite'),
 				'selector' => '{{WRAPPER}} .bdt-omatic-slider .bdt-title',
 			]
 		);
@@ -530,7 +534,7 @@ class Omatic extends Widget_Base {
 		$this->start_controls_section(
 			'section_style_sub_title',
 			[
-				'label'     => esc_html__('Sub Title', 'bdthemes-prime-slider'),
+				'label'     => esc_html__('Sub Title', 'bdthemes-prime-slider-lite'),
 				'tab'       => Controls_Manager::TAB_STYLE,
 				'condition' => [
 					'show_sub_title' => 'yes',
@@ -545,14 +549,14 @@ class Omatic extends Widget_Base {
 		$this->start_controls_tab(
 			'sub_title_style_tab',
 			[
-				'label' => esc_html__( 'Sub Title', 'bdthemes-prime-slider' ),
+				'label' => esc_html__( 'Sub Title', 'bdthemes-prime-slider-lite' ),
 			]
 		);
 
 		$this->add_control(
 			'sub_title_color',
 			[
-				'label'     => esc_html__('Color', 'bdthemes-prime-slider'),
+				'label'     => esc_html__('Color', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .bdt-omatic-slider .bdt-sub-title' => 'color: {{VALUE}};',
@@ -564,7 +568,7 @@ class Omatic extends Widget_Base {
 			Group_Control_Background::get_type(),
 			[
 				'name' => 'sub_title_background_color',
-				'label' => esc_html__('Background', 'bdthemes-prime-slider'),
+				'label' => esc_html__('Background', 'bdthemes-prime-slider-lite'),
 				'types' => ['classic', 'gradient'],
 				'selector' => '{{WRAPPER}} .bdt-omatic-slider .bdt-sub-title',
 			]
@@ -581,7 +585,7 @@ class Omatic extends Widget_Base {
 		$this->add_responsive_control(
 			'sub_title_border_radius',
 			[
-				'label'      => esc_html__( 'Border Radius', 'bdthemes-prime-slider' ),
+				'label'      => esc_html__( 'Border Radius', 'bdthemes-prime-slider-lite' ),
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%'],
 				'selectors'  => [
@@ -593,7 +597,7 @@ class Omatic extends Widget_Base {
 		$this->add_responsive_control(
 			'sub_title_padding',
 			[
-				'label'      => esc_html__( 'Padding', 'bdthemes-prime-slider' ),
+				'label'      => esc_html__( 'Padding', 'bdthemes-prime-slider-lite' ),
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%'],
 				'selectors'  => [
@@ -605,7 +609,7 @@ class Omatic extends Widget_Base {
 		$this->add_responsive_control(
 			'sub_title_margin',
 			[
-				'label'      => esc_html__( 'Margin', 'bdthemes-prime-slider' ),
+				'label'      => esc_html__( 'Margin', 'bdthemes-prime-slider-lite' ),
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', 'em', '%' ],
 				'selectors'  => [
@@ -621,7 +625,7 @@ class Omatic extends Widget_Base {
 				'selector' => '{{WRAPPER}} .bdt-omatic-slider .bdt-sub-title',
 				'fields_options' => [
                     'text_stroke_type' => [
-                        'label' => esc_html__( 'Text Stroke', 'bdthemes-prime-slider' ),
+                        'label' => esc_html__( 'Text Stroke', 'bdthemes-prime-slider-lite' ),
                     ],
                 ],
 			]
@@ -631,7 +635,7 @@ class Omatic extends Widget_Base {
 			Group_Control_Text_Shadow::get_type(),
 			[
 				'name' => 'sub_title_text_shadow',
-				'label' => __('Text Shadow', 'bdthemes-prime-slider'),
+				'label' => __('Text Shadow', 'bdthemes-prime-slider-lite'),
 				'selector' => '{{WRAPPER}} .bdt-omatic-slider .bdt-sub-title',
 			]
 		);
@@ -640,7 +644,7 @@ class Omatic extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name'     => 'sub_title_typography',
-				'label'    => esc_html__('Typography', 'bdthemes-prime-slider'),
+				'label'    => esc_html__('Typography', 'bdthemes-prime-slider-lite'),
 				'selector' => '{{WRAPPER}} .bdt-omatic-slider .bdt-sub-title',
 			]
 		);
@@ -648,7 +652,7 @@ class Omatic extends Widget_Base {
 		$this->add_responsive_control(
 			'sub_title_space_between',
 			[
-				'label' => esc_html__('Space Between', 'bdthemes-prime-slider'),
+				'label' => esc_html__('Space Between', 'bdthemes-prime-slider-lite'),
 				'type'  => Controls_Manager::SLIDER,
 				'size_units' => [ 'px'],
 				'range' => [
@@ -668,14 +672,14 @@ class Omatic extends Widget_Base {
 		$this->start_controls_tab(
 			'sub_title_style_line_tab',
 			[
-				'label' => esc_html__( 'Line', 'bdthemes-prime-slider' ),
+				'label' => esc_html__( 'Line', 'bdthemes-prime-slider-lite' ),
 			]
 		);
 
 		$this->add_control(
 			'sub_title_line_color',
 			[
-				'label'     => esc_html__('Color', 'bdthemes-prime-slider'),
+				'label'     => esc_html__('Color', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .bdt-omatic-slider .bdt-sub-line' => 'background-color: {{VALUE}};',
@@ -686,7 +690,7 @@ class Omatic extends Widget_Base {
 		$this->add_responsive_control(
 			'sub_title_line_width',
 			[
-				'label' => esc_html__('Width', 'bdthemes-prime-slider'),
+				'label' => esc_html__('Width', 'bdthemes-prime-slider-lite'),
 				'type'  => Controls_Manager::SLIDER,
 				'size_units' => [ 'px', ],
 				'range' => [
@@ -704,7 +708,7 @@ class Omatic extends Widget_Base {
 		$this->add_responsive_control(
 			'sub_title_line_height',
 			[
-				'label' => esc_html__('Height', 'bdthemes-prime-slider'),
+				'label' => esc_html__('Height', 'bdthemes-prime-slider-lite'),
 				'type'  => Controls_Manager::SLIDER,
 				'size_units' => [ 'px', ],
 				'range' => [
@@ -722,7 +726,7 @@ class Omatic extends Widget_Base {
 		$this->add_responsive_control(
 			'sub_title_line_radius',
 			[
-				'label' => esc_html__('Border Radius', 'bdthemes-prime-slider'),
+				'label' => esc_html__('Border Radius', 'bdthemes-prime-slider-lite'),
 				'type'  => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%' ],
 				'selectors'   => [
@@ -740,7 +744,7 @@ class Omatic extends Widget_Base {
 		$this->start_controls_section(
 			'section_style_text',
 			[
-				'label'     => esc_html__('Text', 'bdthemes-prime-slider'),
+				'label'     => esc_html__('Text', 'bdthemes-prime-slider-lite'),
 				'tab'       => Controls_Manager::TAB_STYLE,
 				'condition' => [
 					'show_text' => 'yes',
@@ -755,14 +759,14 @@ class Omatic extends Widget_Base {
 		$this->start_controls_tab(
 			'style_text_tab',
 			[
-				'label' => esc_html__( 'Text', 'bdthemes-prime-slider' ),
+				'label' => esc_html__( 'Text', 'bdthemes-prime-slider-lite' ),
 			]
 		);
 
 		$this->add_control(
 			'text_color',
 			[
-				'label'     => esc_html__('Color', 'bdthemes-prime-slider'),
+				'label'     => esc_html__('Color', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .bdt-omatic-slider .bdt-desc' => 'color: {{VALUE}};',
@@ -774,8 +778,9 @@ class Omatic extends Widget_Base {
 			Group_Control_Background::get_type(),
 			[
 				'name' => 'text_background_color',
-				'label' => esc_html__('Background', 'bdthemes-prime-slider'),
+				'label' => esc_html__('Background', 'bdthemes-prime-slider-lite'),
 				'types' => ['classic', 'gradient'],
+				// phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude -- Elementor widget query built from user-configured controls; caching/query shape is expected.
 				'exclude' => ['image'],
 				'selector' => '{{WRAPPER}} .bdt-omatic-slider .bdt-desc, {{WRAPPER}} .bdt-omatic-slider .bdt-desc > *',
 			]
@@ -784,7 +789,7 @@ class Omatic extends Widget_Base {
 		$this->add_responsive_control(
 			'text_padding',
 			[
-				'label'      => esc_html__( 'Padding', 'bdthemes-prime-slider' ),
+				'label'      => esc_html__( 'Padding', 'bdthemes-prime-slider-lite' ),
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', 'em', '%' ],
 				'selectors'  => [
@@ -796,7 +801,7 @@ class Omatic extends Widget_Base {
 		$this->add_responsive_control(
 			'text_margin',
 			[
-				'label'      => esc_html__( 'Margin', 'bdthemes-prime-slider' ),
+				'label'      => esc_html__( 'Margin', 'bdthemes-prime-slider-lite' ),
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', 'em', '%' ],
 				'selectors'  => [
@@ -809,7 +814,7 @@ class Omatic extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name'     => 'text_typography',
-				'label'    => esc_html__('Typography', 'bdthemes-prime-slider'),
+				'label'    => esc_html__('Typography', 'bdthemes-prime-slider-lite'),
 				'selector' => '{{WRAPPER}} .bdt-omatic-slider .bdt-desc',
 			]
 		);
@@ -819,14 +824,14 @@ class Omatic extends Widget_Base {
 		$this->start_controls_tab(
 			'style_text_line_tab',
 			[
-				'label' => esc_html__( 'Line', 'bdthemes-prime-slider' ),
+				'label' => esc_html__( 'Line', 'bdthemes-prime-slider-lite' ),
 			]
 		);
 
 		$this->add_control(
 			'text_line_color',
 			[
-				'label'     => esc_html__('Color', 'bdthemes-prime-slider'),
+				'label'     => esc_html__('Color', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .bdt-omatic-slider .bdt-line' => 'background-color: {{VALUE}};',
@@ -837,7 +842,7 @@ class Omatic extends Widget_Base {
 		$this->add_responsive_control(
 			'text_line_width',
 			[
-				'label' => esc_html__('Width', 'bdthemes-prime-slider'),
+				'label' => esc_html__('Width', 'bdthemes-prime-slider-lite'),
 				'type'  => Controls_Manager::SLIDER,
 				'size_units' => [ 'px', ],
 				'range' => [
@@ -855,7 +860,7 @@ class Omatic extends Widget_Base {
 		$this->add_responsive_control(
 			'text_line_height',
 			[
-				'label' => esc_html__('Height', 'bdthemes-prime-slider'),
+				'label' => esc_html__('Height', 'bdthemes-prime-slider-lite'),
 				'type'  => Controls_Manager::SLIDER,
 				'size_units' => [ 'px', ],
 				'range' => [
@@ -874,7 +879,7 @@ class Omatic extends Widget_Base {
 		$this->add_responsive_control(
 			'text_line_spacing',
 			[
-				'label' => esc_html__('Spacing', 'bdthemes-prime-slider'),
+				'label' => esc_html__('Spacing', 'bdthemes-prime-slider-lite'),
 				'type'  => Controls_Manager::SLIDER,
 				'size_units' => [ 'px'],
 				'range' => [
@@ -892,7 +897,7 @@ class Omatic extends Widget_Base {
 		$this->add_responsive_control(
 			'text_line_radius',
 			[
-				'label'      => esc_html__( 'Border Radius', 'bdthemes-prime-slider' ),
+				'label'      => esc_html__( 'Border Radius', 'bdthemes-prime-slider-lite' ),
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%' ],
 				'selectors'   => [
@@ -910,7 +915,7 @@ class Omatic extends Widget_Base {
 		$this->start_controls_section(
 			'section_style_navigation',
 			[
-				'label'     => __('Navigation', 'bdthemes-prime-slider'),
+				'label'     => __('Navigation', 'bdthemes-prime-slider-lite'),
 				'tab'       => Controls_Manager::TAB_STYLE,
 				'condition' => [ 'show_navigation_arrows' => 'yes' ],
 			]
@@ -919,7 +924,7 @@ class Omatic extends Widget_Base {
 		$this->add_control(
 			'arrows_heading',
 			[
-				'label'     => __('ARROWS', 'bdthemes-prime-slider'),
+				'label'     => __('ARROWS', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::HEADING,
 			]
 		);
@@ -927,34 +932,34 @@ class Omatic extends Widget_Base {
 		$this->add_control(
 			'nav_arrows_icon',
 			[
-				'label'   => esc_html__( 'Arrows Icon', 'bdthemes-prime-slider' ),
+				'label'   => esc_html__( 'Arrows Icon', 'bdthemes-prime-slider-lite' ),
 				'type'    => Controls_Manager::SELECT,
 				'default' => '4',
 				'options' => [
-					'0' => esc_html__('Default', 'bdthemes-prime-slider'),
-					'1' => esc_html__('Style 1', 'bdthemes-prime-slider'),
-					'2' => esc_html__('Style 2', 'bdthemes-prime-slider'),
-					'3' => esc_html__('Style 3', 'bdthemes-prime-slider'),
-					'4' => esc_html__('Style 4', 'bdthemes-prime-slider'),
-					'5' => esc_html__('Style 5', 'bdthemes-prime-slider'),
-					'6' => esc_html__('Style 6', 'bdthemes-prime-slider'),
-					'7' => esc_html__('Style 7', 'bdthemes-prime-slider'),
-					'8' => esc_html__('Style 8', 'bdthemes-prime-slider'),
-					'9' => esc_html__('Style 9', 'bdthemes-prime-slider'),
-					'10' => esc_html__('Style 10', 'bdthemes-prime-slider'),
-					'11' => esc_html__('Style 11', 'bdthemes-prime-slider'),
-					'12' => esc_html__('Style 12', 'bdthemes-prime-slider'),
-					'13' => esc_html__('Style 13', 'bdthemes-prime-slider'),
-					'14' => esc_html__('Style 14', 'bdthemes-prime-slider'),
-					'15' => esc_html__('Style 15', 'bdthemes-prime-slider'),
-					'16' => esc_html__('Style 16', 'bdthemes-prime-slider'),
-					'17' => esc_html__('Style 17', 'bdthemes-prime-slider'),
-					'18' => esc_html__('Style 18', 'bdthemes-prime-slider'),
-					'circle-1' => esc_html__('Style 19', 'bdthemes-prime-slider'),
-					'circle-2' => esc_html__('Style 20', 'bdthemes-prime-slider'),
-					'circle-3' => esc_html__('Style 21', 'bdthemes-prime-slider'),
-					'circle-4' => esc_html__('Style 22', 'bdthemes-prime-slider'),
-					'square-1' => esc_html__('Style 23', 'bdthemes-prime-slider'),
+					'0' => esc_html__('Default', 'bdthemes-prime-slider-lite'),
+					'1' => esc_html__('Style 1', 'bdthemes-prime-slider-lite'),
+					'2' => esc_html__('Style 2', 'bdthemes-prime-slider-lite'),
+					'3' => esc_html__('Style 3', 'bdthemes-prime-slider-lite'),
+					'4' => esc_html__('Style 4', 'bdthemes-prime-slider-lite'),
+					'5' => esc_html__('Style 5', 'bdthemes-prime-slider-lite'),
+					'6' => esc_html__('Style 6', 'bdthemes-prime-slider-lite'),
+					'7' => esc_html__('Style 7', 'bdthemes-prime-slider-lite'),
+					'8' => esc_html__('Style 8', 'bdthemes-prime-slider-lite'),
+					'9' => esc_html__('Style 9', 'bdthemes-prime-slider-lite'),
+					'10' => esc_html__('Style 10', 'bdthemes-prime-slider-lite'),
+					'11' => esc_html__('Style 11', 'bdthemes-prime-slider-lite'),
+					'12' => esc_html__('Style 12', 'bdthemes-prime-slider-lite'),
+					'13' => esc_html__('Style 13', 'bdthemes-prime-slider-lite'),
+					'14' => esc_html__('Style 14', 'bdthemes-prime-slider-lite'),
+					'15' => esc_html__('Style 15', 'bdthemes-prime-slider-lite'),
+					'16' => esc_html__('Style 16', 'bdthemes-prime-slider-lite'),
+					'17' => esc_html__('Style 17', 'bdthemes-prime-slider-lite'),
+					'18' => esc_html__('Style 18', 'bdthemes-prime-slider-lite'),
+					'circle-1' => esc_html__('Style 19', 'bdthemes-prime-slider-lite'),
+					'circle-2' => esc_html__('Style 20', 'bdthemes-prime-slider-lite'),
+					'circle-3' => esc_html__('Style 21', 'bdthemes-prime-slider-lite'),
+					'circle-4' => esc_html__('Style 22', 'bdthemes-prime-slider-lite'),
+					'square-1' => esc_html__('Style 23', 'bdthemes-prime-slider-lite'),
 				],
 			]
 		);
@@ -964,14 +969,14 @@ class Omatic extends Widget_Base {
 		$this->start_controls_tab(
 			'tabs_nav_arrows_normal',
 			[
-				'label'     => __('Normal', 'bdthemes-prime-slider'),
+				'label'     => __('Normal', 'bdthemes-prime-slider-lite'),
 			]
 		);
 
 		$this->add_control(
 			'arrows_color',
 			[
-				'label'     => __('Color', 'bdthemes-prime-slider'),
+				'label'     => __('Color', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .bdt-omatic-slider .bdt-navigation-wrap .bdt-nav-button i' => 'color: {{VALUE}}',
@@ -983,8 +988,9 @@ class Omatic extends Widget_Base {
 			Group_Control_Background::get_type(),
 			[
 				'name' => 'arrows_background',
-				'label' => esc_html__('Background', 'bdthemes-prime-slider'),
+				'label' => esc_html__('Background', 'bdthemes-prime-slider-lite'),
 				'types' => ['classic', 'gradient'],
+				// phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude -- Elementor widget query built from user-configured controls; caching/query shape is expected.
 				'exclude' => ['image'],
 				'selector' => '{{WRAPPER}} .bdt-omatic-slider .bdt-navigation-wrap .bdt-nav-button',
 			]
@@ -1002,7 +1008,7 @@ class Omatic extends Widget_Base {
 		$this->add_responsive_control(
 			'border_radius',
 			[
-				'label'      => __('Border Radius', 'bdthemes-prime-slider'),
+				'label'      => __('Border Radius', 'bdthemes-prime-slider-lite'),
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => ['px', '%'],
 				'selectors'  => [
@@ -1014,7 +1020,7 @@ class Omatic extends Widget_Base {
 		$this->add_responsive_control(
 			'arrows_padding',
 			[
-				'label'      => esc_html__('Padding', 'bdthemes-prime-slider'),
+				'label'      => esc_html__('Padding', 'bdthemes-prime-slider-lite'),
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => ['px', 'em', '%'],
 				'selectors'  => [
@@ -1026,7 +1032,7 @@ class Omatic extends Widget_Base {
 		$this->add_responsive_control(
 			'arrows_margin',
 			[
-				'label'      => esc_html__('Margin', 'bdthemes-prime-slider'),
+				'label'      => esc_html__('Margin', 'bdthemes-prime-slider-lite'),
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => ['px', 'em', '%'],
 				'selectors'  => [
@@ -1038,7 +1044,7 @@ class Omatic extends Widget_Base {
 		$this->add_responsive_control(
 			'arrows_size',
 			[
-				'label'     => __('Icon Size', 'bdthemes-prime-slider'),
+				'label'     => __('Icon Size', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::SLIDER,
 				'range'     => [
 					'px' => [
@@ -1055,7 +1061,7 @@ class Omatic extends Widget_Base {
 		$this->add_responsive_control(
 			'arrows_spacing',
 			[
-				'label'     => __('Space Between', 'bdthemes-prime-slider'),
+				'label'     => __('Space Between', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::SLIDER,
 				'range'     => [
 					'px' => [
@@ -1082,14 +1088,14 @@ class Omatic extends Widget_Base {
 		$this->start_controls_tab(
 			'tabs_nav_arrows_hover',
 			[
-				'label'     => __('Hover', 'bdthemes-prime-slider'),
+				'label'     => __('Hover', 'bdthemes-prime-slider-lite'),
 			]
 		);
 
 		$this->add_control(
 			'arrows_hover_color',
 			[
-				'label'     => __('Color', 'bdthemes-prime-slider'),
+				'label'     => __('Color', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .bdt-omatic-slider .bdt-navigation-wrap .bdt-nav-button:hover i' => 'color: {{VALUE}}',
@@ -1101,8 +1107,9 @@ class Omatic extends Widget_Base {
 			Group_Control_Background::get_type(),
 			[
 				'name' => 'arrows_hover_background',
-				'label' => esc_html__('Background', 'bdthemes-prime-slider'),
+				'label' => esc_html__('Background', 'bdthemes-prime-slider-lite'),
 				'types' => ['classic', 'gradient'],
+				// phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude -- Elementor widget query built from user-configured controls; caching/query shape is expected.
 				'exclude' => ['image'],
 				'selector' => '{{WRAPPER}} .bdt-omatic-slider .bdt-navigation-wrap .bdt-nav-button:hover',
 			]
@@ -1111,7 +1118,7 @@ class Omatic extends Widget_Base {
 		$this->add_control(
 			'nav_arrows_hover_border_color',
 			[
-				'label'     => __('Border Color', 'bdthemes-prime-slider'),
+				'label'     => __('Border Color', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .bdt-omatic-slider .bdt-navigation-wrap .bdt-nav-button:hover' => 'border-color: {{VALUE}};',
@@ -1156,11 +1163,9 @@ class Omatic extends Widget_Base {
 							"speed"          => $settings["speed"]["size"],
 							"effect"        => isset($settings["swiper_effect"]) ? $settings["swiper_effect"] : 'cube',
 							"gl"             => [
-								'shader' => isset($settings["gl_shader"]) ? $settings["gl_shader"] : 'random',
 							],
 							"creativeEffect" => isset($settings["creative_effect"]) ? $settings["creative_effect"] : false,
 							"fadeEffect"     => ['crossFade' => true],
-							"lazy"           => true,
 							"parallax"       => true,
 							"mousewheel"     => ($settings["mousewheel"] === "yes") ? true : false,
 							"watchSlidesProgress" => true,
@@ -1202,7 +1207,7 @@ class Omatic extends Widget_Base {
 				'class' => 'swiper-carousel swiper',
 				'role' => 'region',
 				'aria-roledescription' => 'carousel',
-				'aria-label' => esc_attr( $this->get_title() . ' ' . esc_html__( 'Slider', 'bdthemes-prime-slider' ) ),
+				'aria-label' => esc_attr( $this->get_title() . ' ' . esc_html__( 'Slider', 'bdthemes-prime-slider-lite' ) ),
 				'dir' => $direction,
 			],
 		]);
@@ -1235,9 +1240,10 @@ class Omatic extends Widget_Base {
 			<div thumbsSlider="" class="bdt-omatic-thumbs-slide">
                 <div class="swiper-wrapper">
 
-				<?php foreach ($settings['slides'] as $slide) : 
+				<?php foreach ($settings['slides'] as $slide) :
+					$title_link_key = 'title-link-' . $slide['_id'];
 					if($slide['title']) {
-						$this->add_link_attributes( 'title-link', $slide['title_link'], true );
+						$this->add_link_attributes( $title_link_key, $slide['title_link'], true );
 					}
 					?>
 					<div class="swiper-slide bdt-omatic-item">
@@ -1247,7 +1253,7 @@ class Omatic extends Widget_Base {
 						<div class="bdt-title-wrap">
 							<<?php echo esc_attr(Utils::get_valid_html_tag($settings['title_html_tag'])); ?> class="bdt-title">
 								<?php if ('' !== $slide['title_link']['url']) : ?>
-									<a <?php $this->print_render_attribute_string('title-link'); ?>>
+									<a <?php $this->print_render_attribute_string($title_link_key); ?>>
 									<?php endif; ?>
 									<?php echo wp_kses( prime_slider_first_word( $slide['title'] ), [ 'span' => [ 'class' => [] ] ] ); ?>
 									<?php if ('' !== $slide['title_link']['url']) : ?>
@@ -1330,9 +1336,6 @@ class Omatic extends Widget_Base {
 	public function rendar_item_image($item, $alt = '') {
 		$settings = $this->get_settings_for_display();
 
-		$gl = $settings['swiper_effect'] == 'gl' ? ' swiper-gl-image' : '';
-		$shutters = $settings['swiper_effect'] == 'shutters' ? ' swiper-shutters-image' : '';
-		$slicer = $settings['swiper_effect'] == 'slicer' ? ' swiper-slicer-image' : '';
 
 		$image_src = Group_Control_Image_Size::get_attachment_image_src($item['image']['id'], 'thumbnail_size', $settings);
 
@@ -1348,7 +1351,7 @@ class Omatic extends Widget_Base {
 
 		<div class="bdt-slide-img-wrap">
 			<div class="bdt-img-wrap">
-				<img class="bdt-img<?php echo esc_attr( $gl . $shutters . $slicer ); ?>" src="<?php echo esc_url($image_src); ?>" alt="<?php echo esc_attr($alt); ?>">
+				<img class="bdt-img" src="<?php echo esc_url($image_src); ?>" alt="<?php echo esc_attr($alt); ?>">
 			</div>
 		</div>
 

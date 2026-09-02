@@ -28,7 +28,7 @@ class Woocircle extends Widget_Base {
 	}
 
 	public function get_title() {
-		return BDTPS . esc_html__('WooCircle', 'bdthemes-prime-slider');
+		return BDTPS . esc_html__('WooCircle', 'bdthemes-prime-slider-lite');
 	}
 
 	public function get_icon() {
@@ -44,11 +44,11 @@ class Woocircle extends Widget_Base {
 	}
 
 	public function get_style_depends() {
-		return ['ps-woocircle', 'prime-slider-font'];
+		return ['bdtps-woocircle', 'prime-slider-font'];
 	}
 
 	public function get_script_depends() {
-		return ['classie', 'dynamics', 'ps-woocircle'];
+		return ['bdtps-classie', 'bdtps-dynamics', 'bdtps-woocircle'];
 	}
 
 	public function get_custom_help_url() {
@@ -64,14 +64,14 @@ class Woocircle extends Widget_Base {
 		$this->start_controls_section(
 			'section_content_layout',
 			[
-				'label' => esc_html__('Layout', 'bdthemes-prime-slider'),
+				'label' => esc_html__('Layout', 'bdthemes-prime-slider-lite'),
 			]
 		);
 
 		$this->add_responsive_control(
 			'slider_item_height',
 			[
-				'label' => esc_html__('Height(vh)', 'bdthemes-prime-slider'),
+				'label' => esc_html__('Height(vh)', 'bdthemes-prime-slider-lite'),
 				'type'  => Controls_Manager::SLIDER,
 				'selectors' => [
 					'{{WRAPPER}} .bdt-elastic-slider' => 'height: {{SIZE}}vh;',
@@ -82,19 +82,19 @@ class Woocircle extends Widget_Base {
 		$this->add_responsive_control(
 			'content_alignment',
 			[
-				'label'   => esc_html__('Alignment', 'bdthemes-prime-slider'),
+				'label'   => esc_html__('Alignment', 'bdthemes-prime-slider-lite'),
 				'type'    => Controls_Manager::CHOOSE,
 				'options' => [
 					'left' => [
-						'title' => esc_html__('Left', 'bdthemes-prime-slider'),
+						'title' => esc_html__('Left', 'bdthemes-prime-slider-lite'),
 						'icon'  => 'eicon-text-align-left',
 					],
 					'center' => [
-						'title' => esc_html__('Center', 'bdthemes-prime-slider'),
+						'title' => esc_html__('Center', 'bdthemes-prime-slider-lite'),
 						'icon'  => 'eicon-text-align-center',
 					],
 					'right' => [
-						'title' => esc_html__('Right', 'bdthemes-prime-slider'),
+						'title' => esc_html__('Right', 'bdthemes-prime-slider-lite'),
 						'icon'  => 'eicon-text-align-right',
 					],
 				],
@@ -122,11 +122,10 @@ class Woocircle extends Widget_Base {
 		$this->add_control(
 			'title_word_limit',
 			[
-				'label'     => esc_html__( 'Title Word Limit', 'bdthemes-prime-slider' ) . BDTPS_CORE_PC,
+				'label'     => esc_html__( 'Title Word Limit', 'bdthemes-prime-slider-lite' ),
 				'type'      => Controls_Manager::NUMBER,
 				'min'       => 0,
 				'separator' => 'before',
-				'classes'   => BDTPS_CORE_IS_PC,
 				'condition' => [
 					'show_title' => 'yes',
 				],
@@ -136,10 +135,9 @@ class Woocircle extends Widget_Base {
 		$this->add_control(
 			'excerpt_word_limit',
 			[
-				'label'     => esc_html__( 'Text Word Limit', 'bdthemes-prime-slider' ) . BDTPS_CORE_PC,
+				'label'     => esc_html__( 'Text Word Limit', 'bdthemes-prime-slider-lite' ),
 				'type'      => Controls_Manager::NUMBER,
 				'min'       => 0,
-				'classes'   => BDTPS_CORE_IS_PC,
 				'condition' => [
 					'show_excerpt' => 'yes',
 				],
@@ -162,7 +160,7 @@ class Woocircle extends Widget_Base {
 		$this->start_controls_section(
 			'section_post_query_builder',
 			[
-				'label' => esc_html__('Query', 'bdthemes-prime-slider'),
+				'label' => esc_html__('Query', 'bdthemes-prime-slider-lite'),
 				'tab' => Controls_Manager::TAB_CONTENT,
 			]
 		);
@@ -175,17 +173,17 @@ class Woocircle extends Widget_Base {
 				'type'      => Controls_Manager::SELECT,
 				'default'   => 'product',
 				'options' => [
-					'product' 			 => esc_html__('Product', 'bdthemes-prime-slider'),
-					'manual_selection'   => esc_html__('Manual Selection', 'bdthemes-prime-slider'),
-					'current_query'      => esc_html__('Current Query', 'bdthemes-prime-slider'),
-					'_related_post_type' => esc_html__('Related', 'bdthemes-prime-slider'),
+					'product' 			 => esc_html__('Product', 'bdthemes-prime-slider-lite'),
+					'manual_selection'   => esc_html__('Manual Selection', 'bdthemes-prime-slider-lite'),
+					'current_query'      => esc_html__('Current Query', 'bdthemes-prime-slider-lite'),
+					'_related_post_type' => esc_html__('Related', 'bdthemes-prime-slider-lite'),
 				]
 			]
 		);
 		$this->update_control(
 			'posts_limit',
 			[
-				'label'     => esc_html__('Limit', 'bdthemes-prime-slider'),
+				'label'     => esc_html__('Limit', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::NUMBER,
 				'default'   => 3,
 			]
@@ -196,7 +194,7 @@ class Woocircle extends Widget_Base {
 		$this->start_controls_section(
 			'section_style_slider_items',
 			[
-				'label'     => esc_html__('Slider', 'bdthemes-prime-slider'),
+				'label'     => esc_html__('Slider', 'bdthemes-prime-slider-lite'),
 				'tab'       => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -209,14 +207,14 @@ class Woocircle extends Widget_Base {
 		$this->start_controls_tab(
 			'style_slider_item_tab',
 			[
-				'label' => esc_html__('Item', 'bdthemes-prime-slider'),
+				'label' => esc_html__('Item', 'bdthemes-prime-slider-lite'),
 			]
 		);
 
 		$this->add_control(
 			'active_circle_color',
 			[
-				'label'     => esc_html__('Circle Color', 'bdthemes-prime-slider'),
+				'label'     => esc_html__('Circle Color', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .bdt-elastic-slider .deco--circle' => 'background: {{VALUE}};',
@@ -230,14 +228,14 @@ class Woocircle extends Widget_Base {
 		$this->start_controls_tab(
 			'style_slider_title_tab',
 			[
-				'label' => esc_html__('Title', 'bdthemes-prime-slider'),
+				'label' => esc_html__('Title', 'bdthemes-prime-slider-lite'),
 			]
 		);
 
 		$this->add_control(
 			'title_color',
 			[
-				'label'     => esc_html__('Color', 'bdthemes-prime-slider'),
+				'label'     => esc_html__('Color', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .bdt-elastic-slider .bdt-elastic-title-preview' => 'color: {{VALUE}};',
@@ -272,7 +270,7 @@ class Woocircle extends Widget_Base {
 		$this->add_responsive_control(
 			'title_margin',
 			[
-				'label'      => esc_html__('Margin', 'bdthemes-prime-slider'),
+				'label'      => esc_html__('Margin', 'bdthemes-prime-slider-lite'),
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => ['px', 'em', '%'],
 				'selectors'  => [
@@ -288,14 +286,14 @@ class Woocircle extends Widget_Base {
 		$this->start_controls_tab(
 			'style_slider_price_tab',
 			[
-				'label' => esc_html__('Price', 'bdthemes-prime-slider'),
+				'label' => esc_html__('Price', 'bdthemes-prime-slider-lite'),
 			]
 		);
 
 		$this->add_control(
 			'old_price_heading',
 			[
-				'label' => __('Old Price', 'bdthemes-prime-slider'),
+				'label' => __('Old Price', 'bdthemes-prime-slider-lite'),
 				'type'  => Controls_Manager::HEADING,
 			]
 		);
@@ -303,7 +301,7 @@ class Woocircle extends Widget_Base {
 		$this->add_control(
 			'old_price_color',
 			[
-				'label'     => __('Color', 'bdthemes-prime-slider'),
+				'label'     => __('Color', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .bdt-elastic-slider .bdt-elastic-slide-content .bdt-elastic-price .price del span' => 'color: {{VALUE}};',
@@ -314,7 +312,7 @@ class Woocircle extends Widget_Base {
 		$this->add_responsive_control(
 			'old_price_margin',
 			[
-				'label'      => __('Margin', 'bdthemes-prime-slider'),
+				'label'      => __('Margin', 'bdthemes-prime-slider-lite'),
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => ['px', '%'],
 				'selectors'  => [
@@ -327,7 +325,7 @@ class Woocircle extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name'     => 'old_price_typography',
-				'label'    => __('Typography', 'bdthemes-prime-slider'),
+				'label'    => __('Typography', 'bdthemes-prime-slider-lite'),
 				'selector' => '{{WRAPPER}} .bdt-elastic-slider .bdt-elastic-slide-content .bdt-elastic-price .price del span',
 			]
 		);
@@ -335,7 +333,7 @@ class Woocircle extends Widget_Base {
 		$this->add_control(
 			'sale_price_heading',
 			[
-				'label'     => __('Sale Price', 'bdthemes-prime-slider'),
+				'label'     => __('Sale Price', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::HEADING,
 				'separator' => 'before',
 			]
@@ -344,7 +342,7 @@ class Woocircle extends Widget_Base {
 		$this->add_control(
 			'sale_price_color',
 			[
-				'label'     => __('Color', 'bdthemes-prime-slider'),
+				'label'     => __('Color', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .bdt-elastic-slider .bdt-elastic-slide-content .bdt-elastic-price .price ins, {{WRAPPER}} .bdt-elastic-slider .bdt-elastic-slide-content .bdt-elastic-price .price > span' => 'color: {{VALUE}};',
@@ -355,7 +353,7 @@ class Woocircle extends Widget_Base {
 		$this->add_control(
 			'sale_price_background',
 			[
-				'label'     => __('Background', 'bdthemes-prime-slider'),
+				'label'     => __('Background', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}}  .bdt-elastic-slider .bdt-elastic-slide-content .bdt-elastic-price .price ins' => 'background: {{VALUE}};',
@@ -366,7 +364,7 @@ class Woocircle extends Widget_Base {
 		$this->add_responsive_control(
 			'sale_price_margin',
 			[
-				'label'      => __('Margin', 'bdthemes-prime-slider'),
+				'label'      => __('Margin', 'bdthemes-prime-slider-lite'),
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => ['px', '%'],
 				'selectors'  => [
@@ -379,7 +377,7 @@ class Woocircle extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name'     => 'sale_price_typography',
-				'label'    => __('Typography', 'bdthemes-prime-slider'),
+				'label'    => __('Typography', 'bdthemes-prime-slider-lite'),
 				'selector' => '{{WRAPPER}} .bdt-elastic-slider .bdt-elastic-slide-content .bdt-elastic-price .price ins, {{WRAPPER}} .bdt-elastic-slider .bdt-elastic-slide-content .bdt-elastic-price .price > span',
 			]
 		);
@@ -387,7 +385,7 @@ class Woocircle extends Widget_Base {
 		$this->add_responsive_control(
 			'sale_price_spacing',
 			[
-				'label'      => __('Spacing', 'bdthemes-prime-slider'),
+				'label'      => __('Spacing', 'bdthemes-prime-slider-lite'),
 				'type'       => Controls_Manager::SLIDER,
 				'size_units' => ['px', '%'],
 				'selectors'  => [
@@ -403,14 +401,14 @@ class Woocircle extends Widget_Base {
 		$this->start_controls_tab(
 			'style_slider_modal_open_button_tab',
 			[
-				'label' => esc_html__('Open', 'bdthemes-prime-slider'),
+				'label' => esc_html__('Open', 'bdthemes-prime-slider-lite'),
 			]
 		);
 
 		$this->add_control(
 			'open_button_color',
 			[
-				'label'     => esc_html__('Color', 'bdthemes-prime-slider'),
+				'label'     => esc_html__('Color', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .bdt-elastic-action--open' => 'color: {{VALUE}};',
@@ -430,7 +428,7 @@ class Woocircle extends Widget_Base {
 			Group_Control_Border::get_type(),
 			[
 				'name'        => 'open_button_border',
-				'label'       => esc_html__('Border', 'bdthemes-prime-slider'),
+				'label'       => esc_html__('Border', 'bdthemes-prime-slider-lite'),
 				'placeholder' => '1px',
 				'default'     => '1px',
 				'selector'    => '{{WRAPPER}} .bdt-elastic-action--open',
@@ -441,7 +439,7 @@ class Woocircle extends Widget_Base {
 		$this->add_responsive_control(
 			'open_button_radius',
 			[
-				'label'      => esc_html__('Border Radius', 'bdthemes-prime-slider'),
+				'label'      => esc_html__('Border Radius', 'bdthemes-prime-slider-lite'),
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => ['px', '%'],
 				'selectors'  => [
@@ -453,7 +451,7 @@ class Woocircle extends Widget_Base {
 		$this->add_responsive_control(
 			'open_button_padding',
 			[
-				'label'      => esc_html__('Padding', 'bdthemes-prime-slider'),
+				'label'      => esc_html__('Padding', 'bdthemes-prime-slider-lite'),
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => ['px', 'em', '%'],
 				'selectors'  => [
@@ -465,7 +463,7 @@ class Woocircle extends Widget_Base {
 		$this->add_responsive_control(
 			'open_button_margin',
 			[
-				'label'      => esc_html__('Margin', 'bdthemes-prime-slider'),
+				'label'      => esc_html__('Margin', 'bdthemes-prime-slider-lite'),
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => ['px', 'em', '%'],
 				'selectors'  => [
@@ -495,7 +493,7 @@ class Woocircle extends Widget_Base {
 		$this->add_control(
 			'slider_modal_open_button_heading',
 			[
-				'label' => __('Hover', 'bdthemes-prime-slider'),
+				'label' => __('Hover', 'bdthemes-prime-slider-lite'),
 				'type'  => Controls_Manager::HEADING,
 			]
 		);
@@ -503,7 +501,7 @@ class Woocircle extends Widget_Base {
 		$this->add_control(
 			'open_button_hover_color',
 			[
-				'label'     => esc_html__('Color', 'bdthemes-prime-slider'),
+				'label'     => esc_html__('Color', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .bdt-elastic-action--open:focus,
@@ -523,10 +521,10 @@ class Woocircle extends Widget_Base {
 		$this->add_control(
 			'open_button_hover_border_color',
 			[
-				'label'     => esc_html__('Border Color', 'bdthemes-prime-slider'),
+				'label'     => esc_html__('Border Color', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::COLOR,
 				'condition' => [
-					'close_button_border_border!' => '',
+					'open_button_border_border!' => '',
 				],
 				'selectors' => [
 					'{{WRAPPER}} .bdt-elastic-action--open:focus, {{WRAPPER}} .bdt-elastic-action--open:hover' => 'border-color: {{VALUE}};',
@@ -544,7 +542,7 @@ class Woocircle extends Widget_Base {
 		$this->start_controls_section(
 			'section_style_slider_modal',
 			[
-				'label'     => esc_html__('Modal', 'bdthemes-prime-slider'),
+				'label'     => esc_html__('Modal', 'bdthemes-prime-slider-lite'),
 				'tab'       => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -553,13 +551,14 @@ class Woocircle extends Widget_Base {
 			Group_Control_Background::get_type(),
 			[
 				'name' => 'modal_background',
-				'label' => esc_html__('Background', 'bdthemes-prime-slider'),
+				'label' => esc_html__('Background', 'bdthemes-prime-slider-lite'),
 				'types' => ['classic', 'gradient'],
+				// phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude -- Elementor widget query built from user-configured controls; caching/query shape is expected.
 				'exclude' => ['image'],
 				'selector' => '{{WRAPPER}} .bdt-elastic-slider .bdt-elastic-modal-wrap',
 				'fields_options' => [
 					'background' => [
-						'label' => esc_html__('Background', 'bdthemes-prime-slider'),
+						'label' => esc_html__('Background', 'bdthemes-prime-slider-lite'),
 					],
 				],
 			]
@@ -568,7 +567,7 @@ class Woocircle extends Widget_Base {
 		$this->add_control(
 			'modal_contnet_max_width',
 			[
-				'label' => __('Content Max Width', 'bdthemes-prime-slider'),
+				'label' => __('Content Max Width', 'bdthemes-prime-slider-lite'),
 				'type'  => Controls_Manager::HEADING,
 				'separator' => 'before',
 			]
@@ -577,7 +576,7 @@ class Woocircle extends Widget_Base {
 		$this->add_responsive_control(
 			'modal_text__max_width',
 			[
-				'label' => esc_html__('Max Width', 'bdthemes-prime-slider'),
+				'label' => esc_html__('Max Width', 'bdthemes-prime-slider-lite'),
 				'type'  => Controls_Manager::SLIDER,
 				'size_units' => ['px', '%'],
 				'default' => [
@@ -608,14 +607,14 @@ class Woocircle extends Widget_Base {
 		$this->start_controls_tab(
 			'style_slider_modal_title_tab',
 			[
-				'label' => esc_html__('Title', 'bdthemes-prime-slider'),
+				'label' => esc_html__('Title', 'bdthemes-prime-slider-lite'),
 			]
 		);
 
 		$this->add_control(
 			'modal_title_color',
 			[
-				'label'     => esc_html__('Color', 'bdthemes-prime-slider'),
+				'label'     => esc_html__('Color', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .bdt-elastic-slider .bdt-elastic-title--main' => 'color: {{VALUE}};',
@@ -650,7 +649,7 @@ class Woocircle extends Widget_Base {
 		$this->add_responsive_control(
 			'modal_title_margin',
 			[
-				'label'      => esc_html__('Margin', 'bdthemes-prime-slider'),
+				'label'      => esc_html__('Margin', 'bdthemes-prime-slider-lite'),
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => ['px', 'em', '%'],
 				'selectors'  => [
@@ -666,14 +665,14 @@ class Woocircle extends Widget_Base {
 		$this->start_controls_tab(
 			'style_slider_modal_price_tab',
 			[
-				'label' => esc_html__('Price', 'bdthemes-prime-slider'),
+				'label' => esc_html__('Price', 'bdthemes-prime-slider-lite'),
 			]
 		);
 
 		$this->add_control(
 			'modal_old_price_heading',
 			[
-				'label' => __('Old Price', 'bdthemes-prime-slider'),
+				'label' => __('Old Price', 'bdthemes-prime-slider-lite'),
 				'type'  => Controls_Manager::HEADING,
 			]
 		);
@@ -681,7 +680,7 @@ class Woocircle extends Widget_Base {
 		$this->add_control(
 			'modal_old_price_color',
 			[
-				'label'     => __('Color', 'bdthemes-prime-slider'),
+				'label'     => __('Color', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .bdt-elastic-slider .bdt-elastic-price.bdt-elastic-price--large .price del span' => 'color: {{VALUE}};',
@@ -692,7 +691,7 @@ class Woocircle extends Widget_Base {
 		$this->add_responsive_control(
 			'modal_old_price_margin',
 			[
-				'label'      => __('Margin', 'bdthemes-prime-slider'),
+				'label'      => __('Margin', 'bdthemes-prime-slider-lite'),
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => ['px', '%'],
 				'selectors'  => [
@@ -705,7 +704,7 @@ class Woocircle extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name'     => 'modal_old_price_typography',
-				'label'    => __('Typography', 'bdthemes-prime-slider'),
+				'label'    => __('Typography', 'bdthemes-prime-slider-lite'),
 				'selector' => '{{WRAPPER}} .bdt-elastic-slider .bdt-elastic-price.bdt-elastic-price--large .price del span',
 			]
 		);
@@ -713,7 +712,7 @@ class Woocircle extends Widget_Base {
 		$this->add_control(
 			'modal_sale_price_heading',
 			[
-				'label'     => __('Sale Price', 'bdthemes-prime-slider'),
+				'label'     => __('Sale Price', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::HEADING,
 				'separator' => 'before',
 			]
@@ -722,7 +721,7 @@ class Woocircle extends Widget_Base {
 		$this->add_control(
 			'modal_sale_price_color',
 			[
-				'label'     => __('Color', 'bdthemes-prime-slider'),
+				'label'     => __('Color', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .bdt-elastic-slider .bdt-elastic-price.bdt-elastic-price--large .price ins, {{WRAPPER}} .bdt-elastic-slider .bdt-elastic-price.bdt-elastic-price--large .price > span' => 'color: {{VALUE}};',
@@ -733,7 +732,7 @@ class Woocircle extends Widget_Base {
 		$this->add_control(
 			'modal_sale_price_background',
 			[
-				'label'     => __('Background', 'bdthemes-prime-slider'),
+				'label'     => __('Background', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .bdt-elastic-slider .bdt-elastic-price.bdt-elastic-price--large .price ins' => 'background: {{VALUE}};',
@@ -744,7 +743,7 @@ class Woocircle extends Widget_Base {
 		$this->add_responsive_control(
 			'modal_sale_price_margin',
 			[
-				'label'      => __('Margin', 'bdthemes-prime-slider'),
+				'label'      => __('Margin', 'bdthemes-prime-slider-lite'),
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => ['px', '%'],
 				'selectors'  => [
@@ -757,7 +756,7 @@ class Woocircle extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name'     => 'modal_sale_price_typography',
-				'label'    => __('Typography', 'bdthemes-prime-slider'),
+				'label'    => __('Typography', 'bdthemes-prime-slider-lite'),
 				'selector' => '{{WRAPPER}} .bdt-elastic-slider .bdt-elastic-price.bdt-elastic-price--large .price ins, {{WRAPPER}} .bdt-elastic-slider .bdt-elastic-price.bdt-elastic-price--large .price > span',
 			]
 		);
@@ -765,7 +764,7 @@ class Woocircle extends Widget_Base {
 		$this->add_responsive_control(
 			'modal_sale_price_spacing',
 			[
-				'label'      => __('Spacing', 'bdthemes-prime-slider'),
+				'label'      => __('Spacing', 'bdthemes-prime-slider-lite'),
 				'type'       => Controls_Manager::SLIDER,
 				'size_units' => ['px', '%'],
 				'selectors'  => [
@@ -781,14 +780,14 @@ class Woocircle extends Widget_Base {
 		$this->start_controls_tab(
 			'style_slider_modal_text_tab',
 			[
-				'label' => esc_html__('Text', 'bdthemes-prime-slider'),
+				'label' => esc_html__('Text', 'bdthemes-prime-slider-lite'),
 			]
 		);
 
 		$this->add_control(
 			'excerpt_color',
 			[
-				'label'     => esc_html__('Color', 'bdthemes-prime-slider'),
+				'label'     => esc_html__('Color', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .bdt-elastic-slider .bdt-elastic-description' => 'color: {{VALUE}};',
@@ -800,7 +799,7 @@ class Woocircle extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name'     => 'excerpt_typography',
-				'label'    => esc_html__('Typography', 'bdthemes-prime-slider'),
+				'label'    => esc_html__('Typography', 'bdthemes-prime-slider-lite'),
 				'selector' => '{{WRAPPER}} .bdt-elastic-slider .bdt-elastic-description',
 			]
 		);
@@ -808,7 +807,7 @@ class Woocircle extends Widget_Base {
 		$this->add_responsive_control(
 			'text_margin',
 			[
-				'label'      => esc_html__('Margin', 'bdthemes-prime-slider'),
+				'label'      => esc_html__('Margin', 'bdthemes-prime-slider-lite'),
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => ['px', 'em', '%'],
 				'selectors'  => [
@@ -824,14 +823,14 @@ class Woocircle extends Widget_Base {
 		$this->start_controls_tab(
 			'style_slider_modal_close/open_button_tab',
 			[
-				'label' => esc_html__('Close', 'bdthemes-prime-slider'),
+				'label' => esc_html__('Close', 'bdthemes-prime-slider-lite'),
 			]
 		);
 
 		$this->add_control(
 			'close_button_color',
 			[
-				'label'     => esc_html__('Color', 'bdthemes-prime-slider'),
+				'label'     => esc_html__('Color', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .bdt-elastic-action--close' => 'color: {{VALUE}};',
@@ -851,7 +850,7 @@ class Woocircle extends Widget_Base {
 			Group_Control_Border::get_type(),
 			[
 				'name'        => 'close_button_border',
-				'label'       => esc_html__('Border', 'bdthemes-prime-slider'),
+				'label'       => esc_html__('Border', 'bdthemes-prime-slider-lite'),
 				'placeholder' => '1px',
 				'default'     => '1px',
 				'selector'    => '{{WRAPPER}} .bdt-elastic-action--close',
@@ -862,7 +861,7 @@ class Woocircle extends Widget_Base {
 		$this->add_responsive_control(
 			'close_button_radius',
 			[
-				'label'      => esc_html__('Border Radius', 'bdthemes-prime-slider'),
+				'label'      => esc_html__('Border Radius', 'bdthemes-prime-slider-lite'),
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => ['px', '%'],
 				'selectors'  => [
@@ -874,7 +873,7 @@ class Woocircle extends Widget_Base {
 		$this->add_responsive_control(
 			'close_button_padding',
 			[
-				'label'      => esc_html__('Padding', 'bdthemes-prime-slider'),
+				'label'      => esc_html__('Padding', 'bdthemes-prime-slider-lite'),
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => ['px', 'em', '%'],
 				'selectors'  => [
@@ -886,7 +885,7 @@ class Woocircle extends Widget_Base {
 		$this->add_responsive_control(
 			'close_button_margin',
 			[
-				'label'      => esc_html__('Margin', 'bdthemes-prime-slider'),
+				'label'      => esc_html__('Margin', 'bdthemes-prime-slider-lite'),
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => ['px', 'em', '%'],
 				'selectors'  => [
@@ -916,7 +915,7 @@ class Woocircle extends Widget_Base {
 		$this->add_control(
 			'slider_modal_close/open_button_heading',
 			[
-				'label' => __('Hover', 'bdthemes-prime-slider'),
+				'label' => __('Hover', 'bdthemes-prime-slider-lite'),
 				'type'  => Controls_Manager::HEADING,
 			]
 		);
@@ -924,7 +923,7 @@ class Woocircle extends Widget_Base {
 		$this->add_control(
 			'close_button_hover_color',
 			[
-				'label'     => esc_html__('Color', 'bdthemes-prime-slider'),
+				'label'     => esc_html__('Color', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .bdt-elastic-action--close:hover' => 'color: {{VALUE}};',
@@ -943,11 +942,11 @@ class Woocircle extends Widget_Base {
 		$this->add_control(
 			'close_button_hover_border_color',
 			[
-				'label'     => esc_html__('Border Color', 'bdthemes-prime-slider'),
+				'label'     => esc_html__('Border Color', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::COLOR,
-				// 'condition' => [
-				// 	'close_button_border_border!' => '',
-				// ],
+				'condition' => [
+					'close_button_border_border!' => '',
+				],
 				'selectors' => [
 					'{{WRAPPER}} .bdt-elastic-action--close:hover' => 'border-color: {{VALUE}};',
 				],
@@ -962,7 +961,7 @@ class Woocircle extends Widget_Base {
 		$this->add_control(
 			'slider_modal_add_to_cart_button_heading',
 			[
-				'label' => __('Add to Cart Button', 'bdthemes-prime-slider'),
+				'label' => __('Add to Cart Button', 'bdthemes-prime-slider-lite'),
 				'type'  => Controls_Manager::HEADING,
 				'separator' => 'before',
 			]
@@ -973,14 +972,14 @@ class Woocircle extends Widget_Base {
 		$this->start_controls_tab(
 			'tab_button_normal',
 			[
-				'label' => __('Normal', 'bdthemes-prime-slider'),
+				'label' => __('Normal', 'bdthemes-prime-slider-lite'),
 			]
 		);
 
 		$this->add_control(
 			'button_color',
 			[
-				'label'     => __('Color', 'bdthemes-prime-slider'),
+				'label'     => __('Color', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .bdt-elastic-slider .bdt-elastic-button--buy .button' => 'color: {{VALUE}};',
@@ -991,7 +990,7 @@ class Woocircle extends Widget_Base {
 		$this->add_control(
 			'button_background',
 			[
-				'label'     => __('Background', 'bdthemes-prime-slider'),
+				'label'     => __('Background', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .bdt-elastic-slider .bdt-elastic-button--buy .button' => 'background-color: {{VALUE}};',
@@ -1003,7 +1002,7 @@ class Woocircle extends Widget_Base {
 			Group_Control_Border::get_type(),
 			[
 				'name'        => 'button_border',
-				'label'       => __('Border', 'bdthemes-prime-slider'),
+				'label'       => __('Border', 'bdthemes-prime-slider-lite'),
 				'placeholder' => '1px',
 				'default'     => '1px',
 				'selector'    => '{{WRAPPER}} .bdt-elastic-slider .bdt-elastic-button--buy .button',
@@ -1013,7 +1012,7 @@ class Woocircle extends Widget_Base {
 		$this->add_responsive_control(
 			'button_radius',
 			[
-				'label'      => __('Border Radius', 'bdthemes-prime-slider'),
+				'label'      => __('Border Radius', 'bdthemes-prime-slider-lite'),
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => ['px', '%'],
 				'selectors'  => [
@@ -1025,7 +1024,7 @@ class Woocircle extends Widget_Base {
 		$this->add_responsive_control(
 			'button_padding',
 			[
-				'label'      => __('Padding', 'bdthemes-prime-slider'),
+				'label'      => __('Padding', 'bdthemes-prime-slider-lite'),
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => ['px', 'em', '%'],
 				'selectors'  => [
@@ -1037,7 +1036,7 @@ class Woocircle extends Widget_Base {
 		$this->add_responsive_control(
 			'button_margin',
 			[
-				'label'      => __('margin', 'bdthemes-prime-slider'),
+				'label'      => __('margin', 'bdthemes-prime-slider-lite'),
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => ['px', 'em', '%'],
 				'selectors'  => [
@@ -1067,14 +1066,14 @@ class Woocircle extends Widget_Base {
 		$this->start_controls_tab(
 			'tab_button_hover',
 			[
-				'label' => __('Hover', 'bdthemes-prime-slider'),
+				'label' => __('Hover', 'bdthemes-prime-slider-lite'),
 			]
 		);
 
 		$this->add_control(
 			'button_hover_color',
 			[
-				'label'     => __('Color', 'bdthemes-prime-slider'),
+				'label'     => __('Color', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .bdt-elastic-slider .bdt-elastic-button--buy .button:hover' => 'color: {{VALUE}};',
@@ -1085,7 +1084,7 @@ class Woocircle extends Widget_Base {
 		$this->add_control(
 			'button_hover_background',
 			[
-				'label' => __('Background', 'bdthemes-prime-slider'),
+				'label' => __('Background', 'bdthemes-prime-slider-lite'),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .bdt-elastic-slider .bdt-elastic-button--buy .button::before' => 'background-color: {{VALUE}};',
@@ -1096,7 +1095,7 @@ class Woocircle extends Widget_Base {
 		$this->add_control(
 			'button_hover_border_color',
 			[
-				'label'     => __('Border Color', 'bdthemes-prime-slider'),
+				'label'     => __('Border Color', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::COLOR,
 				'condition' => [
 					'button_border_border!' => '',
@@ -1112,14 +1111,14 @@ class Woocircle extends Widget_Base {
 		$this->start_controls_tab(
 			'tab_button_quantity',
 			[
-				'label' => __('Quantity', 'bdthemes-prime-slider'),
+				'label' => __('Quantity', 'bdthemes-prime-slider-lite'),
 			]
 		);
 
 		$this->add_control(
 			'quantity_button_color',
 			[
-				'label'     => __('Color', 'bdthemes-prime-slider'),
+				'label'     => __('Color', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .bdt-elastic-slider .bdt-elastic-button--buy .input-text' => 'color: {{VALUE}};',
@@ -1130,7 +1129,7 @@ class Woocircle extends Widget_Base {
 		$this->add_control(
 			'quantity_button_background',
 			[
-				'label'     => __('Background', 'bdthemes-prime-slider'),
+				'label'     => __('Background', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .bdt-elastic-slider .bdt-elastic-button--buy .input-text' => 'background-color: {{VALUE}};',
@@ -1151,7 +1150,7 @@ class Woocircle extends Widget_Base {
 		$this->add_responsive_control(
 			'quantity_button_radius',
 			[
-				'label'      => __('Border Radius', 'bdthemes-prime-slider'),
+				'label'      => __('Border Radius', 'bdthemes-prime-slider-lite'),
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => ['px', '%'],
 				'selectors'  => [
@@ -1163,7 +1162,7 @@ class Woocircle extends Widget_Base {
 		$this->add_responsive_control(
 			'quantity_button_padding',
 			[
-				'label'      => __('Padding', 'bdthemes-prime-slider'),
+				'label'      => __('Padding', 'bdthemes-prime-slider-lite'),
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => ['px', 'em', '%'],
 				'selectors'  => [
@@ -1199,7 +1198,7 @@ class Woocircle extends Widget_Base {
 		$this->start_controls_section(
 			'section_style_navigation',
 			[
-				'label'     => __('Navigation', 'bdthemes-prime-slider'),
+				'label'     => __('Navigation', 'bdthemes-prime-slider-lite'),
 				'tab'       => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -1207,7 +1206,7 @@ class Woocircle extends Widget_Base {
 		$this->add_control(
 			'arrows_number_color',
 			[
-				'label'     => __('Color', 'bdthemes-prime-slider'),
+				'label'     => __('Color', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .bdt-elastic-slider .navbutton .navbutton__line' => 'stroke: {{VALUE}}',
@@ -1218,7 +1217,7 @@ class Woocircle extends Widget_Base {
 		$this->add_control(
 			'arrows_hover_color',
 			[
-				'label'     => __('Hover Color', 'bdthemes-prime-slider'),
+				'label'     => __('Hover Color', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .bdt-elastic-slider .navbutton:hover .navbutton__line' => 'stroke: {{VALUE}}',
@@ -1229,7 +1228,7 @@ class Woocircle extends Widget_Base {
 		$this->add_responsive_control(
 			'arrows_size',
 			[
-				'label' => esc_html__('Size', 'bdthemes-prime-slider'),
+				'label' => esc_html__('Size', 'bdthemes-prime-slider-lite'),
 				'type'  => Controls_Manager::SLIDER,
 				'selectors' => [
 					'{{WRAPPER}} .bdt-elastic-slider .navbutton' => 'width: {{SIZE}}{{UNIT}};',
@@ -1276,7 +1275,7 @@ class Woocircle extends Widget_Base {
 
 			public function render_footer() {
 				?>
-					<button class="bdt-elastic-action bdt-elastic-action--close" aria-label="<?php echo esc_attr__( 'Close', 'bdthemes-prime-slider' ); ?>">
+					<button class="bdt-elastic-action bdt-elastic-action--close" aria-label="<?php echo esc_attr__( 'Close', 'bdthemes-prime-slider-lite' ); ?>">
 						<i class="ps-wi-close"></i>
 					</button>
 				</div>
@@ -1286,10 +1285,6 @@ class Woocircle extends Widget_Base {
 	}
 
 	protected function get_wc_pro_word_limit( $settings, $control ) {
-		if ( true !== _is_ps_pro_activated() ) {
-			return 0;
-		}
-
 		return absint( $settings[ $control ] ?? 0 );
 	}
 
@@ -1354,7 +1349,7 @@ class Woocircle extends Widget_Base {
 
 					<img class="bdt-elastic-img bdt-elastic-img-small" src="<?php echo esc_url($image_final_src); ?>" alt="<?php echo esc_html(get_the_title()); ?>">
 
-					<button class="bdt-elastic-action bdt-elastic-action--open" aria-label="<?php echo esc_attr__( 'View details', 'bdthemes-prime-slider' ); ?>"><i class="ps-wi-plus"></i></button>
+					<button class="bdt-elastic-action bdt-elastic-action--open" aria-label="<?php echo esc_attr__( 'View details', 'bdthemes-prime-slider-lite' ); ?>"><i class="ps-wi-plus"></i></button>
 				</div>
 			</div>
 			<div class="bdt-elastic-modal-wrap">

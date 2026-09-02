@@ -28,7 +28,7 @@ class Woolamp extends Widget_Base {
 	}
 
 	public function get_title() {
-		return BDTPS . esc_html__('WooLamp', 'bdthemes-prime-slider');
+		return BDTPS . esc_html__('WooLamp', 'bdthemes-prime-slider-lite');
 	}
 
 	public function get_icon() {
@@ -44,24 +44,12 @@ class Woolamp extends Widget_Base {
 	}
 
 	public function get_style_depends() {
-		return ['ps-woolamp'];
+		return ['bdtps-woolamp'];
 	}
 
 	public function get_script_depends() {
-		$reveal_effects = prime_slider_option('reveal-effects', 'prime_slider_other_settings', 'off');
-		if ('on' === $reveal_effects) {
-			if ( true === _is_ps_pro_activated() ) {
-				return ['gsap', 'split-text', 'anime', 'revealFx', 'ps-animation-helper', 'bdt-goodshare'];
-			} else {
-				return ['bdt-goodshare'];
-			}
-		} else {
-			if ( true === _is_ps_pro_activated() ) {
-				return ['gsap', 'split-text', 'ps-animation-helper', 'bdt-goodshare'];
-			} else {
-				return ['bdt-goodshare'];
-			}
-		}
+		// Add-ons (e.g. Prime Slider Pro) append their own handles via this filter.
+		return $this->addon_script_depends( [ 'bdt-goodshare' ] );
 	}
 
 	public function get_custom_help_url() {
@@ -73,11 +61,10 @@ class Woolamp extends Widget_Base {
     }
 
 	protected function register_controls() {
-		$reveal_effects = prime_slider_option('reveal-effects', 'prime_slider_other_settings', 'off');
 		$this->start_controls_section(
 			'section_content_layout',
 			[
-				'label' => esc_html__('Layout', 'bdthemes-prime-slider'),
+				'label' => esc_html__('Layout', 'bdthemes-prime-slider-lite'),
 			]
 		);
 
@@ -89,19 +76,19 @@ class Woolamp extends Widget_Base {
 		$this->add_responsive_control(
 			'content_alignment',
 			[
-				'label'   => esc_html__('Alignment', 'bdthemes-prime-slider'),
+				'label'   => esc_html__('Alignment', 'bdthemes-prime-slider-lite'),
 				'type'    => Controls_Manager::CHOOSE,
 				'options' => [
 					'left' => [
-						'title' => esc_html__('Left', 'bdthemes-prime-slider'),
+						'title' => esc_html__('Left', 'bdthemes-prime-slider-lite'),
 						'icon'  => 'eicon-text-align-left',
 					],
 					'center' => [
-						'title' => esc_html__('Center', 'bdthemes-prime-slider'),
+						'title' => esc_html__('Center', 'bdthemes-prime-slider-lite'),
 						'icon'  => 'eicon-text-align-center',
 					],
 					'right' => [
-						'title' => esc_html__('Right', 'bdthemes-prime-slider'),
+						'title' => esc_html__('Right', 'bdthemes-prime-slider-lite'),
 						'icon'  => 'eicon-text-align-right',
 					],
 				],
@@ -134,20 +121,19 @@ class Woolamp extends Widget_Base {
 		$this->add_control(
 			'excerpt_length',
 			[
-				'label'       => __( 'Text Limit', 'bdthemes-prime-slider' ) . BDTPS_CORE_PC,
+				'label'       => __( 'Text Limit', 'bdthemes-prime-slider-lite' ),
 				'type'        => Controls_Manager::NUMBER,
 				'min'         => 0,
 				'condition'   => [
 					'show_excerpt' => 'yes',
 				],
-				'classes'     => BDTPS_CORE_IS_PC,
 			]
 		);
 
 		$this->add_control(
 			'strip_shortcode',
 			[
-				'label'     => esc_html__( 'Strip Shortcode', 'bdthemes-prime-slider' ),
+				'label'     => esc_html__( 'Strip Shortcode', 'bdthemes-prime-slider-lite' ),
 				'type'      => Controls_Manager::SWITCHER,
 				'default'   => 'yes',
 				'condition' => [
@@ -174,7 +160,7 @@ class Woolamp extends Widget_Base {
 		$this->add_control(
 			'show_social_share',
 			[
-				'label'   => esc_html__('Show Social Share', 'bdthemes-prime-slider'),
+				'label'   => esc_html__('Show Social Share', 'bdthemes-prime-slider-lite'),
 				'type'    => Controls_Manager::SWITCHER,
 				'default' => 'yes',
 			]
@@ -183,10 +169,9 @@ class Woolamp extends Widget_Base {
 		$this->add_control(
 			'social_share_hide_on_mobile',
 			[
-				'label'   => esc_html__('Social Share Hide on Mobile', 'bdthemes-prime-slider') . BDTPS_CORE_PC,
+				'label'   => esc_html__('Social Share Hide on Mobile', 'bdthemes-prime-slider-lite'),
 				'type'    => Controls_Manager::SWITCHER,
 				'prefix_class' => 'bdt-social-share-hide--',
-				'classes'   => BDTPS_CORE_IS_PC
 			]
 		);
 
@@ -195,7 +180,7 @@ class Woolamp extends Widget_Base {
 		$this->start_controls_section(
 			'section_content_social_link',
 			[
-				'label' 	=> __('Social Share', 'bdthemes-prime-slider'),
+				'label' 	=> __('Social Share', 'bdthemes-prime-slider-lite'),
 				'condition' => [
 					'show_social_share' => 'yes',
 				],
@@ -211,7 +196,7 @@ class Woolamp extends Widget_Base {
 		$repeater->add_control(
 			'button',
 			[
-				'label' => esc_html__('Social Media', 'bdthemes-prime-slider'),
+				'label' => esc_html__('Social Media', 'bdthemes-prime-slider-lite'),
 				'type' => Controls_Manager::SELECT,
 				'options' => array_reduce($medias_names, function ($options, $media_name) use ($medias) {
 					$options[$media_name] = $medias[$media_name]['title'];
@@ -225,7 +210,7 @@ class Woolamp extends Widget_Base {
 		$repeater->add_control(
 			'text',
 			[
-				'label' => esc_html__('Custom Label', 'bdthemes-prime-slider'),
+				'label' => esc_html__('Custom Label', 'bdthemes-prime-slider-lite'),
 				'type' => Controls_Manager::TEXT,
 				'dynamic' => [ 'active' => true ],
 			]
@@ -250,7 +235,7 @@ class Woolamp extends Widget_Base {
 		$this->start_controls_section(
 			'section_post_query_builder',
 			[
-				'label' => esc_html__('Query', 'bdthemes-prime-slider'),
+				'label' => esc_html__('Query', 'bdthemes-prime-slider-lite'),
 				'tab' => Controls_Manager::TAB_CONTENT,
 			]
 		);
@@ -263,17 +248,17 @@ class Woolamp extends Widget_Base {
 				'type'      => Controls_Manager::SELECT,
 				'default'   => 'product',
 				'options' => [
-					'product' 			 => esc_html__('Product', 'bdthemes-prime-slider'),
-					'manual_selection'   => esc_html__('Manual Selection', 'bdthemes-prime-slider'),
-					'current_query'      => esc_html__('Current Query', 'bdthemes-prime-slider'),
-					'_related_post_type' => esc_html__('Related', 'bdthemes-prime-slider'),
+					'product' 			 => esc_html__('Product', 'bdthemes-prime-slider-lite'),
+					'manual_selection'   => esc_html__('Manual Selection', 'bdthemes-prime-slider-lite'),
+					'current_query'      => esc_html__('Current Query', 'bdthemes-prime-slider-lite'),
+					'_related_post_type' => esc_html__('Related', 'bdthemes-prime-slider-lite'),
 				],
 			]
 		);
 		$this->update_control(
 			'posts_limit',
 			[
-				'label'     => esc_html__('Limit', 'bdthemes-prime-slider'),
+				'label'     => esc_html__('Limit', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::NUMBER,
 				'default'   => 3,
 			]
@@ -283,7 +268,7 @@ class Woolamp extends Widget_Base {
 		$this->start_controls_section(
 			'section_style_animation',
 			[
-				'label' => esc_html__('Slider Settings', 'bdthemes-prime-slider'),
+				'label' => esc_html__('Slider Settings', 'bdthemes-prime-slider-lite'),
 			]
 		);
 
@@ -295,64 +280,17 @@ class Woolamp extends Widget_Base {
 		$this->end_controls_section();
 
 		/**
-         * Advanced Animation
-         */
-		$this->start_controls_section(
-			'section_advanced_animation',
-			[
-				'label'     => esc_html__('Advanced Animation', 'bdthemes-prime-slider') . BDTPS_CORE_PC,
-				'tab'       => Controls_Manager::TAB_CONTENT,
-			]
-		);
-
-		$this->add_control(
-			'animation_status',
-			[
-				'label'   => esc_html__('Advanced Animation', 'bdthemes-prime-slider'),
-				'type'    => Controls_Manager::SWITCHER,
-				'classes'   => BDTPS_CORE_IS_PC,
-			]
-		);
-
-		if ( true === _is_ps_pro_activated() ) {
-
-			$this->add_control(
-				'animation_of',
-				[
-					'label'	   => __('Animation Of', 'bdthemes-prime-slider'),
-					'type' 	   => Controls_Manager::SELECT2,
-					'multiple' => true,
-					'options'  => [
-						'.bdt-ps-title' => __('Title', 'bdthemes-prime-slider'),
-						'.bdt-ps-text' => __('Excerpt', 'bdthemes-prime-slider'),
-					],
-					'default'  => ['.bdt-ps-title'],
-					'condition' => [
-						'animation_status' => 'yes'
-					]
-				]
-			);
-
-			/**
-             * Advanced Animation
-             */
-            $this->register_advanced_animation_controls();
-		}
-
-		$this->end_controls_section();
-
-		/**
-		 * Reveal Effects
+		 * Extension point: add-ons (e.g. Prime Slider Pro) register their own
+		 * controls here. This plugin registers none of its own.
 		 */
-		if ('on' === $reveal_effects) {
-			$this->register_reveal_effects();
-		}
+		$this->register_addon_controls();
+
 
 		//Style Start
 		$this->start_controls_section(
 			'section_style_sliders',
 			[
-				'label'     => esc_html__('Sliders', 'bdthemes-prime-slider'),
+				'label'     => esc_html__('Sliders', 'bdthemes-prime-slider-lite'),
 				'tab'       => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -360,20 +298,19 @@ class Woolamp extends Widget_Base {
 		$this->add_control(
 			'image_overlay_color',
 			[
-				'label'     => esc_html__('Image Overlay Color', 'bdthemes-prime-slider') . BDTPS_CORE_PC,
+				'label'     => esc_html__('Image Overlay Color', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::COLOR,
-				'description' => esc_html__('NOTE: It just works on Mobile Device.', 'bdthemes-prime-slider'),
+				'description' => esc_html__('NOTE: It just works on Mobile Device.', 'bdthemes-prime-slider-lite'),
 				'selectors' => [
 					'(mobile){{WRAPPER}} .bdt-prime-slider-woolamp .bdt-ps-wc-product-img:before' => 'background: {{VALUE}};',
 				],
-				'classes'   => BDTPS_CORE_IS_PC
 			]
 		);
 
 		$this->add_responsive_control(
 			'content_padding',
 			[
-				'label'      => esc_html__('Content Padding', 'bdthemes-prime-slider'),
+				'label'      => esc_html__('Content Padding', 'bdthemes-prime-slider-lite'),
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => ['px', 'em', '%'],
 				'selectors'  => [
@@ -388,7 +325,7 @@ class Woolamp extends Widget_Base {
 		$this->start_controls_tab(
 			'slider_title_style',
 			[
-				'label' 	=> __('Title', 'bdthemes-prime-slider'),
+				'label' 	=> __('Title', 'bdthemes-prime-slider-lite'),
 				'condition' => [
 					'show_title' => ['yes'],
 				],
@@ -398,7 +335,7 @@ class Woolamp extends Widget_Base {
 		$this->add_control(
 			'show_text_stroke',
 			[
-				'label'   => esc_html__('Text Stroke', 'bdthemes-prime-slider'),
+				'label'   => esc_html__('Text Stroke', 'bdthemes-prime-slider-lite'),
 				'type'    => Controls_Manager::SWITCHER,
 				'prefix_class' => 'bdt-text-stroke--',
 				'condition' => [
@@ -410,7 +347,7 @@ class Woolamp extends Widget_Base {
 		$this->add_control(
 			'title_color',
 			[
-				'label'     => esc_html__('Color', 'bdthemes-prime-slider'),
+				'label'     => esc_html__('Color', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .bdt-prime-slider-woolamp .bdt-ps-content-wrapper .bdt-ps-title a' => 'color: {{VALUE}}; -webkit-text-stroke-color: {{VALUE}};',
@@ -425,7 +362,7 @@ class Woolamp extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name'     => 'title_typography',
-				'label'    => esc_html__('Typography', 'bdthemes-prime-slider'),
+				'label'    => esc_html__('Typography', 'bdthemes-prime-slider-lite'),
 				'selector' => '{{WRAPPER}} .bdt-prime-slider-woolamp .bdt-ps-content-wrapper .bdt-ps-title',
 				'condition' => [
 					'show_title' => ['yes'],
@@ -436,7 +373,7 @@ class Woolamp extends Widget_Base {
 		$this->add_responsive_control(
 			'prime_slider_title_spacing',
 			[
-				'label' => esc_html__('Title Spacing', 'bdthemes-prime-slider'),
+				'label' => esc_html__('Title Spacing', 'bdthemes-prime-slider-lite'),
 				'type'  => Controls_Manager::SLIDER,
 				'range' => [
 					'px' => [
@@ -458,7 +395,7 @@ class Woolamp extends Widget_Base {
 		$this->start_controls_tab(
 			'slider_category_style',
 			[
-				'label' 	=> __('Category', 'bdthemes-prime-slider'),
+				'label' 	=> __('Category', 'bdthemes-prime-slider-lite'),
 				'condition' => [
 					'show_category' => ['yes'],
 				],
@@ -468,7 +405,7 @@ class Woolamp extends Widget_Base {
 		$this->add_control(
 			'category_heading_normal',
 			[
-				'label' => __('Normal', 'bdthemes-prime-slider'),
+				'label' => __('Normal', 'bdthemes-prime-slider-lite'),
 				'type'  => Controls_Manager::HEADING,
 			]
 		);
@@ -476,7 +413,7 @@ class Woolamp extends Widget_Base {
 		$this->add_control(
 			'category_color',
 			[
-				'label'     => esc_html__('Color', 'bdthemes-prime-slider'),
+				'label'     => esc_html__('Color', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .bdt-prime-slider-woolamp .bdt-ps-content-wrapper .bdt-ps-category a' => 'color: {{VALUE}};',
@@ -487,7 +424,7 @@ class Woolamp extends Widget_Base {
 		$this->add_control(
 			'category_background_color',
 			[
-				'label'     => esc_html__('Line Color', 'bdthemes-prime-slider'),
+				'label'     => esc_html__('Line Color', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .bdt-prime-slider-woolamp .bdt-ps-content-wrapper .bdt-ps-category a:before' => 'background: {{VALUE}};',
@@ -498,7 +435,7 @@ class Woolamp extends Widget_Base {
 		$this->add_responsive_control(
 			'category_border_radius',
 			[
-				'label'      => esc_html__('Border Radius', 'bdthemes-prime-slider'),
+				'label'      => esc_html__('Border Radius', 'bdthemes-prime-slider-lite'),
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => ['px', '%'],
 				'selectors'  => [
@@ -510,7 +447,7 @@ class Woolamp extends Widget_Base {
 		$this->add_responsive_control(
 			'category_padding',
 			[
-				'label'      => esc_html__('Padding', 'bdthemes-prime-slider'),
+				'label'      => esc_html__('Padding', 'bdthemes-prime-slider-lite'),
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => ['px', 'em', '%'],
 				'selectors'  => [
@@ -530,7 +467,7 @@ class Woolamp extends Widget_Base {
 		$this->add_responsive_control(
 			'prime_slider_category_spacing',
 			[
-				'label' => esc_html__('Spacing', 'bdthemes-prime-slider'),
+				'label' => esc_html__('Spacing', 'bdthemes-prime-slider-lite'),
 				'type'  => Controls_Manager::SLIDER,
 				'range' => [
 					'px' => [
@@ -550,7 +487,7 @@ class Woolamp extends Widget_Base {
 		$this->add_control(
 			'category_heading_hover',
 			[
-				'label' => __('Hover', 'bdthemes-prime-slider'),
+				'label' => __('Hover', 'bdthemes-prime-slider-lite'),
 				'type'  => Controls_Manager::HEADING,
 				'separator' => 'before',
 			]
@@ -559,7 +496,7 @@ class Woolamp extends Widget_Base {
 		$this->add_control(
 			'category_hover_color',
 			[
-				'label'     => esc_html__('Color', 'bdthemes-prime-slider'),
+				'label'     => esc_html__('Color', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .bdt-prime-slider-woolamp .bdt-ps-content-wrapper .bdt-ps-category a:hover' => 'color: {{VALUE}};',
@@ -570,7 +507,7 @@ class Woolamp extends Widget_Base {
 		$this->add_control(
 			'category_hover_background_color',
 			[
-				'label'     => esc_html__('Background', 'bdthemes-prime-slider'),
+				'label'     => esc_html__('Background', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .bdt-prime-slider-woolamp .bdt-ps-content-wrapper .bdt-ps-category a:hover:before' => 'background: {{VALUE}};',
@@ -583,7 +520,7 @@ class Woolamp extends Widget_Base {
 		$this->start_controls_tab(
 			'slider_style_excerpt',
 			[
-				'label'     => esc_html__('Excerpt', 'bdthemes-prime-slider'),
+				'label'     => esc_html__('Excerpt', 'bdthemes-prime-slider-lite'),
 				'condition' => [
 					'show_excerpt' => ['yes'],
 				],
@@ -593,7 +530,7 @@ class Woolamp extends Widget_Base {
 		$this->add_control(
 			'excerpt_color',
 			[
-				'label'     => esc_html__('Color', 'bdthemes-prime-slider'),
+				'label'     => esc_html__('Color', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .bdt-prime-slider-woolamp .bdt-ps-content-wrapper .bdt-ps-text' => 'color: {{VALUE}};',
@@ -608,7 +545,7 @@ class Woolamp extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name'     => 'excerpt_typography',
-				'label'    => esc_html__('Typography', 'bdthemes-prime-slider'),
+				'label'    => esc_html__('Typography', 'bdthemes-prime-slider-lite'),
 				'selector' => '{{WRAPPER}} .bdt-prime-slider-woolamp .bdt-ps-content-wrapper .bdt-ps-text',
 				'condition' => [
 					'show_excerpt'  => ['yes'],
@@ -619,7 +556,7 @@ class Woolamp extends Widget_Base {
 		$this->add_responsive_control(
 			'prime_slider_excerpt_spacing',
 			[
-				'label' 	=> esc_html__('Excerpt Spacing', 'bdthemes-prime-slider'),
+				'label' 	=> esc_html__('Excerpt Spacing', 'bdthemes-prime-slider-lite'),
 				'type'  	=> Controls_Manager::SLIDER,
 				'range' 	=> [
 					'px' 		=> [
@@ -641,7 +578,7 @@ class Woolamp extends Widget_Base {
 		$this->start_controls_tab(
 			'tab_style_price',
 			[
-				'label'     => __('Price', 'bdthemes-prime-slider'),
+				'label'     => __('Price', 'bdthemes-prime-slider-lite'),
 				'condition' => [
 					'show_price' => 'yes',
 				],
@@ -651,7 +588,7 @@ class Woolamp extends Widget_Base {
 		$this->add_control(
 			'old_price_heading',
 			[
-				'label' => __('Old Price', 'bdthemes-prime-slider'),
+				'label' => __('Old Price', 'bdthemes-prime-slider-lite'),
 				'type'  => Controls_Manager::HEADING,
 			]
 		);
@@ -659,7 +596,7 @@ class Woolamp extends Widget_Base {
 		$this->add_control(
 			'old_price_color',
 			[
-				'label'     => __('Color', 'bdthemes-prime-slider'),
+				'label'     => __('Color', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .bdt-prime-slider-woolamp .bdt-ps-content-wrapper .bdt-ps-price .price del span' => 'color: {{VALUE}};',
@@ -670,7 +607,7 @@ class Woolamp extends Widget_Base {
 		$this->add_responsive_control(
 			'old_price_margin',
 			[
-				'label'      => __('Margin', 'bdthemes-prime-slider'),
+				'label'      => __('Margin', 'bdthemes-prime-slider-lite'),
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => ['px', '%'],
 				'selectors'  => [
@@ -683,7 +620,7 @@ class Woolamp extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name'     => 'old_price_typography',
-				'label'    => __('Typography', 'bdthemes-prime-slider'),
+				'label'    => __('Typography', 'bdthemes-prime-slider-lite'),
 				'selector' => '{{WRAPPER}} .bdt-prime-slider-woolamp .bdt-ps-content-wrapper .bdt-ps-price .price del span',
 			]
 		);
@@ -691,7 +628,7 @@ class Woolamp extends Widget_Base {
 		$this->add_control(
 			'sale_price_heading',
 			[
-				'label'     => __('Sale Price', 'bdthemes-prime-slider'),
+				'label'     => __('Sale Price', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::HEADING,
 				'separator' => 'before',
 			]
@@ -700,7 +637,7 @@ class Woolamp extends Widget_Base {
 		$this->add_control(
 			'sale_price_color',
 			[
-				'label'     => __('Color', 'bdthemes-prime-slider'),
+				'label'     => __('Color', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .bdt-prime-slider-woolamp .bdt-ps-content-wrapper .bdt-ps-price .price ins, {{WRAPPER}} .bdt-prime-slider-woolamp .bdt-ps-content-wrapper .bdt-ps-price .price > span' => 'color: {{VALUE}};',
@@ -711,7 +648,7 @@ class Woolamp extends Widget_Base {
 		$this->add_responsive_control(
 			'sale_price_margin',
 			[
-				'label'      => __('Margin', 'bdthemes-prime-slider'),
+				'label'      => __('Margin', 'bdthemes-prime-slider-lite'),
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => ['px', '%'],
 				'selectors'  => [
@@ -724,7 +661,7 @@ class Woolamp extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name'     => 'sale_price_typography',
-				'label'    => __('Typography', 'bdthemes-prime-slider'),
+				'label'    => __('Typography', 'bdthemes-prime-slider-lite'),
 				'selector' => '{{WRAPPER}} .bdt-prime-slider-woolamp .bdt-ps-content-wrapper .bdt-ps-price .price ins, {{WRAPPER}} .bdt-prime-slider-woolamp .bdt-ps-content-wrapper .bdt-ps-price .price > span',
 			]
 		);
@@ -733,7 +670,7 @@ class Woolamp extends Widget_Base {
 		$this->add_responsive_control(
 			'sale_price_spacing',
 			[
-				'label'      => __('Spacing', 'bdthemes-prime-slider'),
+				'label'      => __('Spacing', 'bdthemes-prime-slider-lite'),
 				'type'       => Controls_Manager::SLIDER,
 				'size_units' => ['px', '%'],
 				'selectors'  => [
@@ -751,7 +688,7 @@ class Woolamp extends Widget_Base {
 		$this->start_controls_section(
 			'section_style_button',
 			[
-				'label'     => __('Add to Cart Button', 'bdthemes-prime-slider'),
+				'label'     => __('Add to Cart Button', 'bdthemes-prime-slider-lite'),
 				'tab'       => Controls_Manager::TAB_STYLE,
 				'condition' => [
 					'show_cart' => 'yes',
@@ -764,14 +701,14 @@ class Woolamp extends Widget_Base {
 		$this->start_controls_tab(
 			'tab_button_normal',
 			[
-				'label' => __('Normal', 'bdthemes-prime-slider'),
+				'label' => __('Normal', 'bdthemes-prime-slider-lite'),
 			]
 		);
 
 		$this->add_control(
 			'button_color',
 			[
-				'label'     => __('Color', 'bdthemes-prime-slider'),
+				'label'     => __('Color', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .bdt-prime-slider-woolamp .bdt-ps-content-wrapper .bdt-ps-add-to-cart .button' => 'color: {{VALUE}};',
@@ -782,7 +719,7 @@ class Woolamp extends Widget_Base {
 		$this->add_control(
 			'button_background',
 			[
-				'label'     => __('Background', 'bdthemes-prime-slider'),
+				'label'     => __('Background', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .bdt-prime-slider-woolamp .bdt-ps-content-wrapper .bdt-ps-add-to-cart .button' => 'background-color: {{VALUE}};',
@@ -794,7 +731,7 @@ class Woolamp extends Widget_Base {
 			Group_Control_Border::get_type(),
 			[
 				'name'        => 'button_border',
-				'label'       => __('Border', 'bdthemes-prime-slider'),
+				'label'       => __('Border', 'bdthemes-prime-slider-lite'),
 				'placeholder' => '1px',
 				'default'     => '1px',
 				'selector'    => '{{WRAPPER}} .bdt-prime-slider-woolamp .bdt-ps-content-wrapper .bdt-ps-add-to-cart .button',
@@ -804,7 +741,7 @@ class Woolamp extends Widget_Base {
 		$this->add_responsive_control(
 			'button_radius',
 			[
-				'label'      => __('Border Radius', 'bdthemes-prime-slider'),
+				'label'      => __('Border Radius', 'bdthemes-prime-slider-lite'),
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => ['px', '%'],
 				'selectors'  => [
@@ -816,7 +753,7 @@ class Woolamp extends Widget_Base {
 		$this->add_responsive_control(
 			'button_padding',
 			[
-				'label'      => __('Padding', 'bdthemes-prime-slider'),
+				'label'      => __('Padding', 'bdthemes-prime-slider-lite'),
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => ['px', 'em', '%'],
 				'selectors'  => [
@@ -846,14 +783,14 @@ class Woolamp extends Widget_Base {
 		$this->start_controls_tab(
 			'tab_button_hover',
 			[
-				'label' => __('Hover', 'bdthemes-prime-slider'),
+				'label' => __('Hover', 'bdthemes-prime-slider-lite'),
 			]
 		);
 
 		$this->add_control(
 			'button_hover_background',
 			[
-				'label' => __('Background', 'bdthemes-prime-slider'),
+				'label' => __('Background', 'bdthemes-prime-slider-lite'),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .bdt-prime-slider-woolamp .bdt-ps-content-wrapper .bdt-ps-add-to-cart .button:before' => 'background-color: {{VALUE}};',
@@ -864,7 +801,7 @@ class Woolamp extends Widget_Base {
 		$this->add_control(
 			'button_hover_color',
 			[
-				'label'     => __('Color', 'bdthemes-prime-slider'),
+				'label'     => __('Color', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .bdt-prime-slider-woolamp .bdt-ps-content-wrapper .bdt-ps-add-to-cart .button:hover' => 'color: {{VALUE}};',
@@ -875,7 +812,7 @@ class Woolamp extends Widget_Base {
 		$this->add_control(
 			'button_hover_border_color',
 			[
-				'label'     => __('Border Color', 'bdthemes-prime-slider'),
+				'label'     => __('Border Color', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::COLOR,
 				'condition' => [
 					'button_border_border!' => '',
@@ -891,14 +828,14 @@ class Woolamp extends Widget_Base {
 		$this->start_controls_tab(
 			'tab_button_quantity',
 			[
-				'label' => __('Quantity', 'bdthemes-prime-slider'),
+				'label' => __('Quantity', 'bdthemes-prime-slider-lite'),
 			]
 		);
 
 		$this->add_control(
 			'quantity_button_color',
 			[
-				'label'     => __('Color', 'bdthemes-prime-slider'),
+				'label'     => __('Color', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .bdt-prime-slider-woolamp .bdt-ps-content-wrapper .bdt-ps-add-to-cart .input-text' => 'color: {{VALUE}};',
@@ -909,7 +846,7 @@ class Woolamp extends Widget_Base {
 		$this->add_control(
 			'quantity_button_background',
 			[
-				'label'     => __('Background', 'bdthemes-prime-slider'),
+				'label'     => __('Background', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .bdt-prime-slider-woolamp .bdt-ps-content-wrapper .bdt-ps-add-to-cart .input-text' => 'background-color: {{VALUE}};',
@@ -930,7 +867,7 @@ class Woolamp extends Widget_Base {
 		$this->add_responsive_control(
 			'quantity_button_radius',
 			[
-				'label'      => __('Border Radius', 'bdthemes-prime-slider'),
+				'label'      => __('Border Radius', 'bdthemes-prime-slider-lite'),
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => ['px', '%'],
 				'selectors'  => [
@@ -942,7 +879,7 @@ class Woolamp extends Widget_Base {
 		$this->add_responsive_control(
 			'quantity_button_padding',
 			[
-				'label'      => __('Padding', 'bdthemes-prime-slider'),
+				'label'      => __('Padding', 'bdthemes-prime-slider-lite'),
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => ['px', 'em', '%'],
 				'selectors'  => [
@@ -976,7 +913,7 @@ class Woolamp extends Widget_Base {
 		$this->start_controls_section(
 			'section_style_social_icon',
 			[
-				'label'     => esc_html__('Social Share', 'bdthemes-prime-slider'),
+				'label'     => esc_html__('Social Share', 'bdthemes-prime-slider-lite'),
 				'tab'       => Controls_Manager::TAB_STYLE,
 				'condition' => [
 					'show_social_share' => 'yes',
@@ -989,14 +926,14 @@ class Woolamp extends Widget_Base {
 		$this->start_controls_tab(
 			'tab_social_icon_normal',
 			[
-				'label' => esc_html__('Normal', 'bdthemes-prime-slider'),
+				'label' => esc_html__('Normal', 'bdthemes-prime-slider-lite'),
 			]
 		);
 
 		$this->add_control(
 			'social_icon_color',
 			[
-				'label'     => esc_html__('Color', 'bdthemes-prime-slider'),
+				'label'     => esc_html__('Color', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .bdt-prime-slider-woolamp .bdt-ps-social-share .bdt-social-share-item .bdt-ps-btn' => 'color: {{VALUE}};',
@@ -1025,7 +962,7 @@ class Woolamp extends Widget_Base {
 		$this->add_responsive_control(
 			'social_icon_radius',
 			[
-				'label'      => esc_html__('Border Radius', 'bdthemes-prime-slider'),
+				'label'      => esc_html__('Border Radius', 'bdthemes-prime-slider-lite'),
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => ['px', '%'],
 				'selectors'  => [
@@ -1037,7 +974,7 @@ class Woolamp extends Widget_Base {
 		$this->add_responsive_control(
 			'social_icon_padding',
 			[
-				'label'      => esc_html__('Padding', 'bdthemes-prime-slider'),
+				'label'      => esc_html__('Padding', 'bdthemes-prime-slider-lite'),
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => ['px', 'em', '%'],
 				'selectors'  => [
@@ -1049,7 +986,7 @@ class Woolamp extends Widget_Base {
 		$this->add_responsive_control(
 			'social_icon_spacing',
 			[
-				'label' => esc_html__('Space Between', 'bdthemes-prime-slider'),
+				'label' => esc_html__('Space Between', 'bdthemes-prime-slider-lite'),
 				'type'  => Controls_Manager::SLIDER,
 				'selectors' => [
 					'{{WRAPPER}} .bdt-prime-slider-woolamp .bdt-ps-social-share .bdt-social-share-item' => 'margin-left: {{SIZE}}{{UNIT}};',
@@ -1060,7 +997,7 @@ class Woolamp extends Widget_Base {
 		$this->add_responsive_control(
 			'social_offset_spacing',
 			[
-				'label' => esc_html__('Horizontal Spacing', 'bdthemes-prime-slider'),
+				'label' => esc_html__('Horizontal Spacing', 'bdthemes-prime-slider-lite'),
 				'type'  => Controls_Manager::SLIDER,
 				'selectors' => [
 					'{{WRAPPER}} .bdt-prime-slider-woolamp .bdt-ps-social-share' => 'left: -{{SIZE}}{{UNIT}};',
@@ -1089,14 +1026,14 @@ class Woolamp extends Widget_Base {
 		$this->start_controls_tab(
 			'tab_social_icon_hover',
 			[
-				'label' => esc_html__('Hover', 'bdthemes-prime-slider'),
+				'label' => esc_html__('Hover', 'bdthemes-prime-slider-lite'),
 			]
 		);
 
 		$this->add_control(
 			'social_icon_hover_color',
 			[
-				'label'     => esc_html__('Color', 'bdthemes-prime-slider'),
+				'label'     => esc_html__('Color', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .bdt-prime-slider-woolamp .bdt-ps-social-share .bdt-social-share-item .bdt-ps-btn:hover' => 'color: {{VALUE}};',
@@ -1117,7 +1054,7 @@ class Woolamp extends Widget_Base {
 		$this->add_control(
 			'icon_hover_border_color',
 			[
-				'label'     => esc_html__('Border Color', 'bdthemes-prime-slider'),
+				'label'     => esc_html__('Border Color', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::COLOR,
 				'condition' => [
 					'social_icon_border_border!' => '',
@@ -1137,7 +1074,7 @@ class Woolamp extends Widget_Base {
 		$this->start_controls_section(
 			'section_style_navigation',
 			[
-				'label'     => __('Navigation', 'bdthemes-prime-slider'),
+				'label'     => __('Navigation', 'bdthemes-prime-slider-lite'),
 				'tab'       => Controls_Manager::TAB_STYLE,
 				'condition' => [
 					'show_navigation_dots' => 'yes'
@@ -1148,7 +1085,7 @@ class Woolamp extends Widget_Base {
 		$this->add_control(
 			'dot_number_color',
 			[
-				'label'     => __('Color', 'bdthemes-prime-slider'),
+				'label'     => __('Color', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .bdt-prime-slider-woolamp .bdt-ps-dotnav li a' => 'color: {{VALUE}}',
@@ -1159,7 +1096,7 @@ class Woolamp extends Widget_Base {
 		$this->add_control(
 			'dot_hover_color',
 			[
-				'label'     => __('Hover Color', 'bdthemes-prime-slider'),
+				'label'     => __('Hover Color', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .bdt-prime-slider-woolamp .bdt-ps-dotnav li a:hover' => 'color: {{VALUE}}',
@@ -1170,7 +1107,7 @@ class Woolamp extends Widget_Base {
 		$this->add_control(
 			'active_dot_number_color',
 			[
-				'label'     => __('Active Color', 'bdthemes-prime-slider'),
+				'label'     => __('Active Color', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .bdt-prime-slider-woolamp .bdt-ps-dotnav li.bdt-active a' => 'color: {{VALUE}}',
@@ -1189,7 +1126,7 @@ class Woolamp extends Widget_Base {
 		$this->add_responsive_control(
 			'dots_spacing',
 			[
-				'label' => esc_html__('Space Between', 'bdthemes-prime-slider'),
+				'label' => esc_html__('Space Between', 'bdthemes-prime-slider-lite'),
 				'type'  => Controls_Manager::SLIDER,
 				'selectors' => [
 					'{{WRAPPER}} .bdt-prime-slider-woolamp .bdt-ps-dotnav li' => 'margin-top: {{SIZE}}{{UNIT}};',
@@ -1200,7 +1137,7 @@ class Woolamp extends Widget_Base {
 		$this->add_responsive_control(
 			'dots_offset_spacing',
 			[
-				'label' => esc_html__('Horizontal Spacing', 'bdthemes-prime-slider'),
+				'label' => esc_html__('Horizontal Spacing', 'bdthemes-prime-slider-lite'),
 				'type'  => Controls_Manager::SLIDER,
 				'selectors' => [
 					'{{WRAPPER}} .bdt-prime-slider-woolamp .bdt-ps-dotnav' => 'right: {{SIZE}}{{UNIT}};',
@@ -1225,13 +1162,9 @@ class Woolamp extends Widget_Base {
 		/**
          * Advanced Animation
          */
-		$this->adv_anim('slideshow');
+		$this->add_addon_render_attributes('slideshow');
 		$this->add_render_attribute('slideshow', 'id', 'bdt-' . $this->get_id());
 
-		/**
-		 * Reveal Effects
-		 */
-		$this->reveal_effects_attr('slideshow');
 
 		/**
          * Slideshow Settings
@@ -1326,15 +1259,12 @@ class Woolamp extends Widget_Base {
 		$parallax_title         = 'data-bdt-slideshow-parallax="y: 70,0,-100; opacity: 1,1,0"';
 		$parallax_text           = 'data-bdt-slideshow-parallax="y: 90,0,-90; opacity: 1,1,0"';
 
-		if ( true === _is_ps_pro_activated() ) {
-			if ($settings['animation_status'] == 'yes' && !empty($settings['animation_of'])) {
-
-				if (in_array(".bdt-ps-title", $settings['animation_of'])) {
-					$parallax_title = '';
-				}
-				if (in_array(".bdt-ps-text", $settings['animation_of'])) {
-					$parallax_text = '';
-				}
+		if ( ! empty( $settings['animation_status'] ) && 'yes' === $settings['animation_status'] && ! empty( $settings['animation_of'] ) ) {
+			if (in_array(".bdt-ps-title", $settings['animation_of'])) {
+				$parallax_title = '';
+			}
+			if (in_array(".bdt-ps-text", $settings['animation_of'])) {
+				$parallax_text = '';
 			}
 		}
 

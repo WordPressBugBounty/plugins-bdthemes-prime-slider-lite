@@ -27,7 +27,7 @@ class Tango extends Widget_Base {
 	}
 
 	public function get_title() {
-		return BDTPS . esc_html__('Tango', 'bdthemes-prime-slider');
+		return BDTPS . esc_html__('Tango', 'bdthemes-prime-slider-lite');
 	}
 
 	public function get_icon() {
@@ -43,21 +43,13 @@ class Tango extends Widget_Base {
 	}
 
 	public function get_style_depends() {
-		return ['swiper', 'prime-slider-font', 'ps-tango'];
+		return ['swiper', 'prime-slider-font', 'bdtps-tango'];
 	}
 
 	public function get_script_depends() {
-        $reveal_effects = prime_slider_option('reveal-effects', 'prime_slider_other_settings', 'off');
-        if ('on' === $reveal_effects) {
-            if ( true === _is_ps_pro_activated() ) {
-                return ['swiper', 'anime', 'revealFx', 'ps-tango'];
-            } else {
-                return ['swiper', 'ps-tango'];
-            }
-        } else {
-            return ['swiper', 'ps-tango'];
-        }
-    }
+		// Add-ons (e.g. Prime Slider Pro) append their own handles via this filter.
+		return $this->addon_script_depends( [ 'swiper', 'bdtps-tango' ] );
+	}
 
 	public function get_custom_help_url() {
 		return 'https://youtu.be/OdXH9cSgdz4';
@@ -71,12 +63,11 @@ class Tango extends Widget_Base {
 	}
 
 	protected function register_controls() {
-		$reveal_effects = prime_slider_option('reveal-effects', 'prime_slider_other_settings', 'off');
 
 		$this->start_controls_section(
 			'section_content_sliders',
 			[
-				'label' => esc_html__('Sliders', 'bdthemes-prime-slider'),
+				'label' => esc_html__('Sliders', 'bdthemes-prime-slider-lite'),
 			]
 		);
 
@@ -85,7 +76,7 @@ class Tango extends Widget_Base {
 		$repeater->add_control(
 			'sub_title',
 			[
-				'label'       => esc_html__('Label', 'bdthemes-prime-slider'),
+				'label'       => esc_html__('Label', 'bdthemes-prime-slider-lite'),
 				'type'        => Controls_Manager::TEXT,
 				'label_block' => true,
 				'dynamic'     => ['active' => true],
@@ -110,28 +101,28 @@ class Tango extends Widget_Base {
 		$this->add_control(
 			'slides',
 			[
-				'label'   => esc_html__('Slider Items', 'bdthemes-prime-slider'),
+				'label'   => esc_html__('Slider Items', 'bdthemes-prime-slider-lite'),
 				'type'    => Controls_Manager::REPEATER,
 				'fields'  => $repeater->get_controls(),
 				'default' => [
 					[
-						'sub_title' => esc_html__('Label', 'bdthemes-prime-slider'),
-						'title'     => esc_html__('Item One', 'bdthemes-prime-slider'),
+						'sub_title' => esc_html__('Label', 'bdthemes-prime-slider-lite'),
+						'title'     => esc_html__('Item One', 'bdthemes-prime-slider-lite'),
 						'image'     => ['url' => BDTPS_CORE_ASSETS_URL . 'images/gallery/item-1.svg']
 					],
 					[
-						'sub_title' => esc_html__('Label', 'bdthemes-prime-slider'),
-						'title'     => esc_html__('Item Two', 'bdthemes-prime-slider'),
+						'sub_title' => esc_html__('Label', 'bdthemes-prime-slider-lite'),
+						'title'     => esc_html__('Item Two', 'bdthemes-prime-slider-lite'),
 						'image'     => ['url' => BDTPS_CORE_ASSETS_URL . 'images/gallery/item-4.svg']
 					],
 					[
-						'sub_title' => esc_html__('Label', 'bdthemes-prime-slider'),
-						'title'     => esc_html__('Item Three', 'bdthemes-prime-slider'),
+						'sub_title' => esc_html__('Label', 'bdthemes-prime-slider-lite'),
+						'title'     => esc_html__('Item Three', 'bdthemes-prime-slider-lite'),
 						'image'     => ['url' => BDTPS_CORE_ASSETS_URL . 'images/gallery/item-5.svg']
 					],
 					[
-						'sub_title' => esc_html__('Label', 'bdthemes-prime-slider'),
-						'title'     => esc_html__('Item Four', 'bdthemes-prime-slider'),
+						'sub_title' => esc_html__('Label', 'bdthemes-prime-slider-lite'),
+						'title'     => esc_html__('Item Four', 'bdthemes-prime-slider-lite'),
 						'image'     => ['url' => BDTPS_CORE_ASSETS_URL . 'images/gallery/item-6.svg']
 					],
 				],
@@ -144,14 +135,14 @@ class Tango extends Widget_Base {
 		$this->start_controls_section(
 			'section_content_layout',
 			[
-				'label' => esc_html__('Additional Options', 'bdthemes-prime-slider'),
+				'label' => esc_html__('Additional Options', 'bdthemes-prime-slider-lite'),
 			]
 		);
 
 		$this->add_responsive_control(
 			'columns',
 			[
-				'label'          => __( 'Columns', 'bdthemes-prime-slider' ) . BDTPS_CORE_PC,
+				'label'          => __( 'Columns', 'bdthemes-prime-slider-lite' ),
 				'type'           => Controls_Manager::SELECT,
 				'default'        => 3,
 				'tablet_default' => 3,
@@ -164,14 +155,13 @@ class Tango extends Widget_Base {
 					5 => '5',
 					6 => '6',
 				],
-				'classes'   => BDTPS_CORE_IS_PC
 			]
 		);
 
 		$this->add_responsive_control(
 			'item_gap',
 			[
-				'label'   => __('Item Gap', 'bdthemes-prime-slider'),
+				'label'   => __('Item Gap', 'bdthemes-prime-slider-lite'),
 				'type'    => Controls_Manager::SLIDER,
 				'default' => [
 					'size' => 40,
@@ -194,7 +184,7 @@ class Tango extends Widget_Base {
 		$this->add_responsive_control(
 			'slider_min_height',
 			[
-				'label' => esc_html__('Height', 'bdthemes-prime-slider'),
+				'label' => esc_html__('Height', 'bdthemes-prime-slider-lite'),
 				'type'  => Controls_Manager::SLIDER,
 				'range' => [
 					'px' => [
@@ -211,7 +201,7 @@ class Tango extends Widget_Base {
 		$this->add_responsive_control(
 			'slider_bottom_spacing',
 			[
-				'label' => esc_html__('Slider Bottom Spacing', 'bdthemes-prime-slider'),
+				'label' => esc_html__('Slider Bottom Spacing', 'bdthemes-prime-slider-lite'),
 				'type'  => Controls_Manager::SLIDER,
 				'range' => [
 					'px' => [
@@ -234,7 +224,7 @@ class Tango extends Widget_Base {
 		$this->add_control(
 			'show_sub_title',
 			[
-				'label'   => esc_html__('Show Label', 'bdthemes-prime-slider'),
+				'label'   => esc_html__('Show Label', 'bdthemes-prime-slider-lite'),
 				'type'    => Controls_Manager::SWITCHER,
 				'default' => 'yes',
 			]
@@ -248,7 +238,7 @@ class Tango extends Widget_Base {
 		$this->add_control(
 			'navigation_center_arrows',
 			[
-				'label'   => esc_html__('Center Arrows', 'bdthemes-prime-slider'),
+				'label'   => esc_html__('Center Arrows', 'bdthemes-prime-slider-lite'),
 				'type'    => Controls_Manager::SWITCHER,
 				'default' => 'yes',
 				'condition' => [
@@ -265,33 +255,32 @@ class Tango extends Widget_Base {
 		$this->add_control(
 			'hide_on_mobile',
 			[
-				'label'   => esc_html__('Pagination Hide on Mobile', 'bdthemes-prime-slider') . BDTPS_CORE_PC,
+				'label'   => esc_html__('Pagination Hide on Mobile', 'bdthemes-prime-slider-lite'),
 				'type'    => Controls_Manager::SWITCHER,
 				'default' => 'yes',
 				'condition' => [
 					'show_navigation_dots' => 'yes'
 				],
 				'prefix_class' => 'bdt-pagination-hide-',
-				'classes'   => BDTPS_CORE_IS_PC
 			]
 		);
 
 		$this->add_responsive_control(
             'content_alignment',
             [
-                'label'   => esc_html__( 'Alignment', 'bdthemes-prime-slider' ),
+                'label'   => esc_html__( 'Alignment', 'bdthemes-prime-slider-lite' ),
                 'type'    => Controls_Manager::CHOOSE,
                 'options' => [
                     'left' => [
-                        'title' => esc_html__( 'Left', 'bdthemes-prime-slider' ),
+                        'title' => esc_html__( 'Left', 'bdthemes-prime-slider-lite' ),
                         'icon'  => 'eicon-text-align-left',
                     ],
                     'center' => [
-                        'title' => esc_html__( 'Center', 'bdthemes-prime-slider' ),
+                        'title' => esc_html__( 'Center', 'bdthemes-prime-slider-lite' ),
                         'icon'  => 'eicon-text-align-center',
                     ],
                     'right' => [
-                        'title' => esc_html__( 'Right', 'bdthemes-prime-slider' ),
+                        'title' => esc_html__( 'Right', 'bdthemes-prime-slider-lite' ),
                         'icon'  => 'eicon-text-align-right',
                     ],
                 ],
@@ -304,20 +293,18 @@ class Tango extends Widget_Base {
 		$this->add_control(
 			'item_up_down',
 			[
-				'label'   => esc_html__('Item Up Down', 'bdthemes-prime-slider') . BDTPS_CORE_NC . BDTPS_CORE_PC,
+				'label'   => esc_html__('Item Up Down', 'bdthemes-prime-slider-lite') . BDTPS_CORE_NC,
 				'type'    => Controls_Manager::SWITCHER,
 				'prefix_class' => 'bdt-item-up-down-',
 				'render_type'  => 'template',
-				'classes'   => BDTPS_CORE_IS_PC
 			]
 		);
 
 		$this->add_control(
 			'item_wrapper_link',
 			[
-				'label'   => esc_html__('Item Wrapper Link', 'bdthemes-prime-slider') . BDTPS_CORE_NC . BDTPS_CORE_PC,
+				'label'   => esc_html__('Item Wrapper Link', 'bdthemes-prime-slider-lite') . BDTPS_CORE_NC,
 				'type'    => Controls_Manager::SWITCHER,
-				'classes' => BDTPS_CORE_IS_PC
 			]
 		);
 
@@ -331,30 +318,29 @@ class Tango extends Widget_Base {
 		$this->start_controls_section(
 			'section_carousel_settings',
 			[
-				'label' => __( 'Slider Settings', 'bdthemes-prime-slider' ),
+				'label' => __( 'Slider Settings', 'bdthemes-prime-slider-lite' ),
 			]
 		);
 
 		$this->add_control(
 			'skin',
 			[
-				'label'   => esc_html__( 'Layout', 'bdthemes-prime-slider' ) . BDTPS_CORE_PC,
+				'label'   => esc_html__( 'Layout', 'bdthemes-prime-slider-lite' ),
 				'type'    => Controls_Manager::SELECT,
 				'default' => 'carousel',
 				'options' => [
-					'carousel'  => esc_html__( 'Carousel', 'bdthemes-prime-slider' ),
-					'coverflow' => esc_html__( 'Coverflow', 'bdthemes-prime-slider' ),
+					'carousel'  => esc_html__( 'Carousel', 'bdthemes-prime-slider-lite' ),
+					'coverflow' => esc_html__( 'Coverflow', 'bdthemes-prime-slider-lite' ),
 				],
 				'prefix_class' => 'bdt-carousel-style-',
 				'render_type'  => 'template',
-				'classes'   => BDTPS_CORE_IS_PC
 			]
 		);
 
 		$this->add_control(
             'coverflow_toggle',
             [
-                'label' => __( 'Coverflow Effect', 'bdthemes-prime-slider' ),
+                'label' => __( 'Coverflow Effect', 'bdthemes-prime-slider-lite' ),
                 'type' => Controls_Manager::POPOVER_TOGGLE,
                 'return_value' => 'yes',
 				'condition' => [
@@ -368,7 +354,7 @@ class Tango extends Widget_Base {
 		$this->add_control(
 			'coverflow_rotate',
 			[
-				'label'   => esc_html__( 'Rotate', 'bdthemes-prime-slider' ),
+				'label'   => esc_html__( 'Rotate', 'bdthemes-prime-slider-lite' ),
 				'type'    => Controls_Manager::SLIDER,
 				'default' => [
 					'size' => 0,
@@ -390,7 +376,7 @@ class Tango extends Widget_Base {
         $this->add_control(
 			'coverflow_stretch',
 			[
-				'label' => __( 'Stretch', 'bdthemes-prime-slider' ),
+				'label' => __( 'Stretch', 'bdthemes-prime-slider-lite' ),
 				'type'  => Controls_Manager::SLIDER,
 				'default' => [
 					'size' => 180,
@@ -412,7 +398,7 @@ class Tango extends Widget_Base {
         $this->add_control(
 			'coverflow_modifier',
 			[
-				'label' => __( 'Modifier', 'bdthemes-prime-slider' ),
+				'label' => __( 'Modifier', 'bdthemes-prime-slider-lite' ),
 				'type'  => Controls_Manager::SLIDER,
 				'default' => [
 					'size' => 1,
@@ -434,7 +420,7 @@ class Tango extends Widget_Base {
 		$this->add_control(
 			'coverflow_depth',
 			[
-				'label' => __( 'Depth', 'bdthemes-prime-slider' ),
+				'label' => __( 'Depth', 'bdthemes-prime-slider-lite' ),
 				'type'  => Controls_Manager::SLIDER,
 				'default' => [
 					'size' => 100,
@@ -456,7 +442,7 @@ class Tango extends Widget_Base {
 		$this->add_control(
 			'slide_shadows',
 			[
-				'label'       => __( 'Slide Shadows', 'bdthemes-prime-slider' ),
+				'label'       => __( 'Slide Shadows', 'bdthemes-prime-slider-lite' ),
 				'type'        => Controls_Manager::SWITCHER,
 				'default'     => 'yes',
 				'render_type' => 'template',
@@ -468,7 +454,7 @@ class Tango extends Widget_Base {
 		$this->add_control(
 			'match_height',
 			[
-				'label' => __( 'Item Match Height', 'bdthemes-prime-slider' ),
+				'label' => __( 'Item Match Height', 'bdthemes-prime-slider-lite' ),
 				'type'  => Controls_Manager::SWITCHER,
 			]
 		);
@@ -482,7 +468,7 @@ class Tango extends Widget_Base {
 			'slides_to_scroll',
 			[
 				'type'      => Controls_Manager::SELECT,
-				'label'     => esc_html__( 'Slides to Scroll', 'bdthemes-prime-slider' ),
+				'label'     => esc_html__( 'Slides to Scroll', 'bdthemes-prime-slider-lite' ),
 				'default'        => 1,
 				'tablet_default' => 1,
 				'mobile_default' => 1,
@@ -515,17 +501,16 @@ class Tango extends Widget_Base {
 		$this->end_controls_section();
 
 		/**
-         * Reveal Effects
-         */
-        if ('on' === $reveal_effects) {
-            $this->register_reveal_effects();
-        }
+		 * Extension point: add-ons (e.g. Prime Slider Pro) register their own
+		 * controls here. This plugin registers none of its own.
+		 */
+		$this->register_addon_controls();
 
 		//style
 		$this->start_controls_section(
 			'section_style_layout',
 			[
-				'label'     => __( 'Content', 'bdthemes-prime-slider' ),
+				'label'     => __( 'Content', 'bdthemes-prime-slider-lite' ),
 				'tab'       => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -533,7 +518,7 @@ class Tango extends Widget_Base {
 		$this->add_responsive_control(
 			'item_padding',
 			[
-				'label'      => __( 'Content Padding', 'bdthemes-prime-slider' ),
+				'label'      => __( 'Content Padding', 'bdthemes-prime-slider-lite' ),
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%', 'em' ],
 				'selectors' => [
@@ -548,7 +533,7 @@ class Tango extends Widget_Base {
 		$this->start_controls_section(
 			'section_style_image',
 			[
-				'label'     => __( 'Image', 'bdthemes-prime-slider' ),
+				'label'     => __( 'Image', 'bdthemes-prime-slider-lite' ),
 				'tab'       => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -557,13 +542,14 @@ class Tango extends Widget_Base {
 			Group_Control_Background::get_type(),
 			[
 				'name' => 'image_overlay',
-				'label' => esc_html__('Background', 'bdthemes-prime-slider'),
+				'label' => esc_html__('Background', 'bdthemes-prime-slider-lite'),
 				'types' => ['classic', 'gradient'],
+				// phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude -- Elementor widget query built from user-configured controls; caching/query shape is expected.
 				'exclude' => ['image'],
 				'selector' => '{{WRAPPER}} .bdt-prime-slider-tango .bdt-image-wrap::before',
 				'fields_options' => [
 					'background' => [
-						'label' => esc_html__('Overlay Color', 'bdthemes-prime-slider'),
+						'label' => esc_html__('Overlay Color', 'bdthemes-prime-slider-lite'),
 						'default' => 'gradient',
 					],
 					'color' => [
@@ -588,7 +574,7 @@ class Tango extends Widget_Base {
 		$this->add_responsive_control(
 			'image_border_radius',
 			[
-				'label'      => __( 'Border Radius', 'bdthemes-prime-slider' ),
+				'label'      => __( 'Border Radius', 'bdthemes-prime-slider-lite' ),
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%' ],
 				'selectors'  => [
@@ -602,7 +588,7 @@ class Tango extends Widget_Base {
 		$this->start_controls_section(
 			'section_style_title',
 			[
-				'label'     => __( 'Title', 'bdthemes-prime-slider' ),
+				'label'     => __( 'Title', 'bdthemes-prime-slider-lite' ),
 				'tab'       => Controls_Manager::TAB_STYLE,
 				'condition' => [
 					'show_title' => 'yes',
@@ -613,7 +599,7 @@ class Tango extends Widget_Base {
 		$this->add_control(
 			'title_color',
 			[
-				'label'     => __( 'Color', 'bdthemes-prime-slider' ),
+				'label'     => __( 'Color', 'bdthemes-prime-slider-lite' ),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .bdt-prime-slider-tango .bdt-title, {{WRAPPER}} .bdt-prime-slider-tango .bdt-title a' => 'color: {{VALUE}};',
@@ -624,7 +610,7 @@ class Tango extends Widget_Base {
 		$this->add_control(
 			'title_hover_color',
 			[
-				'label'     => __( 'Hover Color', 'bdthemes-prime-slider' ),
+				'label'     => __( 'Hover Color', 'bdthemes-prime-slider-lite' ),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .bdt-prime-slider-tango .bdt-title:hover, {{WRAPPER}} .bdt-prime-slider-tango .bdt-title a:hover' => 'color: {{VALUE}};',
@@ -644,7 +630,7 @@ class Tango extends Widget_Base {
 			Group_Control_Text_Shadow::get_type(),
 			[
 				'name' => 'title_text_shadow',
-				'label' => __( 'Text Shadow', 'bdthemes-prime-slider'),
+				'label' => __( 'Text Shadow', 'bdthemes-prime-slider-lite'),
 				'selector' => '{{WRAPPER}} .bdt-prime-slider-tango .bdt-title, {{WRAPPER}} .bdt-prime-slider-tango .bdt-title a',
 			]
 		);
@@ -654,7 +640,7 @@ class Tango extends Widget_Base {
 		$this->start_controls_section(
 			'section_style_sub_title',
 			[
-				'label'     => __( 'Label', 'bdthemes-prime-slider' ),
+				'label'     => __( 'Label', 'bdthemes-prime-slider-lite' ),
 				'tab'       => Controls_Manager::TAB_STYLE,
 				'condition' => [
 					'show_sub_title' => 'yes',
@@ -665,7 +651,7 @@ class Tango extends Widget_Base {
 		$this->add_control(
 			'sub_title_color',
 			[
-				'label'     => __( 'Color', 'bdthemes-prime-slider' ),
+				'label'     => __( 'Color', 'bdthemes-prime-slider-lite' ),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .bdt-prime-slider-tango .bdt-subtitle' => 'color: {{VALUE}};',
@@ -684,7 +670,7 @@ class Tango extends Widget_Base {
 		$this->add_responsive_control(
 			'sub_title_spacing',
 			[
-				'label' => esc_html__('Spacing', 'bdthemes-prime-slider'),
+				'label' => esc_html__('Spacing', 'bdthemes-prime-slider-lite'),
 				'type'  => Controls_Manager::SLIDER,
 				'range' => [
 					'px' => [
@@ -710,7 +696,7 @@ class Tango extends Widget_Base {
 		$this->start_controls_section(
 			'section_style_navigation',
 			[
-				'label'     => __('Navigation', 'bdthemes-prime-slider'),
+				'label'     => __('Navigation', 'bdthemes-prime-slider-lite'),
 				'tab'       => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -718,7 +704,7 @@ class Tango extends Widget_Base {
 		$this->add_control(
 			'arrows_heading',
 			[
-				'label'     => __('Arrows', 'bdthemes-prime-slider'),
+				'label'     => __('Arrows', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::HEADING,
 				'condition' => [
 					'show_navigation_arrows' => ['yes'],
@@ -731,7 +717,7 @@ class Tango extends Widget_Base {
         $this->start_controls_tab(
             'tab_arrows_normal',
             [
-                'label' => esc_html__('Normal', 'bdthemes-prime-slider'),
+                'label' => esc_html__('Normal', 'bdthemes-prime-slider-lite'),
 				'condition' => [
 					'show_navigation_arrows' => ['yes'],
 				],
@@ -741,7 +727,7 @@ class Tango extends Widget_Base {
 		$this->add_control(
 			'arrows_color',
 			[
-				'label'     => __('Color', 'bdthemes-prime-slider'),
+				'label'     => __('Color', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .bdt-prime-slider-tango .bdt-navigation-arrows .bdt-navigation-next, {{WRAPPER}} .bdt-prime-slider-tango .bdt-navigation-arrows .bdt-navigation-prev' => 'color: {{VALUE}}',
@@ -777,7 +763,7 @@ class Tango extends Widget_Base {
         $this->add_responsive_control(
             'arrows_border_radius',
             [
-                'label' => __('Border Radius', 'bdthemes-prime-slider'),
+                'label' => __('Border Radius', 'bdthemes-prime-slider-lite'),
                 'type' => Controls_Manager::DIMENSIONS,
                 'size_units' => ['px', '%'],
                 'selectors' => [
@@ -792,7 +778,7 @@ class Tango extends Widget_Base {
         $this->add_responsive_control(
             'arrows_text_padding',
             [
-                'label' => __('Padding', 'bdthemes-prime-slider'),
+                'label' => __('Padding', 'bdthemes-prime-slider-lite'),
                 'type' => Controls_Manager::DIMENSIONS,
                 'size_units' => ['px', 'em', '%'],
                 'selectors' => [
@@ -818,7 +804,7 @@ class Tango extends Widget_Base {
 		$this->add_responsive_control(
 			'arrows_size',
 			[
-				'label' => esc_html__('Size', 'bdthemes-prime-slider'),
+				'label' => esc_html__('Size', 'bdthemes-prime-slider-lite'),
 				'type'  => Controls_Manager::SLIDER,
 				'range' => [
 					'px' => [
@@ -838,7 +824,7 @@ class Tango extends Widget_Base {
 		$this->add_responsive_control(
 			'arrows_spacing',
 			[
-				'label' => esc_html__('Spacing', 'bdthemes-prime-slider'),
+				'label' => esc_html__('Spacing', 'bdthemes-prime-slider-lite'),
 				'type'  => Controls_Manager::SLIDER,
 				'range' => [
 					'px' => [
@@ -859,7 +845,7 @@ class Tango extends Widget_Base {
 		$this->add_responsive_control(
 			'arrows_acx_position',
 			[
-				'label'   => __( 'Spacing', 'bdthemes-prime-slider' ),
+				'label'   => __( 'Spacing', 'bdthemes-prime-slider-lite' ),
 				'type'    => Controls_Manager::SLIDER,
 				'range' => [
 					'px' => [
@@ -883,7 +869,7 @@ class Tango extends Widget_Base {
         $this->start_controls_tab(
             'tab_arrows_hover',
             [
-                'label' => esc_html__('Hover', 'bdthemes-prime-slider'),
+                'label' => esc_html__('Hover', 'bdthemes-prime-slider-lite'),
 				'condition' => [
 					'show_navigation_arrows' => ['yes'],
 				],
@@ -893,7 +879,7 @@ class Tango extends Widget_Base {
 		$this->add_control(
 			'arrows_hover_color',
 			[
-				'label'     => __('Color', 'bdthemes-prime-slider'),
+				'label'     => __('Color', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .bdt-prime-slider-tango .bdt-navigation-arrows .bdt-navigation-next:hover, {{WRAPPER}} .bdt-prime-slider-tango .bdt-navigation-arrows .bdt-navigation-prev:hover' => 'color: {{VALUE}}',
@@ -918,7 +904,7 @@ class Tango extends Widget_Base {
 		$this->add_control(
             'arrows_hover_border_color',
             [
-                'label' => __('Border Color', 'bdthemes-prime-slider'),
+                'label' => __('Border Color', 'bdthemes-prime-slider-lite'),
                 'type' => Controls_Manager::COLOR,
                 'condition' => [
                     'arrows_border_border!' => '',
@@ -936,7 +922,7 @@ class Tango extends Widget_Base {
 		$this->add_control(
 			'pagination_heading',
 			[
-				'label'     => __('Pagination', 'bdthemes-prime-slider'),
+				'label'     => __('Pagination', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::HEADING,
 				'condition' => [
 					'show_navigation_dots' => ['yes'],
@@ -948,7 +934,7 @@ class Tango extends Widget_Base {
 		$this->add_control(
 			'pagination_color',
 			[
-				'label'     => __('Color', 'bdthemes-prime-slider'),
+				'label'     => __('Color', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .bdt-prime-slider-tango .swiper-pagination .swiper-pagination-bullet' => 'background: {{VALUE}}',
@@ -962,7 +948,7 @@ class Tango extends Widget_Base {
 		$this->add_control(
 			'pagination_active_color',
 			[
-				'label'     => __('Active Color', 'bdthemes-prime-slider'),
+				'label'     => __('Active Color', 'bdthemes-prime-slider-lite'),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .bdt-prime-slider-tango .swiper-pagination .swiper-pagination-bullet.swiper-pagination-bullet-active' => 'background: {{VALUE}}',
@@ -976,7 +962,7 @@ class Tango extends Widget_Base {
 		$this->add_responsive_control(
 			'pagination_size',
 			[
-				'label' => esc_html__('Size', 'bdthemes-prime-slider'),
+				'label' => esc_html__('Size', 'bdthemes-prime-slider-lite'),
 				'type'  => Controls_Manager::SLIDER,
 				'selectors' => [
 					'{{WRAPPER}} .bdt-prime-slider-tango .swiper-pagination .swiper-pagination-bullet' => 'width: {{SIZE}}{{UNIT}};',
@@ -1000,7 +986,7 @@ class Tango extends Widget_Base {
 		/**
 		 * Reveal Effects
 		 */
-		$this->reveal_effects_attr('prime-slider-tango');
+		$this->add_addon_render_attributes('prime-slider-tango');
 
 		$elementor_vp_lg = get_option( 'elementor_viewport_lg' );
 		$elementor_vp_md = get_option( 'elementor_viewport_md' );
@@ -1008,7 +994,7 @@ class Tango extends Widget_Base {
 		$viewport_md     = !empty($elementor_vp_md) ? $elementor_vp_md - 1 : 768;
 
 		if ( 'yes' == $settings['match_height'] ) {
-			$this->add_render_attribute( 'prime-slider-tango', 'bdt-height-match', 'target: > div > div > div > .bdt-slider-item' );
+			$this->add_render_attribute( 'prime-slider-tango', 'bdt-height-match', 'target: > div > div > div > .bdt-item' );
 		}
 
 		$this->add_render_attribute(
@@ -1079,7 +1065,7 @@ class Tango extends Widget_Base {
 				'class' => 'swiper-tango swiper',
 				'role' => 'region',
 				'aria-roledescription' => 'carousel',
-				'aria-label' => esc_attr( $this->get_title() . ' ' . esc_html__( 'Slider', 'bdthemes-prime-slider' ) ),
+				'aria-label' => esc_attr( $this->get_title() . ' ' . esc_html__( 'Slider', 'bdthemes-prime-slider-lite' ) ),
 				'dir' => $direction,
 			],
 		]);
@@ -1165,12 +1151,13 @@ class Tango extends Widget_Base {
 	public function render_slides_loop() {
         $settings = $this->get_settings_for_display();
 
-        foreach ($settings['slides'] as $slide) : 
-		
+        foreach ($settings['slides'] as $slide) :
+			$title_link_key = 'title-link-' . $slide['_id'];
+
 			if( ! empty($slide['title_link']['url']) && $slide['title']){
-				$this->add_link_attributes('title-link', $slide['title_link'], true);
+				$this->add_link_attributes($title_link_key, $slide['title_link'], true);
 			}
-		
+
 			?>
 
             <div class="swiper-slide bdt-item">
@@ -1188,7 +1175,7 @@ class Tango extends Widget_Base {
 					<?php if ($slide['title'] && ('yes' == $settings['show_title'])) : ?>
 						<<?php echo esc_attr(Utils::get_valid_html_tag($settings['title_html_tag'])); ?> class="bdt-title" data-reveal="reveal-active">
 							<?php if ('' !== $slide['title_link']['url']) : ?>
-								<a <?php $this->print_render_attribute_string('title-link'); ?>>
+								<a <?php $this->print_render_attribute_string($title_link_key); ?>>
 								<?php endif; ?>
 								<?php echo wp_kses( prime_slider_first_word( $slide['title'] ), [ 'span' => [ 'class' => [] ] ] ); ?>
 								<?php if ('' !== $slide['title_link']['url']) : ?>
@@ -1198,7 +1185,7 @@ class Tango extends Widget_Base {
 					<?php endif; ?>
 				</div>
 				<?php if ($settings['item_wrapper_link'] == 'yes' and '' !== $slide['title_link']['url']) : ?>
-					<a class="bdt-tango-item-wrap-link" <?php $this->print_render_attribute_string('title-link'); ?>></a>
+					<a class="bdt-tango-item-wrap-link" <?php $this->print_render_attribute_string($title_link_key); ?>></a>
 				<?php endif; ?>
 			</div>
 

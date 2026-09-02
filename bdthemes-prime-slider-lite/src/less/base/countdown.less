@@ -1,0 +1,112 @@
+// Name:            Countdown
+// Description:     Component to create countdown timers
+//
+// Component:       `bdt-countdown`
+//
+// Sub-objects:     `bdt-countdown-number`
+//                  `bdt-countdown-separator`
+//                  `bdt-countdown-label`
+//
+// ========================================================================
+
+
+// Variables
+// ========================================================================
+
+@countdown-separator-line-height:               2;
+@countdown-separator-font-size:                 0.5em;
+
+
+/* ========================================================================
+   Component: Countdown
+ ========================================================================== */
+
+.bdt-countdown {
+    margin: 0;
+    .hook-countdown();
+}
+
+
+/* Item
+ ========================================================================== */
+
+.bdt-countdown-number,
+.bdt-countdown-separator {
+    .hook-countdown-item();
+}
+
+
+/* Number
+ ========================================================================== */
+
+/*
+ * 1. Make numbers all of the same size to prevent jumping. Must be supported by the font.
+ */
+
+.bdt-countdown-number {
+    margin: 0;
+    /* 1 */
+    font-variant-numeric: tabular-nums;
+    .hook-countdown-number();
+}
+
+
+/* Separator
+ ========================================================================== */
+
+.bdt-countdown-separator {
+    font-size: @countdown-separator-font-size;
+    line-height: @countdown-separator-line-height;
+    .hook-countdown-separator();
+}
+
+
+/* Label
+ ========================================================================== */
+
+.bdt-countdown-label {
+    .hook-countdown-label();
+}
+
+
+// Hooks
+// ========================================================================
+
+.hook-countdown-misc();
+
+.hook-countdown() {}
+.hook-countdown-item() {}
+.hook-countdown-number() {}
+.hook-countdown-separator() {}
+.hook-countdown-label() {}
+.hook-countdown-misc() {}
+
+
+// Inverse
+// ========================================================================
+
+.hook-inverse() {
+
+    .bdt-countdown-number,
+    .bdt-countdown-separator {
+        .hook-inverse-countdown-item();
+    }
+
+    .bdt-countdown-number {
+        .hook-inverse-countdown-number();
+    }
+
+    .bdt-countdown-separator {
+        .hook-inverse-countdown-separator();
+    }
+
+    .bdt-countdown-label {
+        .hook-inverse-countdown-label();
+    }
+
+}
+
+.hook-inverse-countdown-item() {}
+.hook-inverse-countdown-number() {}
+.hook-inverse-countdown-separator() {}
+.hook-inverse-countdown-label() {}

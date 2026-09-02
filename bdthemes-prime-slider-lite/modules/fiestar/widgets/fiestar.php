@@ -33,7 +33,7 @@ class Fiestar extends Widget_Base {
     }
 
     public function get_title() {
-        return BDTPS . esc_html__('Fiestar', 'bdthemes-prime-slider');
+        return BDTPS . esc_html__('Fiestar', 'bdthemes-prime-slider-lite');
     }
 
     public function get_icon() {
@@ -49,21 +49,13 @@ class Fiestar extends Widget_Base {
     }
 
     public function get_style_depends() {
-        return ['swiper', 'ps-fiestar', 'prime-slider-font'];
+        return ['swiper', 'bdtps-fiestar', 'prime-slider-font'];
     }
 
     public function get_script_depends() {
-		$reveal_effects = prime_slider_option('reveal-effects', 'prime_slider_other_settings', 'off');
-		if ('on' === $reveal_effects) {
-			if ( true === _is_ps_pro_activated() ) {
-				return ['swiper', 'anime', 'revealFx', 'ps-fiestar'];
-			} else {
-				return ['swiper', 'ps-fiestar'];
-			}
-		} else {
-            return ['swiper', 'ps-fiestar'];
-		}
-	}
+    	// Add-ons (e.g. Prime Slider Pro) append their own handles via this filter.
+    	return $this->addon_script_depends( [ 'swiper', 'bdtps-fiestar' ] );
+    }
 
     public function get_custom_help_url() {
         return 'https://youtu.be/8neRnv80lMU';
@@ -74,18 +66,17 @@ class Fiestar extends Widget_Base {
     }
 
 	protected function register_controls() {
-        $reveal_effects = prime_slider_option('reveal-effects', 'prime_slider_other_settings', 'off');
         $this->start_controls_section(
             'section_content_layout',
             [
-                'label' => esc_html__('Layout', 'bdthemes-prime-slider'),
+                'label' => esc_html__('Layout', 'bdthemes-prime-slider-lite'),
             ]
         );
 
         $this->add_responsive_control(
             'columns',
             [
-                'label'          => __('Columns', 'bdthemes-prime-slider') . BDTPS_CORE_PC,
+                'label'          => __('Columns', 'bdthemes-prime-slider-lite'),
                 'type'           => Controls_Manager::SELECT,
                 'default'        => 3,
                 'tablet_default' => 3,
@@ -98,14 +89,13 @@ class Fiestar extends Widget_Base {
                     5 => '5',
                     6 => '6',
                 ],
-                'classes'   => BDTPS_CORE_IS_PC
             ]
         );
 
         $this->add_responsive_control(
             'item_gap',
             [
-                'label'   => __('Item Gap', 'bdthemes-prime-slider'),
+                'label'   => __('Item Gap', 'bdthemes-prime-slider-lite'),
                 'type'    => Controls_Manager::SLIDER,
                 'default' => [
                     'size' => 20,
@@ -128,7 +118,7 @@ class Fiestar extends Widget_Base {
         $this->add_responsive_control(
             'slider_height',
             [
-                'label' => esc_html__('Height', 'bdthemes-prime-slider'),
+                'label' => esc_html__('Height', 'bdthemes-prime-slider-lite'),
                 'type'  => Controls_Manager::SLIDER,
                 'range' => [
                     'px' => [
@@ -145,7 +135,7 @@ class Fiestar extends Widget_Base {
         $this->add_responsive_control(
             'vertical_spacing',
             [
-                'label' => esc_html__('Vertical Spacing', 'bdthemes-prime-slider') . BDTPS_CORE_PC,
+                'label' => esc_html__('Vertical Spacing', 'bdthemes-prime-slider-lite'),
                 'type'  => Controls_Manager::SLIDER,
                 'range' => [
                     'px' => [
@@ -156,26 +146,25 @@ class Fiestar extends Widget_Base {
                 'selectors' => [
                     '{{WRAPPER}} .bdt-fiestar-slider' => 'padding: {{SIZE}}{{UNIT}} 0;',
                 ],
-                'classes'   => BDTPS_CORE_IS_PC
             ]
         );
 
         $this->add_responsive_control(
             'content_alignment',
             [
-                'label'     => esc_html__('Alignment', 'bdthemes-prime-slider'),
+                'label'     => esc_html__('Alignment', 'bdthemes-prime-slider-lite'),
                 'type'      => Controls_Manager::CHOOSE,
                 'options'   => [
                     'left'   => [
-                        'title' => esc_html__('Left', 'bdthemes-prime-slider'),
+                        'title' => esc_html__('Left', 'bdthemes-prime-slider-lite'),
                         'icon'  => 'eicon-text-align-left',
                     ],
                     'center' => [
-                        'title' => esc_html__('Center', 'bdthemes-prime-slider'),
+                        'title' => esc_html__('Center', 'bdthemes-prime-slider-lite'),
                         'icon'  => 'eicon-text-align-center',
                     ],
                     'right'  => [
-                        'title' => esc_html__('Right', 'bdthemes-prime-slider'),
+                        'title' => esc_html__('Right', 'bdthemes-prime-slider-lite'),
                         'icon'  => 'eicon-text-align-right',
                     ],
                 ],
@@ -189,6 +178,7 @@ class Fiestar extends Widget_Base {
             Group_Control_Image_Size::get_type(),
             [
                 'name'      => 'primary_thumbnail',
+                // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude -- Elementor widget query built from user-configured controls; caching/query shape is expected.
                 'exclude'   => ['custom'],
                 'default'   => 'full',
             ]
@@ -197,7 +187,7 @@ class Fiestar extends Widget_Base {
         $this->add_control(
             'show_title',
             [
-                'label'   => esc_html__('Show Title', 'bdthemes-prime-slider'),
+                'label'   => esc_html__('Show Title', 'bdthemes-prime-slider-lite'),
                 'type'    => Controls_Manager::SWITCHER,
                 'default' => 'yes',
                 'separator' => 'before'
@@ -207,21 +197,20 @@ class Fiestar extends Widget_Base {
         $this->add_control(
             'title_tags',
             [
-                'label'     => esc_html__('Title HTML Tag', 'bdthemes-prime-slider') . BDTPS_CORE_PC,
+                'label'     => esc_html__('Title HTML Tag', 'bdthemes-prime-slider-lite'),
                 'type'      => Controls_Manager::SELECT,
                 'options'   => prime_slider_title_tags(),
                 'default'   => 'h3',
                 'condition' => [
                     'show_title' => 'yes',
                 ],
-                'classes'   => BDTPS_CORE_IS_PC
             ]
         );
 
         $this->add_control(
             'show_category',
             [
-                'label'   => esc_html__('Show Category', 'bdthemes-prime-slider'),
+                'label'   => esc_html__('Show Category', 'bdthemes-prime-slider-lite'),
                 'type'    => Controls_Manager::SWITCHER,
                 'default' => 'yes',
                 'separator' => 'before'
@@ -231,17 +220,16 @@ class Fiestar extends Widget_Base {
         $this->add_control(
             'wrapper_link',
             [
-                'label'   => esc_html__('Item Wrapper Link', 'bdthemes-prime-slider') . BDTPS_CORE_PC,
+                'label'   => esc_html__('Item Wrapper Link', 'bdthemes-prime-slider-lite'),
                 'type'    => Controls_Manager::SWITCHER,
                 'separator' => 'before',
-                'classes'   => BDTPS_CORE_IS_PC
             ]
         );
 
         $this->add_control(
 			'show_navigation_arrows',
 			[
-				'label'   => esc_html__('Show Arrows', 'bdthemes-prime-slider'),
+				'label'   => esc_html__('Show Arrows', 'bdthemes-prime-slider-lite'),
 				'type'    => Controls_Manager::SWITCHER,
 				'default' => 'yes',
 				'separator' => 'before'
@@ -254,7 +242,7 @@ class Fiestar extends Widget_Base {
         $this->start_controls_section(
             'section_post_query_builder',
             [
-                'label' => __('Query', 'bdthemes-prime-slider'),
+                'label' => __('Query', 'bdthemes-prime-slider-lite'),
                 'tab' => Controls_Manager::TAB_CONTENT,
             ]
         );
@@ -266,7 +254,7 @@ class Fiestar extends Widget_Base {
         $this->start_controls_section(
             'section_slider_settings',
             [
-                'label' => __('Slider Settings', 'bdthemes-prime-slider'),
+                'label' => __('Slider Settings', 'bdthemes-prime-slider-lite'),
             ]
         );
 
@@ -279,7 +267,7 @@ class Fiestar extends Widget_Base {
             'slides_to_scroll',
             [
                 'type'      => Controls_Manager::SELECT,
-                'label'     => esc_html__('Slides to Scroll', 'bdthemes-prime-slider'),
+                'label'     => esc_html__('Slides to Scroll', 'bdthemes-prime-slider-lite'),
                 'default'        => 1,
                 'tablet_default' => 1,
                 'mobile_default' => 1,
@@ -297,8 +285,8 @@ class Fiestar extends Widget_Base {
         $this->add_control(
 			'centered_slides',
 			[
-				'label'   => __( 'Center Slide', 'bdthemes-prime-slider' ),
-				'description'   => __( 'Use even items from Layout > Columns settings for better preview.', 'bdthemes-prime-slider' ),
+				'label'   => __( 'Center Slide', 'bdthemes-prime-slider-lite' ),
+				'description'   => __( 'Use even items from Layout > Columns settings for better preview.', 'bdthemes-prime-slider-lite' ),
 				'type'    => Controls_Manager::SWITCHER,
                 'default' => 'yes',
 			]
@@ -327,17 +315,16 @@ class Fiestar extends Widget_Base {
         $this->end_controls_section();
 
 		/**
-		 * Reveal Effects
+		 * Extension point: add-ons (e.g. Prime Slider Pro) register their own
+		 * controls here. This plugin registers none of its own.
 		 */
-		if ('on' === $reveal_effects) {
-			$this->register_reveal_effects();
-		}
+		$this->register_addon_controls();
 
         //style
         $this->start_controls_section(
             'section_style_layout',
             [
-                'label'     => __('Sliders', 'bdthemes-prime-slider'),
+                'label'     => __('Sliders', 'bdthemes-prime-slider-lite'),
                 'tab'       => Controls_Manager::TAB_STYLE,
             ]
         );
@@ -345,7 +332,7 @@ class Fiestar extends Widget_Base {
         $this->add_control(
             'content_ovarlay',
             [
-                'label'     => esc_html__('Ovarlay Color', 'bdthemes-prime-slider'),
+                'label'     => esc_html__('Ovarlay Color', 'bdthemes-prime-slider-lite'),
                 'type'      => Controls_Manager::COLOR,
                 'selectors' => [
                     '{{WRAPPER}} .bdt-fiestar-slider .bdt-content' => 'background: linear-gradient(0deg, {{VALUE}} 0, rgba(0, 0, 0, 0) 100%);',
@@ -356,7 +343,7 @@ class Fiestar extends Widget_Base {
         $this->add_responsive_control(
             'item_border_radius',
             [
-                'label'      => esc_html__('Border Radius', 'bdthemes-prime-slider'),
+                'label'      => esc_html__('Border Radius', 'bdthemes-prime-slider-lite'),
                 'type'       => Controls_Manager::DIMENSIONS,
                 'size_units' => ['px', '%'],
                 'selectors'  => [
@@ -368,7 +355,7 @@ class Fiestar extends Widget_Base {
         $this->add_responsive_control(
             'content_padding',
             [
-                'label'      => __('Padding', 'bdthemes-prime-slider'),
+                'label'      => __('Padding', 'bdthemes-prime-slider-lite'),
                 'type'          => Controls_Manager::DIMENSIONS,
                 'size_units' => ['px', 'em', '%'],
                 'selectors'  => [
@@ -390,7 +377,7 @@ class Fiestar extends Widget_Base {
         $this->start_controls_section(
             'section_style_title',
             [
-                'label'     => esc_html__('Title', 'bdthemes-prime-slider'),
+                'label'     => esc_html__('Title', 'bdthemes-prime-slider-lite'),
                 'tab'       => Controls_Manager::TAB_STYLE,
                 'condition' => [
                     'show_title' => 'yes',
@@ -401,7 +388,7 @@ class Fiestar extends Widget_Base {
         $this->add_control(
             'title_color',
             [
-                'label'     => esc_html__('Color', 'bdthemes-prime-slider'),
+                'label'     => esc_html__('Color', 'bdthemes-prime-slider-lite'),
                 'type'      => Controls_Manager::COLOR,
                 'selectors' => [
                     '{{WRAPPER}} .bdt-fiestar-slider .bdt-title a' => 'color: {{VALUE}};',
@@ -412,7 +399,7 @@ class Fiestar extends Widget_Base {
         $this->add_control(
             'title_hover_color',
             [
-                'label'     => esc_html__('Hover Color', 'bdthemes-prime-slider'),
+                'label'     => esc_html__('Hover Color', 'bdthemes-prime-slider-lite'),
                 'type'      => Controls_Manager::COLOR,
                 'selectors' => [
                     '{{WRAPPER}} .bdt-fiestar-slider .bdt-title a:hover' => 'color: {{VALUE}};',
@@ -424,7 +411,7 @@ class Fiestar extends Widget_Base {
             Group_Control_Typography::get_type(),
             [
                 'name'      => 'title_typography',
-                'label'     => esc_html__('Typography', 'bdthemes-prime-slider'),
+                'label'     => esc_html__('Typography', 'bdthemes-prime-slider-lite'),
                 'selector'  => '{{WRAPPER}} .bdt-fiestar-slider .bdt-title',
             ]
         );
@@ -433,7 +420,7 @@ class Fiestar extends Widget_Base {
             Group_Control_Text_Shadow::get_type(),
             [
                 'name' => 'title_text_shadow',
-                'label' => __('Text Shadow', 'bdthemes-prime-slider'),
+                'label' => __('Text Shadow', 'bdthemes-prime-slider-lite'),
                 'selector' => '{{WRAPPER}} .bdt-fiestar-slider .bdt-title a',
             ]
         );
@@ -442,7 +429,7 @@ class Fiestar extends Widget_Base {
             Group_Control_Text_Stroke::get_type(),
             [
                 'name' => 'title_text_stroke',
-                'label' => __('Text Stroke', 'bdthemes-prime-slider'),
+                'label' => __('Text Stroke', 'bdthemes-prime-slider-lite'),
                 'selector' => '{{WRAPPER}} .bdt-fiestar-slider .bdt-title a',
             ]
         );
@@ -452,7 +439,7 @@ class Fiestar extends Widget_Base {
         $this->start_controls_section(
             'section_style_category',
             [
-                'label'     => esc_html__('Category', 'bdthemes-prime-slider'),
+                'label'     => esc_html__('Category', 'bdthemes-prime-slider-lite'),
                 'tab'       => Controls_Manager::TAB_STYLE,
                 'condition' => [
                     'show_category' => 'yes'
@@ -463,7 +450,7 @@ class Fiestar extends Widget_Base {
         $this->add_responsive_control(
             'category_bottom_spacing',
             [
-                'label'     => esc_html__('Spacing', 'bdthemes-prime-slider'),
+                'label'     => esc_html__('Spacing', 'bdthemes-prime-slider-lite'),
                 'type'      => Controls_Manager::SLIDER,
                 'range'     => [
                     'px' => [
@@ -482,14 +469,14 @@ class Fiestar extends Widget_Base {
         $this->start_controls_tab(
             'tab_category_normal',
             [
-                'label' => esc_html__('Normal', 'bdthemes-prime-slider'),
+                'label' => esc_html__('Normal', 'bdthemes-prime-slider-lite'),
             ]
         );
 
         $this->add_control(
             'category_color',
             [
-                'label'     => esc_html__('Color', 'bdthemes-prime-slider'),
+                'label'     => esc_html__('Color', 'bdthemes-prime-slider-lite'),
                 'type'      => Controls_Manager::COLOR,
                 'selectors' => [
                     '{{WRAPPER}} .bdt-fiestar-slider .bdt-category a' => 'color: {{VALUE}};',
@@ -516,7 +503,7 @@ class Fiestar extends Widget_Base {
         $this->add_responsive_control(
             'category_border_radius',
             [
-                'label'      => esc_html__('Border Radius', 'bdthemes-prime-slider'),
+                'label'      => esc_html__('Border Radius', 'bdthemes-prime-slider-lite'),
                 'type'       => Controls_Manager::DIMENSIONS,
                 'size_units' => ['px', '%'],
                 'selectors'  => [
@@ -528,7 +515,7 @@ class Fiestar extends Widget_Base {
         $this->add_responsive_control(
             'category_padding',
             [
-                'label'      => esc_html__('Padding', 'bdthemes-prime-slider'),
+                'label'      => esc_html__('Padding', 'bdthemes-prime-slider-lite'),
                 'type'       => Controls_Manager::DIMENSIONS,
                 'size_units' => ['px', 'em', '%'],
                 'selectors'  => [
@@ -540,7 +527,7 @@ class Fiestar extends Widget_Base {
         $this->add_responsive_control(
             'category_space_between',
             [
-                'label'     => esc_html__('Space Between', 'bdthemes-prime-slider'),
+                'label'     => esc_html__('Space Between', 'bdthemes-prime-slider-lite'),
                 'type'      => Controls_Manager::SLIDER,
                 'range'     => [
                     'px' => [
@@ -566,7 +553,7 @@ class Fiestar extends Widget_Base {
             Group_Control_Typography::get_type(),
             [
                 'name'     => 'category_typography',
-                'label'    => esc_html__('Typography', 'bdthemes-prime-slider'),
+                'label'    => esc_html__('Typography', 'bdthemes-prime-slider-lite'),
                 'selector' => '{{WRAPPER}} .bdt-fiestar-slider .bdt-category a',
             ]
         );
@@ -576,14 +563,14 @@ class Fiestar extends Widget_Base {
         $this->start_controls_tab(
             'tab_category_hover',
             [
-                'label'     => esc_html__('Hover', 'bdthemes-prime-slider'),
+                'label'     => esc_html__('Hover', 'bdthemes-prime-slider-lite'),
             ]
         );
 
         $this->add_control(
             'category_hover_color',
             [
-                'label'     => esc_html__('Color', 'bdthemes-prime-slider'),
+                'label'     => esc_html__('Color', 'bdthemes-prime-slider-lite'),
                 'type'      => Controls_Manager::COLOR,
                 'selectors' => [
                     '{{WRAPPER}} .bdt-fiestar-slider .bdt-category a:hover' => 'color: {{VALUE}};',
@@ -602,7 +589,7 @@ class Fiestar extends Widget_Base {
         $this->add_control(
             'category_hover_border_color',
             [
-                'label'     => esc_html__('Border Color', 'bdthemes-prime-slider'),
+                'label'     => esc_html__('Border Color', 'bdthemes-prime-slider-lite'),
                 'type'      => Controls_Manager::COLOR,
                 'condition' => [
                     'category_border_border!' => '',
@@ -623,7 +610,7 @@ class Fiestar extends Widget_Base {
         $this->start_controls_section(
             'section_style_navigation',
             [
-                'label'     => __('Navigation', 'bdthemes-prime-slider'),
+                'label'     => __('Navigation', 'bdthemes-prime-slider-lite'),
                 'tab'       => Controls_Manager::TAB_STYLE,
                 'condition' => [
 					'show_navigation_arrows' => ['yes'],
@@ -634,34 +621,34 @@ class Fiestar extends Widget_Base {
         $this->add_control(
 			'nav_arrows_icon',
 			[
-				'label'   => esc_html__( 'Arrows Icon', 'bdthemes-prime-slider' ),
+				'label'   => esc_html__( 'Arrows Icon', 'bdthemes-prime-slider-lite' ),
 				'type'    => Controls_Manager::SELECT,
 				'default' => '8',
 				'options' => [
-					'0' => esc_html__('Default', 'bdthemes-prime-slider'),
-					'1' => esc_html__('Style 1', 'bdthemes-prime-slider'),
-					'2' => esc_html__('Style 2', 'bdthemes-prime-slider'),
-					'3' => esc_html__('Style 3', 'bdthemes-prime-slider'),
-					'4' => esc_html__('Style 4', 'bdthemes-prime-slider'),
-					'5' => esc_html__('Style 5', 'bdthemes-prime-slider'),
-					'6' => esc_html__('Style 6', 'bdthemes-prime-slider'),
-					'7' => esc_html__('Style 7', 'bdthemes-prime-slider'),
-					'8' => esc_html__('Style 8', 'bdthemes-prime-slider'),
-					'9' => esc_html__('Style 9', 'bdthemes-prime-slider'),
-					'10' => esc_html__('Style 10', 'bdthemes-prime-slider'),
-					'11' => esc_html__('Style 11', 'bdthemes-prime-slider'),
-					'12' => esc_html__('Style 12', 'bdthemes-prime-slider'),
-					'13' => esc_html__('Style 13', 'bdthemes-prime-slider'),
-					'14' => esc_html__('Style 14', 'bdthemes-prime-slider'),
-					'15' => esc_html__('Style 15', 'bdthemes-prime-slider'),
-					'16' => esc_html__('Style 16', 'bdthemes-prime-slider'),
-					'17' => esc_html__('Style 17', 'bdthemes-prime-slider'),
-					'18' => esc_html__('Style 18', 'bdthemes-prime-slider'),
-					'circle-1' => esc_html__('Style 19', 'bdthemes-prime-slider'),
-					'circle-2' => esc_html__('Style 20', 'bdthemes-prime-slider'),
-					'circle-3' => esc_html__('Style 21', 'bdthemes-prime-slider'),
-					'circle-4' => esc_html__('Style 22', 'bdthemes-prime-slider'),
-					'square-1' => esc_html__('Style 23', 'bdthemes-prime-slider'),
+					'0' => esc_html__('Default', 'bdthemes-prime-slider-lite'),
+					'1' => esc_html__('Style 1', 'bdthemes-prime-slider-lite'),
+					'2' => esc_html__('Style 2', 'bdthemes-prime-slider-lite'),
+					'3' => esc_html__('Style 3', 'bdthemes-prime-slider-lite'),
+					'4' => esc_html__('Style 4', 'bdthemes-prime-slider-lite'),
+					'5' => esc_html__('Style 5', 'bdthemes-prime-slider-lite'),
+					'6' => esc_html__('Style 6', 'bdthemes-prime-slider-lite'),
+					'7' => esc_html__('Style 7', 'bdthemes-prime-slider-lite'),
+					'8' => esc_html__('Style 8', 'bdthemes-prime-slider-lite'),
+					'9' => esc_html__('Style 9', 'bdthemes-prime-slider-lite'),
+					'10' => esc_html__('Style 10', 'bdthemes-prime-slider-lite'),
+					'11' => esc_html__('Style 11', 'bdthemes-prime-slider-lite'),
+					'12' => esc_html__('Style 12', 'bdthemes-prime-slider-lite'),
+					'13' => esc_html__('Style 13', 'bdthemes-prime-slider-lite'),
+					'14' => esc_html__('Style 14', 'bdthemes-prime-slider-lite'),
+					'15' => esc_html__('Style 15', 'bdthemes-prime-slider-lite'),
+					'16' => esc_html__('Style 16', 'bdthemes-prime-slider-lite'),
+					'17' => esc_html__('Style 17', 'bdthemes-prime-slider-lite'),
+					'18' => esc_html__('Style 18', 'bdthemes-prime-slider-lite'),
+					'circle-1' => esc_html__('Style 19', 'bdthemes-prime-slider-lite'),
+					'circle-2' => esc_html__('Style 20', 'bdthemes-prime-slider-lite'),
+					'circle-3' => esc_html__('Style 21', 'bdthemes-prime-slider-lite'),
+					'circle-4' => esc_html__('Style 22', 'bdthemes-prime-slider-lite'),
+					'square-1' => esc_html__('Style 23', 'bdthemes-prime-slider-lite'),
 				],
 			]
 		);
@@ -671,14 +658,14 @@ class Fiestar extends Widget_Base {
         $this->start_controls_tab(
             'tabs_nav_arrows_normal',
             [
-                'label'     => __('Normal', 'bdthemes-prime-slider'),
+                'label'     => __('Normal', 'bdthemes-prime-slider-lite'),
             ]
         );
 
         $this->add_control(
             'arrows_color',
             [
-                'label'     => __('Color', 'bdthemes-prime-slider'),
+                'label'     => __('Color', 'bdthemes-prime-slider-lite'),
                 'type'      => Controls_Manager::COLOR,
                 'selectors' => [
                     '{{WRAPPER}} .bdt-fiestar-slider .bdt-navigation-wrap .bdt-navigation-next, {{WRAPPER}} .bdt-fiestar-slider .bdt-navigation-wrap .bdt-navigation-prev' => 'color: {{VALUE}}',
@@ -705,7 +692,7 @@ class Fiestar extends Widget_Base {
         $this->add_responsive_control(
             'arrows_border_radius',
             [
-                'label'      => esc_html__('Border Radius', 'bdthemes-prime-slider'),
+                'label'      => esc_html__('Border Radius', 'bdthemes-prime-slider-lite'),
                 'type'       => Controls_Manager::DIMENSIONS,
                 'size_units' => ['px', '%'],
                 'selectors'  => [
@@ -717,7 +704,7 @@ class Fiestar extends Widget_Base {
         $this->add_responsive_control(
             'arrow_padding',
             [
-                'label'      => __('Padding', 'bdthemes-prime-slider'),
+                'label'      => __('Padding', 'bdthemes-prime-slider-lite'),
                 'type'          => Controls_Manager::DIMENSIONS,
                 'size_units' => ['px', 'em', '%'],
                 'selectors'  => [
@@ -730,13 +717,12 @@ class Fiestar extends Widget_Base {
         $this->add_responsive_control(
             'arrows_horizontal_offset',
             [
-                'label'     => esc_html__('Horizontal Offset', 'bdthemes-prime-slider') . BDTPS_CORE_PC,
+                'label'     => esc_html__('Horizontal Offset', 'bdthemes-prime-slider-lite'),
                 'type'      => Controls_Manager::SLIDER,
                 'selectors' => [
                     '{{WRAPPER}} .bdt-fiestar-slider .bdt-navigation-wrap .bdt-navigation-next' => 'right: {{SIZE}}%;',
                     '{{WRAPPER}} .bdt-fiestar-slider .bdt-navigation-wrap .bdt-navigation-prev' => 'left: {{SIZE}}%;',
                 ],
-                'classes'   => BDTPS_CORE_IS_PC
             ]
         );
 
@@ -752,7 +738,7 @@ class Fiestar extends Widget_Base {
             Group_Control_Typography::get_type(),
             [
                 'name'     => 'arrows_typography',
-                'label'    => esc_html__('Icon Typography', 'bdthemes-prime-slider'),
+                'label'    => esc_html__('Icon Typography', 'bdthemes-prime-slider-lite'),
                 'selector' => '{{WRAPPER}} .bdt-fiestar-slider .bdt-navigation-wrap .bdt-navigation-next, {{WRAPPER}} .bdt-fiestar-slider .bdt-navigation-wrap .bdt-navigation-prev',
             ]
         );
@@ -762,14 +748,14 @@ class Fiestar extends Widget_Base {
         $this->start_controls_tab(
             'tabs_nav_arrows_hover',
             [
-                'label'     => __('Hover', 'bdthemes-prime-slider'),
+                'label'     => __('Hover', 'bdthemes-prime-slider-lite'),
             ]
         );
 
         $this->add_control(
             'arrows_hover_color',
             [
-                'label'     => __('Color', 'bdthemes-prime-slider'),
+                'label'     => __('Color', 'bdthemes-prime-slider-lite'),
                 'type'      => Controls_Manager::COLOR,
                 'selectors' => [
                     '{{WRAPPER}} .bdt-fiestar-slider .bdt-navigation-wrap .bdt-navigation-next:hover, {{WRAPPER}} .bdt-fiestar-slider .bdt-navigation-wrap .bdt-navigation-prev:hover' => 'color: {{VALUE}}',
@@ -789,7 +775,7 @@ class Fiestar extends Widget_Base {
         $this->add_control(
             'arrows_hover_border_color',
             [
-                'label'     => esc_html__('Border Color', 'bdthemes-prime-slider'),
+                'label'     => esc_html__('Border Color', 'bdthemes-prime-slider-lite'),
                 'type'      => Controls_Manager::COLOR,
                 'condition' => [
                     'arrows_border_border!' => '',
@@ -896,7 +882,7 @@ class Fiestar extends Widget_Base {
         /**
 		 * Reveal Effects
 		 */
-		$this->reveal_effects_attr('prime-slider-fiestar');
+		$this->add_addon_render_attributes('prime-slider-fiestar');
 
         $this->add_render_attribute('prime-slider-fiestar', 'id', $id);
         $this->add_render_attribute('prime-slider-fiestar', 'class', ['bdt-fiestar-slider', 'elementor-swiper']);
@@ -958,7 +944,7 @@ class Fiestar extends Widget_Base {
 				'class' => 'bdt-center-slider',
 				'role' => 'region',
 				'aria-roledescription' => 'carousel',
-				'aria-label' => $this->get_title() . ' ' . esc_html__( 'Slider', 'bdthemes-prime-slider' ),
+				'aria-label' => $this->get_title() . ' ' . esc_html__( 'Slider', 'bdthemes-prime-slider-lite' ),
 				'dir' => $direction,
 			],
 		]);

@@ -24,6 +24,7 @@ class Admin {
 	public function __construct() {
 
 		// Embed the Script on our Plugin's Option Page Only
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only check for display/routing, no form data processed.
 		if ( isset( $_GET['page'] ) && ( $_GET['page'] == 'prime_slider_options' ) ) {
 			add_action( 'admin_init', [ $this, 'admin_script' ] );
 			add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_styles' ] );
@@ -42,8 +43,7 @@ class Admin {
 	}
 
 	function biggopti_styles(){
-		wp_enqueue_style('ps-admin-biggopti', BDTPS_CORE_ADMIN_URL . 'assets/css/ps-admin-biggopti.css', [], BDTPS_CORE_VER);
-		wp_enqueue_style('bdt-admin-api-biggopti', BDTPS_CORE_ADMIN_URL . 'assets/css/ps-admin-api-biggopti.css', [], BDTPS_CORE_VER);
+		wp_enqueue_style('bdtps-admin-biggopti', BDTPS_CORE_ADMIN_URL . 'assets/css/ps-admin-biggopti.css', [], BDTPS_CORE_VER);
 		wp_enqueue_style('bdt-product-feed', BDTPS_CORE_ADMIN_URL . 'assets/css/ps-product-feed.css', [], BDTPS_CORE_VER);
 	}
 
@@ -55,22 +55,12 @@ class Admin {
 	}
 
 	/**
-	 * You can easily add white label branding for extended license or multi site license. Don't try for regular license otherwise your license will be invalid.
-	 * @return [type] [description]
-	 * Define BDTPS_WL for execute white label branding
+	 * Register plugin row and action meta links.
+	 * @return void
 	 */
 	public function whitelabel() {
-		if ( defined( 'BDTPS_WL' ) ) {
-
-			add_filter( 'gettext', [ $this, 'prime_slider_name_change' ], 20, 3 );
-
-			if ( defined( 'BDTPS_CORE_HIDE' ) ) {
-				add_action( 'pre_current_active_plugins', [ $this, 'hide_prime_slider' ] );
-			}
-		} else {
-			add_filter( 'plugin_row_meta', [ $this, 'plugin_row_meta' ], 10, 2 );
-			add_filter( 'plugin_action_links_' . BDTPS_CORE_PBNAME, [ $this, 'plugin_action_meta' ] );
-		}
+		add_filter( 'plugin_row_meta', [ $this, 'plugin_row_meta' ], 10, 2 );
+		add_filter( 'plugin_action_links_' . BDTPS_CORE_PBNAME, [ $this, 'plugin_action_meta' ] );
 	}
 
 	/**
@@ -85,11 +75,11 @@ class Admin {
 		wp_enqueue_style( 'bdt-uikit', BDTPS_CORE_ASSETS_URL . 'css/bdt-uikit' . $direction_suffix . '.css', [], '3.15.3' );
 		wp_enqueue_style( 'prime-slider-font', BDTPS_CORE_ASSETS_URL . 'css/prime-slider-font' . $direction_suffix . '.css', [], BDTPS_CORE_VER );
 
-		// wp_enqueue_style( 'ps-admin', BDTPS_CORE_ADMIN_URL . 'assets/css/ps-admin' . $direction_suffix . '.css', [], BDTPS_CORE_VER );
+		// wp_enqueue_style( 'bdtps-admin', BDTPS_CORE_ADMIN_URL . 'assets/css/ps-admin' . $direction_suffix . '.css', [], BDTPS_CORE_VER );
 
-		wp_enqueue_style( 'ps-admin', BDTPS_CORE_ADMIN_URL . 'assets/css/ps-admin.css', [], BDTPS_CORE_VER );
+		wp_enqueue_style( 'bdtps-admin', BDTPS_CORE_ADMIN_URL . 'assets/css/ps-admin.css', [], BDTPS_CORE_VER );
 
-		wp_enqueue_script( 'bdt-uikit', BDTPS_CORE_ASSETS_URL . 'js/bdt-uikit.min.js', [ 'jquery' ], '3.15.3' );
+		wp_enqueue_script( 'bdt-uikit', BDTPS_CORE_ASSETS_URL . 'js/bdt-uikit.min.js', [ 'jquery' ], '3.15.3', true );
 	}
 
 	/**
@@ -101,8 +91,8 @@ class Admin {
 	public function plugin_row_meta( $plugin_meta, $plugin_file ) {
 		if ( BDTPS_CORE_PBNAME === $plugin_file ) {
 			$row_meta = [ 
-				'docs'  => '<a href="https://bdthemes.com/support/" aria-label="' . esc_attr( __( 'Go for Get Support', 'bdthemes-prime-slider' ) ) . '" target="_blank">' . __( 'Get Support', 'bdthemes-prime-slider' ) . '</a>',
-				'video' => '<a href="https://www.youtube.com/playlist?list=PLP0S85GEw7DOJf_cbgUIL20qqwqb5x8KA" aria-label="' . esc_attr( __( 'View Prime Slider Video Tutorials', 'bdthemes-prime-slider' ) ) . '" target="_blank">' . __( 'Video Tutorials', 'bdthemes-prime-slider' ) . '</a>',
+				'docs'  => '<a href="https://bdthemes.com/support/" aria-label="' . esc_attr( __( 'Go for Get Support', 'bdthemes-prime-slider-lite' ) ) . '" target="_blank">' . __( 'Get Support', 'bdthemes-prime-slider-lite' ) . '</a>',
+				'video' => '<a href="https://www.youtube.com/playlist?list=PLP0S85GEw7DOJf_cbgUIL20qqwqb5x8KA" aria-label="' . esc_attr( __( 'View Prime Slider Video Tutorials', 'bdthemes-prime-slider-lite' ) ) . '" target="_blank">' . __( 'Video Tutorials', 'bdthemes-prime-slider-lite' ) . '</a>',
 			];
 
 			$plugin_meta = array_merge( $plugin_meta, $row_meta );
@@ -120,13 +110,13 @@ class Admin {
 
 	public function plugin_action_meta( $links ) {
 
-		$links = array_merge( [ sprintf( '<a href="%s">%s</a>', prime_slider_dashboard_link( '#prime_slider_welcome' ), esc_html__( 'Settings', 'bdthemes-prime-slider' ) ) ], $links );
+		$links = array_merge( [ sprintf( '<a href="%s">%s</a>', prime_slider_dashboard_link( '#prime_slider_welcome' ), esc_html__( 'Settings', 'bdthemes-prime-slider-lite' ) ) ], $links );
 
 		$links = array_merge( $links, [ 
 			sprintf(
 				'<a href="%s">%s</a>',
 				prime_slider_dashboard_link( '#license' ),
-				esc_html__( 'License', 'bdthemes-prime-slider' )
+				esc_html__( 'License', 'bdthemes-prime-slider-lite' )
 			)
 		] );
 
@@ -142,7 +132,7 @@ class Admin {
 	 public function plugin_action_links( $plugin_meta ) {
 
 		$row_meta = [
-			'settings' => '<a href="'.admin_url( 'admin.php?page=prime_slider_options' ) .'" aria-label="' . esc_attr(__('Go to settings', 'bdthemes-prime-slider')) . '" >' . __('Settings', 'bdthemes-prime-slider') . '</b></a>',
+			'settings' => '<a href="'.admin_url( 'admin.php?page=prime_slider_options' ) .'" aria-label="' . esc_attr(__('Go to settings', 'bdthemes-prime-slider-lite')) . '" >' . __('Settings', 'bdthemes-prime-slider-lite') . '</b></a>',
 		];
 
         $plugin_meta = array_merge($plugin_meta, $row_meta);
@@ -194,8 +184,8 @@ class Admin {
 			wp_enqueue_script( 'jquery' );
 			wp_enqueue_script( 'jquery-form' );
 
-			wp_enqueue_script( 'chart', BDTPS_CORE_ADMIN_URL . 'assets/js/chart.min.js', [ 'jquery' ], '3.9.3', true );
-			wp_enqueue_script( 'ps-admin', BDTPS_CORE_ADMIN_URL . 'assets/js/ps-admin' . $suffix . '.js', [ 'jquery', 'chart' ], BDTPS_CORE_VER, true );
+			wp_enqueue_script( 'bdtps-chart', BDTPS_CORE_ADMIN_URL . 'assets/js/chart.min.js', [ 'jquery' ], '4.5.1', true );
+			wp_enqueue_script( 'bdtps-admin', BDTPS_CORE_ADMIN_URL . 'assets/js/ps-admin' . $suffix . '.js', [ 'jquery', 'bdtps-chart' ], BDTPS_CORE_VER, true );
 		}
 	}
 
@@ -208,21 +198,26 @@ class Admin {
 		$suffix = '.min';
 		if ( is_admin() ) { // for Admin Dashboard Only
 
-			wp_enqueue_script( 'ps-biggopti', BDTPS_CORE_ADMIN_URL . 'assets/js/ps-biggopti.js', [ 'jquery' ], BDTPS_CORE_VER, true );
-			wp_enqueue_script( 'ps-admin-api-biggopti', BDTPS_CORE_ADMIN_URL . 'assets/js/ps-admin-api-biggopti.js', [ 'jquery' ], BDTPS_CORE_VER, true );
+			wp_enqueue_script( 'bdtps-biggopti', BDTPS_CORE_ADMIN_URL . 'assets/js/ps-biggopti.js', [ 'jquery' ], BDTPS_CORE_VER, true );
 
 			$dismissals = get_option('bdt_biggopti_dismissals', []);
 			$dismissed_display_ids = [];
+			// Keys written since the dismissal store was namespaced carry the
+			// plugin prefix; older ones do not, so strip whichever is present.
+			$namespace = class_exists( __NAMESPACE__ . '\\Biggopties' ) ? Biggopties::DISMISSAL_KEY_PREFIX : 'bdtps_biggopti_';
 			$prefix = 'bdt-admin-biggopti-api-biggopti-';
 			foreach (array_keys($dismissals) as $key) {
-				if (strpos($key, $prefix) === 0) {
-					$dismissed_display_ids[] = substr($key, strlen($prefix));
-				} else {
-					$dismissed_display_ids[] = $key;
+				if (strpos($key, $namespace) === 0) {
+					$key = substr($key, strlen($namespace));
 				}
+				if (strpos($key, $prefix) === 0) {
+					$key = substr($key, strlen($prefix));
+				}
+				$dismissed_display_ids[] = $key;
 			}
 
 			$current_sector = '';
+			// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only check for display/routing, no form data processed.
 			if ( isset( $_GET['page'] ) && $_GET['page'] === 'prime_slider_options' ) {
 				$current_sector = 'plugin_dashboard';
 			}
@@ -230,14 +225,13 @@ class Admin {
 			$script_config = [
 				'ajaxurl'				=> admin_url('admin-ajax.php'),
 				'nonce'					=> wp_create_nonce('prime-slider'),
-				'isPro'             	=> function_exists('_is_ps_pro_activated') && _is_ps_pro_activated(),
+				'isPro'             	=> function_exists('bdtps_is_pro_activated') && bdtps_is_pro_activated(),
 				'assetsUrl'         	=> defined('BDTPS_CORE_ASSETS_URL') ? BDTPS_CORE_ASSETS_URL : '',
 				'dismissedDisplayIds'	=> $dismissed_display_ids,
 				'currentSector'      	=> $current_sector,
 			];
 			
-			wp_localize_script('ps-biggopti', 'PrimeSliderBiggoptiConfig', $script_config);
-			wp_localize_script('ps-admin-api-biggopti', 'PrimeSliderAdminApiBiggoptiConfig', $script_config);
+			wp_localize_script('bdtps-biggopti', 'PrimeSliderBiggoptiConfig', $script_config);
 		}
 	}
 }
